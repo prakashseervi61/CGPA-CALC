@@ -2,17 +2,6 @@
 
 Apex GPA is a clean, modern, and minimalist engineering GPA/CGPA calculator designed with a light-theme first aesthetic, supporting glassmorphism design patterns, responsive layouts, and auto-saving. It features pre-loaded curriculum datasets specifically tailored for students.
 
----
-
-## 🚀 Live Demo & Hosting
-
-You can easily host this repository on GitHub Pages:
-1. Go to repository **Settings** -> **Pages**.
-2. Select **Deploy from a branch** as the source.
-3. Choose the **`main`** branch and the **`/ (root)`** folder, then click **Save**.
-4. Your site will be live at `https://<your-username>.github.io/CGPA-CALC/`.
-
----
 
 ## ✨ Features
 

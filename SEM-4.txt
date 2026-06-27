@@ -1,0 +1,18 @@
+--- PAGE 1 ---
+                  
+                  END SEMESTER RESULTS - APR / MAY 2026
+                  
+SNO SEMESTER SUBJECT CODE SUBJECT TITLE GRADE RESULT
+1 4 23CS404 Backend Frameworks A PASS
+2 4 23CSC02 Machine Learning Techniques A PASS
+3 4 23CYC01 Cyber Security Essentials B PASS
+4 4 23EC411 Signals and Linear Systems B PASS
+5 4 23GEC01 Entrepreneurships and Startup A+ PASS
+6 4 23IT401 Formal Languages and Automata Theory A PASS
+7 4 23MCC11 Disaster Management and Preparedness CO PASS
+8 4 23MEC04 Design Thinking and Idea Lab A+ PASS
+9 4 23SLC01 Multilingual Practices O PASS
+~ End of Statement ~
+                                                                               
+PLACE : COIMBATORE
+DATE : 11-JUN-2026 CONTROLLER OF EXAMINATIONS

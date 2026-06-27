@@ -1,0 +1,367 @@
+/* Minimalist CGPA Calculator Style System */
+
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+  --font-sans: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+  --color-primary: #3b82f6; /* Soft Blue accent */
+  --color-primary-hover: #2563eb;
+  --bg-app: #f8fafc; /* Very light slate background */
+  --bg-card: #ffffff; /* Clean white cards */
+  --border-subtle: #e2e8f0; /* Light gray border */
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--bg-app);
+  color: #1e293b; /* dark slate text */
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+/* Dark Mode overrides - supporting dark option if toggled */
+.dark {
+  --bg-app: #0f172a;
+  --bg-card: #1e293b;
+  --border-subtle: #334155;
+}
+.dark body {
+  color: #f1f5f9;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.15);
+  border: 2px solid transparent;
+  background-clip: padding-box;
+  border-radius: 9999px;
+  transition: background-color 0.2s ease;
+}
+.dark ::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.15);
+}
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(0, 0, 0, 0.3);
+}
+.dark ::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+/* ============================
+   TWO-COLUMN LAYOUT
+   ============================ */
+
+.left-panel {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 0, 0, 0.15) transparent;
+}
+
+.dark .left-panel {
+  scrollbar-color: rgba(255, 255, 255, 0.15) transparent;
+}
+
+.left-panel::-webkit-scrollbar {
+  width: 8px;
+}
+
+.left-panel::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.left-panel::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.12);
+  border: 2.5px solid transparent;
+  background-clip: padding-box;
+  border-radius: 9999px;
+}
+
+.left-panel::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(0, 0, 0, 0.25);
+}
+
+.dark .left-panel::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.12);
+}
+
+.dark .left-panel::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(255, 255, 255, 0.25);
+}
+
+.right-panel-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 0, 0, 0.15) transparent;
+}
+
+.dark .right-panel-scroll {
+  scrollbar-color: rgba(255, 255, 255, 0.15) transparent;
+}
+
+.right-panel-scroll::-webkit-scrollbar {
+  width: 8px;
+}
+
+.right-panel-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.right-panel-scroll::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.15);
+  border: 2px solid transparent;
+  background-clip: padding-box;
+  border-radius: 9999px;
+}
+
+.right-panel-scroll::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.dark .right-panel-scroll::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+.dark .right-panel-scroll::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+
+/* Semester Tab Grid */
+.sem-tab {
+  position: relative;
+  padding: 12px 8px;
+  border-radius: 8px;
+  border: 1.5px solid transparent;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center;
+  background: var(--bg-card);
+}
+
+.sem-tab:hover {
+  border-color: var(--color-primary);
+  background: rgba(59, 130, 246, 0.04);
+}
+
+.sem-tab.active {
+  border-color: var(--color-primary);
+  background: rgba(59, 130, 246, 0.08);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.12);
+}
+
+.dark .sem-tab {
+  background: rgba(30, 41, 59, 0.5);
+}
+
+.dark .sem-tab.active {
+  background: rgba(59, 130, 246, 0.12);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+
+/* Semester SGPA badge inside tab */
+.sem-tab-sgpa {
+  font-size: 11px;
+  font-weight: 700;
+  font-family: 'Outfit', monospace;
+}
+
+/* CGPA Number Container */
+.cgpa-number {
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ============================
+   GLASSMORPHISM NAVBAR
+   ============================ */
+
+#main-header {
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.dark #main-header {
+  background: rgba(15, 23, 42, 0.78);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+}
+
+#main-header.header-shadow {
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
+}
+
+.dark #main-header.header-shadow {
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+}
+
+#main-header .logo-glow {
+  text-shadow: 0 0 20px rgba(59, 130, 246, 0.15);
+}
+
+/* Rounded Cards with Soft Shadow */
+.minimal-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 24px;
+  box-shadow: 0 4px 20px -2px rgba(148, 163, 184, 0.08), 0 2px 8px -1px rgba(148, 163, 184, 0.04);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.dark .minimal-card {
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.25);
+}
+
+/* Form Controls */
+.minimal-input {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  padding: 8px 14px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.minimal-input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+
+.minimal-input[readonly] {
+  cursor: default;
+  opacity: 0.85;
+}
+
+/* Dynamic Grade Badging */
+.grade-badge-O { background-color: rgba(16, 185, 129, 0.08); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.2); }
+.grade-badge-Aplus { background-color: rgba(59, 130, 246, 0.08); color: #3b82f6; border: 1px solid rgba(59, 130, 246, 0.2); }
+.grade-badge-A { background-color: rgba(99, 102, 241, 0.08); color: #6366f1; border: 1px solid rgba(99, 102, 241, 0.2); }
+.grade-badge-Bplus { background-color: rgba(139, 92, 246, 0.08); color: #8b5cf6; border: 1px solid rgba(139, 92, 246, 0.2); }
+.grade-badge-B { background-color: rgba(245, 158, 11, 0.08); color: #f59e0b; border: 1px solid rgba(245, 158, 11, 0.2); }
+.grade-badge-C { background-color: rgba(239, 68, 68, 0.08); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.15); }
+.grade-badge-F { background-color: rgba(239, 68, 68, 0.15); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.3); font-weight: bold; }
+
+/* Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.row-fade-in {
+  animation: fadeInUp 0.2s ease-out forwards;
+}
+
+/* Status circle dashboard progress */
+.progress-ring-circle {
+  transition: stroke-dashoffset 0.35s;
+  transform: rotate(-90deg);
+  transform-origin: 50% 50%;
+}
+
+/* ============================
+   MOBILE RESPONSIVENESS & BOTTOM NAV
+   ============================ */
+
+/* Floating Bottom Nav styling */
+.mobile-nav-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  color: #94a3b8; /* slate-400 */
+  font-weight: 600;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  font-size: 10px;
+}
+
+.dark .mobile-nav-btn {
+  color: #64748b; /* slate-500 */
+}
+
+.mobile-nav-btn.active {
+  color: var(--color-primary);
+  font-weight: 700;
+}
+
+.mobile-nav-btn.active i {
+  transform: translateY(-2px);
+  filter: drop-shadow(0 2px 8px rgba(59, 130, 246, 0.3));
+}
+
+.mobile-nav-btn i {
+  transition: transform 0.2s ease;
+}
+
+/* Responsive adjustments for viewport and scroll controls */
+@media (max-width: 767.98px) {
+  /* Layout adjustments */
+  main {
+    height: calc(100vh - 11.5rem) !important;
+    height: calc(100dvh - 11.5rem) !important; /* Ensure content clears the floating bottom tab bar */
+    padding-top: 0.75rem !important;
+    padding-bottom: 0 !important;
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+    overflow: hidden !important;
+  }
+  
+  .left-panel {
+    width: 100% !important;
+    max-width: 100% !important;
+    flex: none !important;
+    height: 100% !important;
+    overflow-y: auto !important;
+  }
+
+  .right-panel-scroll {
+    width: 100% !important;
+    max-width: 100% !important;
+    flex: none !important;
+    height: 100% !important;
+    overflow-y: hidden !important;
+  }
+  
+  /* Show / Hide tabs on mobile */
+  .mobile-hidden {
+    display: none !important;
+  }
+  
+  /* Shrink header controls spacing on small viewports */
+  #main-header select {
+    max-width: 125px;
+    font-size: 11px;
+    padding-left: 1.75rem;
+    padding-right: 0.5rem;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+  }
+  
+  #main-header i.fa-folder-open {
+    left: 0.5rem;
+  }
+}
+
+@media (max-width: 380px) {
+  #main-header select {
+    max-width: 95px;
+  }
+  
+  #main-header h1 {
+    font-size: 15px;
+  }
+}
+

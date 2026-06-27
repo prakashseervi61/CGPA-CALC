@@ -1,0 +1,20 @@
+--- PAGE 1 ---
+                 
+                 APRIL / MAY 2025 EXAMINATION RESULTSPROVISIONAL STATEMENT OF GRADES                 
+Name of the CandidatePRAKASH V Month & YearApril/May - 2025
+Register No 727824TUIT144 Date of Birth15-Mar-06
+Programme & Branch B.TECH.INFORMATION TECHNOLOGY
+SEMESTERSUBJECT CODE SUBJECT TITLE CREDIT GRADE GRADE POINTSRESULT
+2 23CS201 Data Structures and Algorithms3 A 8 PASS
+2 23CS202 Object Oriented Analysis and Design4 A 8 PASS
+2 23CY203 Programming in JAVA 3 A+ 9 PASS
+2 23EN101 Oral and Written Communication Skills3 B+ 7 PASS
+2 23IT201 DATABASE MANAGEMENT SYSTEMS 3 A 8 PASS
+2 23MA201Mathematics II 4 A 8 PASS
+2 23MC102Environmental Sciences 0 A 8 PASS
+2 23TA201 TAMILS AND TECHNOLOGY 1 B+ 7 PASS
+~ End of Statement ~
+                                                                                           
+PLACE : COIMBATORE
+DATE : 01-JUL-2025 CONTROLLER OF EXAMINATIONS
+

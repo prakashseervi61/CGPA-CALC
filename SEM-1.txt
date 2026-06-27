@@ -1,0 +1,21 @@
+--- PAGE 1 ---
+                 
+                 NOV / DEC 2024 EXAMINATION RESULTSPROVISIONAL STATEMENT OF GRADES                 
+Name of the CandidatePRAKASH V Month & YearNov/Dec - 2024
+Register No 727824TUIT144 Date of Birth15-Mar-06
+Programme & Branch B.TECH.INFORMATION TECHNOLOGY
+SEMESTERSUBJECT CODE SUBJECT TITLE CREDIT GRADEGRADE POINTSRESULT
+1 23AS101Applied Science 4 A 8 PASS
+1 23AS102Applied Science Laboratory 1 A+ 9 PASS
+1 23CS101 Problem Solving using C++ 3 A 8 PASS
+1 23EC111Digital Logic Design and Computer Architecture4 B 6 PASS
+1 23IT101 Application Development Practices 3 A 8 PASS
+1 23MA101Mathematics I 4 B+ 7 PASS
+1 23MC101Mandatory Course: Induction Programme 0 CO 0 PASS
+1 23SB101 Engineering Biology 3 B+ 7 PASS
+1 23TA101 Heritage of Tamils 1 B 6 PASS
+~ End of Statement ~
+                                                                              
+PLACE : COIMBATORE
+DATE : 06-FEB-2025 CONTROLLER OF EXAMINATIONS
+

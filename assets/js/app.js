@@ -10,7 +10,7 @@ const GRADE_POINTS = {
   "B+": 7,
   "B": 6,
   "C": 5,
-  "F": 0
+  "U": 0
 };
 
 // Application State
@@ -87,6 +87,17 @@ async function loadStateOrPreset() {
   if (savedState) {
     try {
       state = JSON.parse(savedState);
+      
+      // Migrate legacy F grades to U
+      if (state.semesters) {
+        state.semesters.forEach(sem => {
+          if (sem.courses) {
+            sem.courses.forEach(c => {
+              if (c.grade === "F") c.grade = "U";
+            });
+          }
+        });
+      }
       
       // Ensure layout is locked to tabbed for minimalist requirements
       state.currentLayout = "tabbed";
@@ -572,7 +583,7 @@ function renderCourseRows(semId) {
             <option value="B+" ${course.grade === "B+" ? 'selected' : ''}>B+ (7)</option>
             <option value="B" ${course.grade === "B" ? 'selected' : ''}>B (6)</option>
             <option value="C" ${course.grade === "C" ? 'selected' : ''}>C (5)</option>
-            <option value="F" ${course.grade === "F" ? 'selected' : ''}>F (0)</option>
+            <option value="U" ${course.grade === "U" ? 'selected' : ''}>U (0)</option>
           </select>
         </div>
       </div>
@@ -596,7 +607,7 @@ function renderCourseRows(semId) {
           <option value="B+" ${course.grade === "B+" ? 'selected' : ''}>B+ (7)</option>
           <option value="B" ${course.grade === "B" ? 'selected' : ''}>B (6)</option>
           <option value="C" ${course.grade === "C" ? 'selected' : ''}>C (5)</option>
-          <option value="F" ${course.grade === "F" ? 'selected' : ''}>F (0)</option>
+          <option value="U" ${course.grade === "U" ? 'selected' : ''}>U (0)</option>
         </select>
       </div>
     `;

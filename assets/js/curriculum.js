@@ -62,7 +62,6 @@ const CURRICULUM_PRESETS = {
           { code: "23EC411", name: "Signals and Linear Systems", credits: 4, grade: "" },
           { code: "23GEC01", name: "Entrepreneurships and Startup", credits: 3, grade: "" },
           { code: "23IT401", name: "Formal Languages and Automata Theory", credits: 4, grade: "" },
-          { code: "23MCC11", name: "Disaster Management and Preparedness (Mandatory)", credits: 0, grade: "" },
           { code: "23MEC04", name: "Design Thinking and Idea Lab", credits: 1, grade: "" },
           { code: "23SLC01", name: "Multilingual Practices", credits: 1, grade: "" }
         ]

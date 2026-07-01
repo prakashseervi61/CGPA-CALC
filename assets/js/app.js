@@ -293,6 +293,50 @@ function renderLeftPanel() {
   const container = document.getElementById("left-panel-content");
   if (!container) return;
   
+  // Pre-calculate live metrics for the left panel to avoid "0.00" blinking on DOM recreation
+  let totalCreditsForCgpa = 0;
+  let totalPointsForCgpa = 0;
+  let totalOverallCreditsEarned = 0;
+  let activeSemesterCount = 0;
+  
+  state.semesters.forEach(sem => {
+    let gradedCreditsCount = 0;
+    let weightedPointsCount = 0;
+    let semesterTotalCredits = 0;
+    
+    sem.courses.forEach(course => {
+      semesterTotalCredits += course.credits;
+      
+      if (course.grade !== "" && GRADE_POINTS[course.grade] !== undefined) {
+        const points = GRADE_POINTS[course.grade];
+        gradedCreditsCount += course.credits;
+        weightedPointsCount += (course.credits * points);
+      }
+    });
+
+    if (sem.included) {
+      totalOverallCreditsEarned += semesterTotalCredits;
+      activeSemesterCount++;
+    }
+    
+    sem.computedSgpa = gradedCreditsCount > 0 ? weightedPointsCount / gradedCreditsCount : 0;
+    sem.gradedCredits = gradedCreditsCount;
+    
+    if (sem.included && gradedCreditsCount > 0) {
+      totalCreditsForCgpa += gradedCreditsCount;
+      totalPointsForCgpa += weightedPointsCount;
+    }
+  });
+
+  let cgpa = totalCreditsForCgpa > 0 ? totalPointsForCgpa / totalCreditsForCgpa : 0;
+  const cgpaColorClass = totalCreditsForCgpa === 0 ? "text-slate-500 dark:text-slate-400" :
+                         cgpa >= 8.5 ? "text-emerald-500 dark:text-emerald-400" :
+                         cgpa >= 7.0 ? "text-blue-600 dark:text-blue-400" :
+                         cgpa >= 5.0 ? "text-amber-500 dark:text-amber-400" : "text-rose-500 dark:text-rose-400";
+                         
+  const cgpaPercent = (cgpa / 10.0) * 100;
+  const strokeOffset = 119.38 - (cgpaPercent / 100) * 119.38;
+  
   container.innerHTML = `
     <!-- CGPA Card -->
     <div class="minimal-card p-5 mb-3">
@@ -300,7 +344,7 @@ function renderLeftPanel() {
         <div class="flex flex-col gap-1">
           <span class="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest">Overall CGPA</span>
           <div class="flex items-baseline gap-1.5">
-            <span id="live-cgpa" class="text-4xl font-extrabold text-slate-500 transition-all duration-300 cgpa-number">0.00</span>
+            <span id="live-cgpa" class="text-4xl font-extrabold transition-all duration-300 cgpa-number ${cgpaColorClass}">${cgpa.toFixed(2)}</span>
             <span class="text-xs font-semibold text-slate-400">/ 10.0</span>
           </div>
           <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-1 leading-snug" id="curriculum-description">
@@ -312,9 +356,9 @@ function renderLeftPanel() {
         <div class="relative flex items-center justify-center h-16 w-16 shrink-0 mt-1">
           <svg class="w-full h-full -rotate-90" viewBox="0 0 48 48">
             <circle cx="24" cy="24" r="19" stroke="currentColor" stroke-width="3.5" class="text-slate-100 dark:text-slate-700" fill="transparent" />
-            <circle id="cgpa-progress-circle" cx="24" cy="24" r="19" stroke="currentColor" stroke-width="4" stroke-dasharray="119.38" stroke-dashoffset="119.38" stroke-linecap="round" fill="transparent" class="text-blue-500 progress-ring-circle" />
+            <circle id="cgpa-progress-circle" cx="24" cy="24" r="19" stroke="currentColor" stroke-width="4" stroke-dasharray="119.38" stroke-dashoffset="${strokeOffset}" stroke-linecap="round" fill="transparent" class="text-blue-500 progress-ring-circle" />
           </svg>
-          <span id="live-cgpa-percentage" class="absolute text-[10px] font-extrabold text-slate-600 dark:text-slate-300">0%</span>
+          <span id="live-cgpa-percentage" class="absolute text-[10px] font-extrabold text-slate-600 dark:text-slate-300">${Math.round(cgpaPercent)}%</span>
         </div>
       </div>
 
@@ -322,12 +366,12 @@ function renderLeftPanel() {
       <div class="flex items-center gap-6 mt-4 pt-3 border-t border-slate-100 dark:border-slate-800">
         <div>
           <span class="text-[9px] block font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest">Total Credits</span>
-          <span id="live-credits" class="text-lg font-bold text-slate-700 dark:text-slate-200">0</span>
+          <span id="live-credits" class="text-lg font-bold text-slate-700 dark:text-slate-200">${totalOverallCreditsEarned}</span>
         </div>
         <div class="w-px h-5 bg-slate-200 dark:bg-slate-800"></div>
         <div>
           <span class="text-[9px] block font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest">Semesters</span>
-          <span id="active-sem-count" class="text-lg font-bold text-slate-700 dark:text-slate-200">0</span>
+          <span id="active-sem-count" class="text-lg font-bold text-slate-700 dark:text-slate-200">${activeSemesterCount}</span>
         </div>
       </div>
     </div>

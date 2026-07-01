@@ -93,7 +93,7 @@ const CURRICULUM_PRESETS = {
           { code: "23XXXX", name: "Professional Elective - III", credits: 3, grade: "" },
           { code: "23XXXX", name: "Professional Elective - IV", credits: 3, grade: "" },
           { code: "23IT605", name: "Prototype Lab (Mini Project)", credits: 1, grade: "" },
-          { code: "23xxxx", name: "Indian Constitution (Mandatory)", credits: 0, grade: "" }
+          { code: "23XXXX", name: "Indian Constitution (Mandatory)", credits: 0, grade: "" }
         ]
       },
       {

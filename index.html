@@ -23,6 +23,19 @@
               500: '#3b82f6',
               600: '#2563eb',
               700: '#1d4ed8',
+            },
+            slate: {
+              50: '#f8fafc',
+              100: '#f1f5f9',
+              200: '#e2e8f0',
+              300: '#cbd5e1',
+              400: '#94a3b8',
+              500: '#64748b',
+              600: '#475569',
+              700: '#1c233d',
+              800: '#0d1127',
+              900: '#060814',
+              950: '#03040b',
             }
           }
         }
@@ -37,6 +50,25 @@
   <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body class="bg-slate-50 text-slate-800 dark:bg-slate-900 dark:text-slate-100 min-h-screen flex flex-col transition-colors duration-300">
+
+  <!-- Premium Launch Screen Loader -->
+  <div id="app-loader" class="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-slate-50 dark:bg-[#060814] transition-opacity duration-500 ease-out">
+    <div class="flex flex-col items-center gap-4">
+      <!-- Pulsing Brand Icon -->
+      <div class="relative flex items-center justify-center w-16 h-16 rounded-2xl bg-blue-500 shadow-xl shadow-blue-500/20 animate-pulse">
+        <i class="fa-solid fa-graduation-cap text-white text-2xl"></i>
+      </div>
+      <!-- App Name & Subtitle -->
+      <div class="text-center mt-2">
+        <h2 class="text-lg font-extrabold text-slate-800 dark:text-slate-100 tracking-tight">Apex GPA</h2>
+        <p class="text-[9px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mt-1">Preparing Curriculum...</p>
+      </div>
+      <!-- Infinite Bar Loader -->
+      <div class="w-32 h-1 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden mt-2">
+        <div class="h-full bg-blue-500 rounded-full w-full loader-bar-fill"></div>
+      </div>
+    </div>
+  </div>
 
   <!-- Glassmorphism Navbar -->
   <header id="main-header" class="sticky top-0 z-50 w-full border-b border-white/10 dark:border-white/5 transition-shadow duration-300">

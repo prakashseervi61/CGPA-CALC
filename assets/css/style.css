@@ -16,13 +16,27 @@ body {
   background-color: var(--bg-app);
   color: #1e293b; /* dark slate text */
   transition: background-color 0.25s ease, color 0.25s ease;
+  
+  /* Disable text selection globally for native feel */
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Allow text selection inside inputs and selects so they remain interactive */
+input, select, textarea {
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
 }
 
 /* Dark Mode overrides - supporting dark option if toggled */
 .dark {
-  --bg-app: #0f172a;
-  --bg-card: #1e293b;
-  --border-subtle: #334155;
+  --bg-app: #060814;
+  --bg-card: #0d1127;
+  --border-subtle: #1c233d;
 }
 .dark body {
   color: #f1f5f9;
@@ -259,10 +273,6 @@ body {
   }
 }
 
-.row-fade-in {
-  animation: fadeInUp 0.2s ease-out forwards;
-}
-
 /* Status circle dashboard progress */
 .progress-ring-circle {
   transition: stroke-dashoffset 0.35s;
@@ -324,6 +334,7 @@ body {
     flex: none !important;
     height: 100% !important;
     overflow-y: auto !important;
+    padding-bottom: 5.5rem !important; /* Prevent scrolling content from being hidden behind bottom nav */
   }
 
   .right-panel-scroll {
@@ -332,6 +343,11 @@ body {
     flex: none !important;
     height: 100% !important;
     overflow-y: hidden !important;
+  }
+
+  /* Shorter card height to clear the floating bottom nav bar on mobile */
+  .right-panel-scroll .minimal-card {
+    height: calc(100% - 5.5rem) !important;
   }
   
   /* Show / Hide tabs on mobile */
@@ -363,5 +379,16 @@ body {
   #main-header h1 {
     font-size: 15px;
   }
+}
+
+/* Infinite loader keyframes */
+@keyframes loader-slide {
+  0% { transform: translateX(-100%) scaleX(0.2); }
+  50% { transform: translateX(0%) scaleX(0.5); }
+  100% { transform: translateX(100%) scaleX(0.2); }
+}
+.loader-bar-fill {
+  animation: loader-slide 1.5s infinite ease-in-out;
+  transform-origin: left;
 }
 

@@ -22,12 +22,56 @@ let state = {
   semesters: []
 };
 
+// Storage Helper: transparently uses Capacitor Preferences on Mobile, falling back to LocalStorage in web browsers.
+const storage = {
+  async get(key) {
+    try {
+      if (window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.Preferences) {
+        const { value } = await window.Capacitor.Plugins.Preferences.get({ key });
+        return value;
+      }
+    } catch (e) {
+      console.warn("Capacitor Preferences get failed, falling back to localStorage", e);
+    }
+    return localStorage.getItem(key);
+  },
+  async set(key, value) {
+    try {
+      if (window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.Preferences) {
+        await window.Capacitor.Plugins.Preferences.set({ key, value });
+        return;
+      }
+    } catch (e) {
+      console.warn("Capacitor Preferences set failed, falling back to localStorage", e);
+    }
+    localStorage.setItem(key, value);
+  },
+  async remove(key) {
+    try {
+      if (window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.Preferences) {
+        await window.Capacitor.Plugins.Preferences.remove({ key });
+        return;
+      }
+    } catch (e) {
+      console.warn("Capacitor Preferences remove failed, falling back to localStorage", e);
+    }
+    localStorage.removeItem(key);
+  }
+};
+
 // Initialize Application
-document.addEventListener("DOMContentLoaded", () => {
-  initTheme();
-  loadStateOrPreset();
+document.addEventListener("DOMContentLoaded", async () => {
+  await initTheme();
+  await loadStateOrPreset();
   renderApp();
   setupGlobalEvents();
+  
+  // Fade out loader
+  const loader = document.getElementById("app-loader");
+  if (loader) {
+    loader.classList.add("opacity-0", "pointer-events-none");
+    setTimeout(() => loader.remove(), 500); // completely remove from DOM after transition completes
+  }
 });
 
 /* ==========================================
@@ -37,8 +81,8 @@ document.addEventListener("DOMContentLoaded", () => {
 /**
  * Loads saved state from localStorage or initializes default curriculum preset
  */
-function loadStateOrPreset() {
-  const savedState = localStorage.getItem("apex_gpa_state_min");
+async function loadStateOrPreset() {
+  const savedState = await storage.get("apex_gpa_state_min");
   
   if (savedState) {
     try {
@@ -60,7 +104,7 @@ function loadStateOrPreset() {
         state.semesters.forEach((sem) => {
           sem.expanded = (sem.id === state.activeTabId);
         });
-        saveState();
+        await saveState();
       }
       
       // Sync curriculum selector value
@@ -73,10 +117,10 @@ function loadStateOrPreset() {
       syncCreditsWithPresets();
     } catch (e) {
       console.error("Failed to parse saved state, loading default.", e);
-      loadPreset("skcet_it_24_28", false);
+      await loadPreset("skcet_it_24_28", false);
     }
   } else {
-    loadPreset("skcet_it_24_28", false);
+    await loadPreset("skcet_it_24_28", false);
   }
 }
 
@@ -165,14 +209,14 @@ function syncCreditsWithPresets() {
 /**
  * Saves current application state to localStorage
  */
-function saveState() {
-  localStorage.setItem("apex_gpa_state_min", JSON.stringify(state));
+async function saveState() {
+  await storage.set("apex_gpa_state_min", JSON.stringify(state));
 }
 
 /**
  * Loads a specific curriculum preset, resetting input states
  */
-function loadPreset(presetKey, shouldNotify = true) {
+async function loadPreset(presetKey, shouldNotify = true) {
   const actualKey = CURRICULUM_PRESETS[presetKey] ? presetKey : "skcet_it_24_28";
   const preset = CURRICULUM_PRESETS[actualKey];
   
@@ -184,10 +228,8 @@ function loadPreset(presetKey, shouldNotify = true) {
     sem.expanded = (sem.id === state.activeTabId);
   });
   
-  saveState();
+  await saveState();
   updateCurriculumDescription(presetKey);
-  
-
 }
 
 function updateCurriculumDescription(presetKey) {
@@ -361,7 +403,7 @@ function renderRightPanel() {
   const checkedAttr = sem.included ? "checked" : "";
 
   container.innerHTML = `
-    <div class="minimal-card p-4 md:p-6 h-full flex flex-col overflow-hidden ${sem.included ? "opacity-100" : "opacity-75"}">
+    <div class="minimal-card p-4 md:p-6 h-full flex flex-col overflow-hidden">
       <!-- Semester Header -->
       <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-100 dark:border-slate-800 pb-5 mb-5">
         <div class="flex items-center justify-between md:justify-start gap-4 w-full md:w-auto">
@@ -636,10 +678,10 @@ function calculateAll() {
   if (cgpaEl) {
     cgpaEl.textContent = cgpa.toFixed(2);
     cgpaEl.className = `text-5xl md:text-6xl font-extrabold transition-colors duration-300 ${
-      totalCreditsForCgpa === 0 ? "text-slate-500" :
-      cgpa >= 8.5 ? "text-emerald-500" :
-      cgpa >= 7.0 ? "text-blue-600" :
-      cgpa >= 5.0 ? "text-amber-500" : "text-rose-500"
+      totalCreditsForCgpa === 0 ? "text-slate-500 dark:text-slate-400" :
+      cgpa >= 8.5 ? "text-emerald-500 dark:text-emerald-400" :
+      cgpa >= 7.0 ? "text-blue-600 dark:text-blue-400" :
+      cgpa >= 5.0 ? "text-amber-500 dark:text-amber-400" : "text-rose-500 dark:text-rose-400"
     }`;
   }
   
@@ -670,9 +712,9 @@ function calculateAll() {
    THEME SWITCHING & UTILITIES
    ========================================== */
 
-function initTheme() {
+async function initTheme() {
   // Default to light theme as requested in redesign prompt
-  const savedTheme = localStorage.getItem("apex_gpa_theme") || "light";
+  const savedTheme = await storage.get("apex_gpa_theme") || "light";
   if (savedTheme === "dark") {
     document.documentElement.classList.add("dark");
   } else {
@@ -680,14 +722,14 @@ function initTheme() {
   }
 }
 
-function toggleTheme() {
+async function toggleTheme() {
   const html = document.documentElement;
   if (html.classList.contains("dark")) {
     html.classList.remove("dark");
-    localStorage.setItem("apex_gpa_theme", "light");
+    await storage.set("apex_gpa_theme", "light");
   } else {
     html.classList.add("dark");
-    localStorage.setItem("apex_gpa_theme", "dark");
+    await storage.set("apex_gpa_theme", "dark");
   }
 }
 
@@ -765,15 +807,15 @@ function setupGlobalEvents() {
   if (modalCancel) modalCancel.addEventListener("click", closeModal);
   
   if (modalConfirm) {
-    modalConfirm.addEventListener("click", () => {
-      localStorage.removeItem("apex_gpa_state_min");
+    modalConfirm.addEventListener("click", async () => {
+      await storage.remove("apex_gpa_state_min");
       
       const currSelect = document.getElementById("curriculum-select");
       if (currSelect) currSelect.value = "skcet_it_24_28";
       
       state.activeTabId = 1;
       state.activeMobileTab = "dashboard";
-      loadPreset("skcet_it_24_28", false);
+      await loadPreset("skcet_it_24_28", false);
       closeModal();
       renderApp();
     });

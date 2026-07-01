@@ -1,0 +1,14 @@
+# Dependency directories
+node_modules/
+
+# Local build / output directories
+www/
+android/
+
+# Mobile config and packaging files
+capacitor.config.json
+package.json
+package-lock.json
+
+# App resources
+icon.png

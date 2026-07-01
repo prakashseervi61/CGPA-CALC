@@ -348,7 +348,9 @@ function renderLeftPanel() {
             <span class="text-xs font-semibold text-slate-400">/ 10.0</span>
           </div>
           <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-1 leading-snug" id="curriculum-description">
-            Start with a clean slate and add your own subjects & credits.
+            ${CURRICULUM_PRESETS[state.currentCurriculum] 
+              ? CURRICULUM_PRESETS[state.currentCurriculum].description 
+              : "Select your course credits and grade points to compute your GPA instantly."}
           </p>
         </div>
 

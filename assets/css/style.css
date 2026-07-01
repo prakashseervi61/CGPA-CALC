@@ -392,3 +392,17 @@ input, select, textarea {
   transform-origin: left;
 }
 
+/* Theme Switcher Icons visibility based on theme */
+#theme-toggle .fa-sun {
+  display: none !important;
+}
+#theme-toggle .fa-moon {
+  display: inline-block !important;
+}
+.dark #theme-toggle .fa-sun {
+  display: inline-block !important;
+}
+.dark #theme-toggle .fa-moon {
+  display: none !important;
+}
+

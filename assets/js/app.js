@@ -311,7 +311,7 @@ function renderLeftPanel() {
         <!-- Radial Gauge (small) -->
         <div class="relative flex items-center justify-center h-16 w-16 shrink-0 mt-1">
           <svg class="w-full h-full -rotate-90" viewBox="0 0 48 48">
-            <circle cx="24" cy="24" r="19" stroke="currentColor" stroke-width="3.5" class="text-slate-100 dark:text-slate-800" fill="transparent" />
+            <circle cx="24" cy="24" r="19" stroke="currentColor" stroke-width="3.5" class="text-slate-100 dark:text-slate-700" fill="transparent" />
             <circle id="cgpa-progress-circle" cx="24" cy="24" r="19" stroke="currentColor" stroke-width="4" stroke-dasharray="119.38" stroke-dashoffset="119.38" stroke-linecap="round" fill="transparent" class="text-blue-500 progress-ring-circle" />
           </svg>
           <span id="live-cgpa-percentage" class="absolute text-[10px] font-extrabold text-slate-600 dark:text-slate-300">0%</span>

@@ -66,11 +66,13 @@ document.addEventListener("DOMContentLoaded", async () => {
   renderApp();
   setupGlobalEvents();
   
-  // Fade out loader
+  // Fade out loader after 3 seconds
   const loader = document.getElementById("app-loader");
   if (loader) {
-    loader.classList.add("opacity-0", "pointer-events-none");
-    setTimeout(() => loader.remove(), 500); // completely remove from DOM after transition completes
+    setTimeout(() => {
+      loader.classList.add("opacity-0", "pointer-events-none");
+      setTimeout(() => loader.remove(), 500); // completely remove from DOM after transition completes
+    }, 3000);
   }
 });
 

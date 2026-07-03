@@ -1159,6 +1159,11 @@ function setupAuthEvents() {
     document.addEventListener("click", () => {
       dropdown.classList.add("hidden");
     });
+
+    // Stop propagation of clicks inside dropdown to prevent accidental closure
+    dropdown.addEventListener("click", (e) => {
+      e.stopPropagation();
+    });
   }
 
   // Switch User Profile Button

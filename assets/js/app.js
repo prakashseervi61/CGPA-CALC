@@ -33,7 +33,12 @@ const storage = {
     } catch (e) {
       console.warn("Capacitor Preferences get failed, falling back to localStorage", e);
     }
-    return localStorage.getItem(key);
+    try {
+      return localStorage.getItem(key);
+    } catch (e) {
+      console.error("Browser localStorage read blocked or disabled", e);
+      return null;
+    }
   },
   async set(key, value) {
     try {
@@ -44,7 +49,11 @@ const storage = {
     } catch (e) {
       console.warn("Capacitor Preferences set failed, falling back to localStorage", e);
     }
-    localStorage.setItem(key, value);
+    try {
+      localStorage.setItem(key, value);
+    } catch (e) {
+      console.error("Browser localStorage write blocked or quota exceeded", e);
+    }
   },
   async remove(key) {
     try {
@@ -55,7 +64,11 @@ const storage = {
     } catch (e) {
       console.warn("Capacitor Preferences remove failed, falling back to localStorage", e);
     }
-    localStorage.removeItem(key);
+    try {
+      localStorage.removeItem(key);
+    } catch (e) {
+      console.error("Browser localStorage remove blocked or disabled", e);
+    }
   }
 };
 
@@ -179,8 +192,8 @@ function syncCreditsWithPresets() {
       presetSem.courses.forEach(presetCourse => {
         if (!presetCourse.code) return; // skip custom rows without code
         
-        // Find course in state semester by code
-        const stateCourse = stateSem.courses.find(c => c.code === presetCourse.code);
+        // Find course in state semester by code and name (to handle duplicates like placeholder '23XXXX' electives)
+        const stateCourse = stateSem.courses.find(c => c.code === presetCourse.code && c.name === presetCourse.name);
         if (stateCourse) {
           // Sync credits if they differ
           if (stateCourse.credits !== presetCourse.credits) {
@@ -820,8 +833,8 @@ function setupGlobalEvents() {
   // Curriculum loader
   const currSelect = document.getElementById("curriculum-select");
   if (currSelect) {
-    currSelect.addEventListener("change", (e) => {
-      loadPreset(e.target.value);
+    currSelect.addEventListener("change", async (e) => {
+      await loadPreset(e.target.value);
       renderApp();
     });
   }

@@ -11,15 +11,15 @@
 
   --color-slate-50: #f8fafc;
   --color-slate-100: #f1f5f9;
-  --color-slate-200: #e2e8f0;
-  --color-slate-300: #cbd5e1;
-  --color-slate-400: #94a3b8;
-  --color-slate-500: #64748b;
-  --color-slate-600: #475569;
-  --color-slate-700: #1c233d;
-  --color-slate-800: #0d1127;
-  --color-slate-900: #060814;
-  --color-slate-950: #03040b;
+  --color-slate-200: #7a7a7a;
+  --color-slate-300: #696969;
+  --color-slate-400: #575757;
+  --color-slate-500: #464646;
+  --color-slate-600: #343434;
+  --color-slate-700: #232323;
+  --color-slate-800: #111111;
+  --color-slate-900: #000000;
+  --color-slate-950: #000000;
 
   --font-sans: 'Outfit', sans-serif;
 }

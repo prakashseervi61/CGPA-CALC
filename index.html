@@ -84,16 +84,17 @@
 
   <!-- Floating Bottom Nav for Mobile -->
   <div class="fixed bottom-5 left-1/2 -translate-x-1/2 z-40 w-[90%] max-w-xs md:hidden">
-    <div class="bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border border-slate-200/50 dark:border-slate-800/50 rounded-2xl p-2 shadow-xl flex justify-around items-center">
-      <button id="mobile-tab-dashboard" class="mobile-nav-btn active flex-1 py-1.5 cursor-pointer" aria-label="Show Dashboard">
-        <i class="fa-solid fa-chart-simple text-lg"></i>
-        <span>Dashboard</span>
+    <nav id="mobile-nav-container" class="relative flex items-center gap-1 p-1 rounded-full border border-[#E5E5E9] dark:border-zinc-800 bg-linear-to-b from-[#ffffff] to-[#e9e9f2] dark:from-zinc-900 dark:to-zinc-950 shadow-[inset_0_-2px_4px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.9),0_4px_12px_rgba(0,0,0,0.03)] dark:shadow-[inset_0_-2px_4px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.05),0_10px_20px_rgba(0,0,0,0.4)] transition-all duration-300 nav-dashboard-active">
+      <div id="mobile-nav-pill"></div>
+      <button id="mobile-tab-dashboard" class="mobile-nav-btn relative z-20 flex-1 py-2 rounded-full flex flex-col items-center justify-center gap-0.5 outline-none cursor-pointer" aria-label="Show Dashboard">
+        <i class="fa-solid fa-chart-simple text-base relative z-10 transition-colors duration-200"></i>
+        <span class="text-[10px] font-semibold relative z-10 transition-colors duration-200">Dashboard</span>
       </button>
-      <button id="mobile-tab-courses" class="mobile-nav-btn flex-1 py-1.5 cursor-pointer" aria-label="Show Courses">
-        <i class="fa-solid fa-list-check text-lg"></i>
-        <span>Courses</span>
+      <button id="mobile-tab-courses" class="mobile-nav-btn relative z-20 flex-1 py-2 rounded-full flex flex-col items-center justify-center gap-0.5 outline-none cursor-pointer" aria-label="Show Courses">
+        <i class="fa-solid fa-list-check text-base relative z-10 transition-colors duration-200"></i>
+        <span class="text-[10px] font-semibold relative z-10 transition-colors duration-200">Courses</span>
       </button>
-    </div>
+    </nav>
   </div>
 
   <!-- Elegant Reset Modal -->

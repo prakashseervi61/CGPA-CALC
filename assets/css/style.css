@@ -285,34 +285,71 @@ input, select, textarea {
    ============================ */
 
 /* Floating Bottom Nav styling */
+#mobile-nav-pill {
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  left: 4px;
+  width: calc(50% - 6px);
+  background-color: #252528;
+  border-radius: 9999px;
+  transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+  z-index: 10;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+.dark #mobile-nav-pill {
+  background-color: #f4f4f5; /* zinc-100 */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+/* Sliding active pill positions */
+#mobile-nav-container.nav-dashboard-active #mobile-nav-pill {
+  transform: translateX(0);
+}
+#mobile-nav-container.nav-courses-active #mobile-nav-pill {
+  transform: translateX(calc(100% + 4px));
+}
+
 .mobile-nav-btn {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 3px;
-  color: #94a3b8; /* slate-400 */
+  color: #343437;
+  transition: color 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   font-weight: 600;
-  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-  position: relative;
-  font-size: 10px;
 }
-
 .dark .mobile-nav-btn {
-  color: #64748b; /* slate-500 */
+  color: #a1a1aa; /* zinc-400 */
+}
+.mobile-nav-btn:hover {
+  color: #62625d;
+}
+.dark .mobile-nav-btn:hover {
+  color: #d4d4d8; /* zinc-300 */
 }
 
-.mobile-nav-btn.active {
-  color: var(--color-primary);
-  font-weight: 700;
+/* Active states for Dashboard active */
+#mobile-nav-container.nav-dashboard-active #mobile-tab-dashboard {
+  color: #ededec;
+}
+.dark #mobile-nav-container.nav-dashboard-active #mobile-tab-dashboard {
+  color: #09090b; /* zinc-950 */
 }
 
-.mobile-nav-btn.active i {
-  transform: translateY(-2px);
-  filter: drop-shadow(0 2px 8px rgba(59, 130, 246, 0.3));
+/* Active states for Courses active */
+#mobile-nav-container.nav-courses-active #mobile-tab-courses {
+  color: #ededec;
+}
+.dark #mobile-nav-container.nav-courses-active #mobile-tab-courses {
+  color: #09090b; /* zinc-950 */
 }
 
 .mobile-nav-btn i {
-  transition: transform 0.2s ease;
+  transition: transform 0.25s ease;
+}
+#mobile-nav-container.nav-dashboard-active #mobile-tab-dashboard i,
+#mobile-nav-container.nav-courses-active #mobile-tab-courses i {
+  transform: scale(1.05);
 }
 
 /* Responsive adjustments for viewport and scroll controls */

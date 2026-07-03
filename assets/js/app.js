@@ -281,21 +281,24 @@ function switchMobileTab(tabName, shouldSave = true) {
   
   const leftPanel = document.getElementById("left-panel");
   const rightPanel = document.getElementById("right-panel");
-  const dashboardBtn = document.getElementById("mobile-tab-dashboard");
-  const coursesBtn = document.getElementById("mobile-tab-courses");
+  const navContainer = document.getElementById("mobile-nav-container");
   
   if (tabName === "dashboard") {
     if (leftPanel) leftPanel.classList.remove("mobile-hidden");
     if (rightPanel) rightPanel.classList.add("mobile-hidden");
     
-    if (dashboardBtn) dashboardBtn.classList.add("active");
-    if (coursesBtn) coursesBtn.classList.remove("active");
+    if (navContainer) {
+      navContainer.classList.add("nav-dashboard-active");
+      navContainer.classList.remove("nav-courses-active");
+    }
   } else {
     if (leftPanel) leftPanel.classList.add("mobile-hidden");
     if (rightPanel) rightPanel.classList.remove("mobile-hidden");
     
-    if (dashboardBtn) dashboardBtn.classList.remove("active");
-    if (coursesBtn) coursesBtn.classList.add("active");
+    if (navContainer) {
+      navContainer.classList.remove("nav-dashboard-active");
+      navContainer.classList.add("nav-courses-active");
+    }
   }
 }
 

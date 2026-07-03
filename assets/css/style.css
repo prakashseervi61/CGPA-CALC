@@ -291,15 +291,15 @@ input, select, textarea {
   bottom: 4px;
   left: 4px;
   width: calc(50% - 6px);
-  background-color: #252528;
+  background-color: var(--color-primary);
   border-radius: 9999px;
   transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
   z-index: 10;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.25);
 }
 .dark #mobile-nav-pill {
-  background-color: #f4f4f5; /* zinc-100 */
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  background-color: var(--color-primary);
+  box-shadow: 0 4px 14px rgba(59, 130, 246, 0.4);
 }
 
 /* Sliding active pill positions */
@@ -314,34 +314,34 @@ input, select, textarea {
   display: flex;
   flex-direction: column;
   align-items: center;
-  color: #343437;
+  color: #64748b;
   transition: color 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   font-weight: 600;
 }
 .dark .mobile-nav-btn {
-  color: #a1a1aa; /* zinc-400 */
+  color: #94a3b8;
 }
 .mobile-nav-btn:hover {
-  color: #62625d;
+  color: #1e293b;
 }
 .dark .mobile-nav-btn:hover {
-  color: #d4d4d8; /* zinc-300 */
+  color: #f1f5f9;
 }
 
 /* Active states for Dashboard active */
 #mobile-nav-container.nav-dashboard-active #mobile-tab-dashboard {
-  color: #ededec;
+  color: #ffffff;
 }
 .dark #mobile-nav-container.nav-dashboard-active #mobile-tab-dashboard {
-  color: #09090b; /* zinc-950 */
+  color: #ffffff;
 }
 
 /* Active states for Courses active */
 #mobile-nav-container.nav-courses-active #mobile-tab-courses {
-  color: #ededec;
+  color: #ffffff;
 }
 .dark #mobile-nav-container.nav-courses-active #mobile-tab-courses {
-  color: #09090b; /* zinc-950 */
+  color: #ffffff;
 }
 
 .mobile-nav-btn i {

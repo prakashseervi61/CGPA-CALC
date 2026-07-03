@@ -6,15 +6,15 @@
   --font-sans: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
   --color-primary: #3b82f6; /* Soft Blue accent */
   --color-primary-hover: #2563eb;
-  --bg-app: #f8fafc; /* Very light slate background */
-  --bg-card: #ffffff; /* Clean white cards */
-  --border-subtle: #e2e8f0; /* Light gray border */
+  --bg-app: #ffffff; /* Inverted #000000 */
+  --bg-card: #eeeeee; /* Inverted #111111 */
+  --border-subtle: #dddddd; /* Inverted #232323 */
 }
 
 body {
   font-family: var(--font-sans);
   background-color: var(--bg-app);
-  color: #1e293b; /* dark slate text */
+  color: #111111; /* Grayscale body text */
   transition: background-color 0.25s ease, color 0.25s ease;
   
   /* Disable text selection globally for native feel */
@@ -197,7 +197,7 @@ input, select, textarea {
   background: rgba(255, 255, 255, 0.65);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+  border-bottom: 1px solid rgba(221, 221, 221, 0.8);
   transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 

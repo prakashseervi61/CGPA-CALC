@@ -2,6 +2,34 @@
 
 @variant dark (&:where(.dark, .dark *));
 
+:root {
+  --slate-50: #ffffff;
+  --slate-100: #eeeeee;
+  --slate-200: #dddddd;
+  --slate-300: #cccccc;
+  --slate-400: #bbbbbb;
+  --slate-500: #aaaaaa;
+  --slate-600: #999999;
+  --slate-700: #888888;
+  --slate-800: #777777;
+  --slate-900: #666666;
+  --slate-950: #555555;
+}
+
+.dark {
+  --slate-50: #7a7a7a;
+  --slate-100: #696969;
+  --slate-200: #7a7a7a;
+  --slate-300: #696969;
+  --slate-400: #575757;
+  --slate-500: #464646;
+  --slate-600: #343434;
+  --slate-700: #232323;
+  --slate-800: #111111;
+  --slate-900: #000000;
+  --slate-950: #000000;
+}
+
 @theme {
   --color-brand-50: #eff6ff;
   --color-brand-100: #dbeafe;
@@ -9,17 +37,17 @@
   --color-brand-600: #2563eb;
   --color-brand-700: #1d4ed8;
 
-  --color-slate-50: #f8fafc;
-  --color-slate-100: #f1f5f9;
-  --color-slate-200: #7a7a7a;
-  --color-slate-300: #696969;
-  --color-slate-400: #575757;
-  --color-slate-500: #464646;
-  --color-slate-600: #343434;
-  --color-slate-700: #232323;
-  --color-slate-800: #111111;
-  --color-slate-900: #000000;
-  --color-slate-950: #000000;
+  --color-slate-50: var(--slate-50);
+  --color-slate-100: var(--slate-100);
+  --color-slate-200: var(--slate-200);
+  --color-slate-300: var(--slate-300);
+  --color-slate-400: var(--slate-400);
+  --color-slate-500: var(--slate-500);
+  --color-slate-600: var(--slate-600);
+  --color-slate-700: var(--slate-700);
+  --color-slate-800: var(--slate-800);
+  --color-slate-900: var(--slate-900);
+  --color-slate-950: var(--slate-950);
 
   --font-sans: 'Outfit', sans-serif;
 }

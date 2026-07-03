@@ -632,6 +632,7 @@ window.updateCourseField = function(semId, courseIdx, field, value) {
   sem.courses[courseIdx][field] = value;
   saveState();
   calculateAll();
+  renderSemesterTabs();
 };
 
 window.updateCourseGrade = function(semId, courseIdx, grade) {
@@ -642,6 +643,7 @@ window.updateCourseGrade = function(semId, courseIdx, grade) {
   saveState();
   renderCourseRows(semId);
   calculateAll();
+  renderSemesterTabs();
 };
 
 window.toggleSemesterInclusion = function(semId, checkbox) {

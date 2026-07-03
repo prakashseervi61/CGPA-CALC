@@ -15,6 +15,7 @@ const GRADE_POINTS = {
 
 // Application State
 let state = {
+  currentUser: null,                 // active profile username
   currentCurriculum: "skcet_it_24_28", // default to SKCET curriculum
   currentLayout: "tabbed",           // default layout for minimalist tabs
   activeTabId: 1,                    // current active semester (1-8)
@@ -75,9 +76,9 @@ const storage = {
 // Initialize Application
 document.addEventListener("DOMContentLoaded", async () => {
   await initTheme();
-  await loadStateOrPreset();
-  renderApp();
+  await initAuthSession();
   setupGlobalEvents();
+  setupAuthEvents();
   
   // Fade out loader after 3 seconds
   const loader = document.getElementById("app-loader");
@@ -97,11 +98,17 @@ document.addEventListener("DOMContentLoaded", async () => {
  * Loads saved state from localStorage or initializes default curriculum preset
  */
 async function loadStateOrPreset() {
-  const savedState = await storage.get("apex_gpa_state_min");
+  const key = state.currentUser ? `apex_gpa_state_user_${state.currentUser}` : "apex_gpa_state_min";
+  const savedState = await storage.get(key);
   
   if (savedState) {
     try {
       state = JSON.parse(savedState);
+      
+      // Ensure active user state matches current context
+      if (!state.currentUser && activeUserSession) {
+        state.currentUser = activeUserSession;
+      }
       
       // Migrate legacy F grades to U
       if (state.semesters) {
@@ -236,7 +243,8 @@ function syncCreditsWithPresets() {
  * Saves current application state to localStorage
  */
 async function saveState() {
-  await storage.set("apex_gpa_state_min", JSON.stringify(state));
+  const key = state.currentUser ? `apex_gpa_state_user_${state.currentUser}` : "apex_gpa_state_min";
+  await storage.set(key, JSON.stringify(state));
 }
 
 /**
@@ -246,8 +254,10 @@ async function loadPreset(presetKey, shouldNotify = true) {
   const actualKey = CURRICULUM_PRESETS[presetKey] ? presetKey : "skcet_it_24_28";
   const preset = CURRICULUM_PRESETS[actualKey];
   
+  const currentUser = state.currentUser;
   state.currentCurriculum = actualKey;
   state.semesters = JSON.parse(JSON.stringify(preset.semesters));
+  state.currentUser = currentUser;
   
   // By default expand only the active tab, rest are collapsed
   state.semesters.forEach((sem) => {
@@ -366,49 +376,60 @@ function renderLeftPanel() {
   const cgpaPercent = (cgpa / 10.0) * 100;
   const strokeOffset = 119.38 - (cgpaPercent / 100) * 119.38;
   
+  const hrs = new Date().getHours();
+  let greeting = "Hello";
+  if (hrs < 12) greeting = "Good morning";
+  else if (hrs < 17) greeting = "Good afternoon";
+  else greeting = "Good evening";
+  
   container.innerHTML = `
     <!-- CGPA Card -->
-    <div class="minimal-card p-5 mb-3">
+    <div class="minimal-card p-4 mb-3">
+      <!-- Greeting Row -->
+      <div class="flex items-center justify-between mb-3 border-b border-slate-100 dark:border-slate-800/80 pb-2">
+        <span class="text-sm font-bold text-slate-800 dark:text-slate-100">${greeting}, ${state.currentUser || "Student"}! 👋</span>
+      </div>
+      
       <div class="flex items-start justify-between">
-        <div class="flex flex-col gap-1">
-          <span class="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest">Overall CGPA</span>
-          <div class="flex items-baseline gap-1.5">
-            <span id="live-cgpa" class="text-4xl font-extrabold transition-all duration-300 cgpa-number ${cgpaColorClass}">${cgpa.toFixed(2)}</span>
+        <div class="flex flex-col gap-0.5">
+          <span class="text-[9px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest">Overall CGPA</span>
+          <div class="flex items-baseline gap-1">
+            <span id="live-cgpa" class="text-3xl font-extrabold transition-all duration-300 cgpa-number ${cgpaColorClass}">${cgpa.toFixed(2)}</span>
             <span class="text-xs font-semibold text-slate-400">/ 10.0</span>
           </div>
-          <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-1 leading-snug" id="curriculum-description">
+          <p class="text-[10px] text-slate-500 dark:text-slate-400 mt-0.5 leading-snug" id="curriculum-description">
             Select your course credits and grade points to calculate your CGPA.
           </p>
         </div>
 
         <!-- Radial Gauge (small) -->
-        <div class="relative flex items-center justify-center h-16 w-16 shrink-0 mt-1">
+        <div class="relative flex items-center justify-center h-14 w-14 shrink-0 mt-0.5">
           <svg class="w-full h-full -rotate-90" viewBox="0 0 48 48">
             <circle cx="24" cy="24" r="19" stroke="currentColor" stroke-width="3.5" class="text-slate-100 dark:text-slate-700" fill="transparent" />
             <circle id="cgpa-progress-circle" cx="24" cy="24" r="19" stroke="currentColor" stroke-width="4" stroke-dasharray="119.38" stroke-dashoffset="${strokeOffset}" stroke-linecap="round" fill="transparent" class="text-blue-500 progress-ring-circle" />
           </svg>
-          <span id="live-cgpa-percentage" class="absolute text-[10px] font-extrabold text-slate-600 dark:text-slate-300">${Math.round(cgpaPercent)}%</span>
+          <span id="live-cgpa-percentage" class="absolute text-[9px] font-extrabold text-slate-600 dark:text-slate-300">${Math.round(cgpaPercent)}%</span>
         </div>
       </div>
 
       <!-- Metrics Row -->
-      <div class="flex items-center gap-6 mt-4 pt-3 border-t border-slate-100 dark:border-slate-800">
+      <div class="flex items-center gap-6 mt-3 pt-2 border-t border-slate-100 dark:border-slate-800/80">
         <div>
           <span class="text-[9px] block font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest">Total Credits</span>
-          <span id="live-credits" class="text-lg font-bold text-slate-700 dark:text-slate-200">${totalOverallCreditsEarned}</span>
+          <span id="live-credits" class="text-base font-bold text-slate-700 dark:text-slate-200">${totalOverallCreditsEarned}</span>
         </div>
-        <div class="w-px h-5 bg-slate-200 dark:bg-slate-800"></div>
+        <div class="w-px h-4 bg-slate-200 dark:bg-slate-800"></div>
         <div>
           <span class="text-[9px] block font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest">Semesters</span>
-          <span id="active-sem-count" class="text-lg font-bold text-slate-700 dark:text-slate-200">${activeSemesterCount}</span>
+          <span id="active-sem-count" class="text-base font-bold text-slate-700 dark:text-slate-200">${activeSemesterCount}</span>
         </div>
       </div>
     </div>
 
     <!-- Semester Tabs Card -->
-    <div class="minimal-card p-4">
-      <div class="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-3">Semesters</div>
-      <div class="grid grid-cols-3 gap-2" id="semester-tab-grid"></div>
+    <div class="minimal-card p-3.5">
+      <div class="text-[9px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-2.5">Semesters</div>
+      <div class="grid grid-cols-3 gap-1.5" id="semester-tab-grid"></div>
     </div>
   `;
 
@@ -437,11 +458,11 @@ function renderSemesterTabs() {
     }
 
     tab.innerHTML = `
-      <div class="flex items-center justify-between mb-1">
-        <span class="text-xs font-bold text-slate-700 dark:text-slate-200">Sem ${sem.id}</span>
+      <div class="flex items-center justify-between mb-0.5">
+        <span class="text-[10px] font-bold text-slate-700 dark:text-slate-200">Sem ${sem.id}</span>
         ${sem.included
-          ? '<span class="w-1.5 h-1.5 rounded-full bg-blue-500"></span>'
-          : '<span class="w-1.5 h-1.5 rounded-full bg-slate-300 dark:bg-slate-700"></span>'
+          ? '<span class="w-1 h-1 rounded-full bg-blue-500"></span>'
+          : '<span class="w-1 h-1 rounded-full bg-slate-300 dark:bg-slate-700"></span>'
         }
       </div>
       <span class="sem-tab-sgpa ${sgpaColor}">
@@ -883,16 +904,364 @@ function setupGlobalEvents() {
   
   if (modalConfirm) {
     modalConfirm.addEventListener("click", async () => {
-      await storage.remove("apex_gpa_state_min");
+      const key = state.currentUser ? `apex_gpa_state_user_${state.currentUser}` : "apex_gpa_state_min";
+      await storage.remove(key);
       
       const currSelect = document.getElementById("curriculum-select");
       if (currSelect) currSelect.value = "skcet_it_24_28";
       
+      const currentUser = state.currentUser;
       state.activeTabId = 1;
       state.activeMobileTab = "dashboard";
       await loadPreset("skcet_it_24_28", false);
+      state.currentUser = currentUser;
       closeModal();
       renderApp();
+    });
+  }
+}
+
+/* ==========================================================
+   CLIENT-SIDE PROFILE & AUTHENTICATION MANAGER
+   ========================================================== */
+
+let profilesList = [];
+let activeUserSession = null;
+
+// Password hashing function (SHA-256 with fallback)
+async function hashPassword(password) {
+  if (!password) return "";
+  if (window.crypto && window.crypto.subtle) {
+    const encoder = new TextEncoder();
+    const data = encoder.encode(password);
+    const hashBuffer = await crypto.subtle.digest("SHA-256", data);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    return hashArray.map(b => b.toString(16).padStart(2, "0")).join("");
+  }
+  let hash = 0;
+  for (let i = 0; i < password.length; i++) {
+    hash = (hash << 5) - hash + password.charCodeAt(i);
+    hash |= 0;
+  }
+  return "fallback_" + hash.toString();
+}
+
+async function loadProfilesList() {
+  const saved = await storage.get("apex_gpa_profiles_list");
+  if (saved) {
+    try {
+      profilesList = JSON.parse(saved);
+      // Filter out any legacy "Guest" profile that was saved under earlier iterations
+      const hasGuest = profilesList.some(p => p.username.toLowerCase() === "guest");
+      if (hasGuest) {
+        profilesList = profilesList.filter(p => p.username.toLowerCase() !== "guest");
+        await saveProfilesList();
+      }
+    } catch (e) {
+      profilesList = [];
+    }
+  } else {
+    profilesList = [];
+  }
+}
+
+async function saveProfilesList() {
+  await storage.set("apex_gpa_profiles_list", JSON.stringify(profilesList));
+}
+
+// Initialise auth session on application load
+async function initAuthSession() {
+  await loadProfilesList();
+  const savedSession = await storage.get("apex_gpa_active_session");
+  
+  if (savedSession) {
+    const profile = profilesList.find(p => p.username.toLowerCase() === savedSession.toLowerCase());
+    if (profile) {
+      // Auto-login to active profile on page refresh, bypassing PIN entry
+      await loginToProfile(profile.username);
+      return;
+    }
+  }
+  // If no session, show general profile welcome screen
+  showAuthOverlay();
+}
+
+// Shows gatekeeper auth UI view
+function showAuthOverlay(targetUsername = null) {
+  const overlay = document.getElementById("auth-gatekeeper-overlay");
+  if (!overlay) return;
+  
+  overlay.classList.remove("hidden");
+  
+  // Hide main header dropdown just in case
+  const dropdown = document.getElementById("auth-profile-dropdown");
+  if (dropdown) dropdown.classList.add("hidden");
+
+  if (targetUsername) {
+    // Direct pin unlock view
+    showAuthSubView("unlock");
+    const title = document.getElementById("auth-unlock-username-title");
+    if (title) title.textContent = `Unlock @${targetUsername}`;
+    
+    // Setup login context on submit
+    const submitBtn = document.getElementById("auth-btn-unlock-submit");
+    const input = document.getElementById("auth-unlock-input");
+    const error = document.getElementById("auth-unlock-error");
+    
+    if (input) {
+      input.value = "";
+      input.focus();
+    }
+    if (error) error.classList.add("hidden");
+    
+    // Remove old listeners by replacing button with itself
+    const newSubmitBtn = submitBtn.cloneNode(true);
+    submitBtn.parentNode.replaceChild(newSubmitBtn, submitBtn);
+    
+    newSubmitBtn.addEventListener("click", async () => {
+      const password = input.value;
+      const hashed = await hashPassword(password);
+      const profile = profilesList.find(p => p.username.toLowerCase() === targetUsername.toLowerCase());
+      
+      if (profile && profile.passwordHash === hashed) {
+        await loginToProfile(profile.username);
+      } else {
+        if (error) error.classList.remove("hidden");
+      }
+    });
+
+    // Handle enter key
+    input.onkeydown = async (e) => {
+      if (e.key === "Enter") {
+        newSubmitBtn.click();
+      }
+    };
+  } else {
+    if (profilesList.length === 0) {
+      // Direct create view if no profiles exist
+      showAuthSubView("create");
+      const nameInput = document.getElementById("auth-create-username");
+      const passInput = document.getElementById("auth-create-password");
+      const error = document.getElementById("auth-create-error");
+      
+      if (nameInput) nameInput.value = "";
+      if (passInput) passInput.value = "";
+      if (error) error.classList.add("hidden");
+      if (nameInput) nameInput.focus();
+      
+      // Hide the cancel/back button on Create Profile if there are no other profiles to go back to!
+      const createBackBtn = document.getElementById("auth-btn-create-back");
+      if (createBackBtn) createBackBtn.classList.add("hidden");
+    } else {
+      // Show profiles selection grid
+      showAuthSubView("welcome");
+      renderProfilesWelcomeGrid();
+      
+      // Make sure the back button is visible if profiles exist
+      const createBackBtn = document.getElementById("auth-btn-create-back");
+      if (createBackBtn) createBackBtn.classList.remove("hidden");
+    }
+  }
+}
+
+function showAuthSubView(viewId) {
+  const views = ["welcome", "unlock", "create"];
+  views.forEach(v => {
+    const el = document.getElementById(`auth-view-${v}`);
+    if (el) {
+      if (v === viewId) el.classList.remove("hidden");
+      else el.classList.add("hidden");
+    }
+  });
+}
+
+function renderProfilesWelcomeGrid() {
+  const listContainer = document.getElementById("auth-profiles-list");
+  if (!listContainer) return;
+  
+  listContainer.innerHTML = "";
+  
+  profilesList.forEach(profile => {
+    const card = document.createElement("button");
+    card.className = "auth-profile-card flex flex-col items-center justify-center p-4 rounded-2xl cursor-pointer w-32 md:w-36 text-center relative gap-2 shrink-0 select-none";
+    
+    card.innerHTML = `
+      <div class="w-12 h-12 rounded-xl bg-blue-500/10 text-blue-500 flex items-center justify-center text-lg">
+        <i class="fa-solid fa-user"></i>
+      </div>
+      <div class="flex flex-col">
+        <span class="text-xs font-bold text-slate-800 dark:text-slate-200 truncate max-w-[120px]">${profile.username}</span>
+        ${profile.hasPassword 
+          ? '<span class="text-[9px] text-slate-400 flex items-center gap-0.5 justify-center"><i class="fa-solid fa-lock text-[8px]"></i> Locked</span>'
+          : '<span class="text-[9px] text-emerald-500">Auto-login</span>'
+        }
+      </div>
+    `;
+    
+    card.addEventListener("click", () => {
+      if (profile.hasPassword) {
+        showAuthOverlay(profile.username);
+      } else {
+        loginToProfile(profile.username);
+      }
+    });
+    
+    listContainer.appendChild(card);
+  });
+}
+
+// Logs into active profile and bootstraps calculator
+async function loginToProfile(username) {
+  activeUserSession = username;
+  state.currentUser = username;
+  
+  await storage.set("apex_gpa_active_session", username);
+  
+  // Hide Auth Gatekeeper Screen
+  const overlay = document.getElementById("auth-gatekeeper-overlay");
+  if (overlay) overlay.classList.add("hidden");
+  
+  // Set Profile Name in Header
+  const headerUsername = document.getElementById("auth-header-username");
+  if (headerUsername) headerUsername.textContent = username;
+  
+  // Bootstrap user state
+  await loadStateOrPreset();
+  renderApp();
+}
+
+// Log out active session
+async function logoutActiveSession() {
+  activeUserSession = null;
+  state.currentUser = null;
+  await storage.remove("apex_gpa_active_session");
+  
+  // Clear layout fields
+  const headerUsername = document.getElementById("auth-header-username");
+  if (headerUsername) headerUsername.textContent = "Guest";
+  
+  showAuthOverlay();
+}
+
+// Register Auth DOM Event Listeners
+function setupAuthEvents() {
+  // Toggle Header dropdown
+  const menuBtn = document.getElementById("auth-profile-menu-btn");
+  const dropdown = document.getElementById("auth-profile-dropdown");
+  
+  if (menuBtn && dropdown) {
+    menuBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      dropdown.classList.toggle("hidden");
+    });
+    
+    // Close dropdown on click outside
+    document.addEventListener("click", () => {
+      dropdown.classList.add("hidden");
+    });
+  }
+
+  // Switch User Profile Button
+  const switchUserBtn = document.getElementById("auth-btn-switch-user");
+  if (switchUserBtn) {
+    switchUserBtn.addEventListener("click", () => {
+      showAuthOverlay();
+    });
+  }
+
+  // Logout Button
+  const logoutBtn = document.getElementById("auth-btn-logout");
+  if (logoutBtn) {
+    logoutBtn.addEventListener("click", async () => {
+      await logoutActiveSession();
+    });
+  }
+
+  // Back to profiles button inside Unlock
+  const unlockBackBtn = document.getElementById("auth-btn-unlock-back");
+  if (unlockBackBtn) {
+    unlockBackBtn.addEventListener("click", () => {
+      showAuthOverlay(); // show welcome list
+    });
+  }
+
+  // Go to Create Profile View
+  const gotoCreateBtn = document.getElementById("auth-btn-goto-create");
+  if (gotoCreateBtn) {
+    gotoCreateBtn.addEventListener("click", () => {
+      showAuthSubView("create");
+      const nameInput = document.getElementById("auth-create-username");
+      const passInput = document.getElementById("auth-create-password");
+      const error = document.getElementById("auth-create-error");
+      
+      if (nameInput) nameInput.value = "";
+      if (passInput) passInput.value = "";
+      if (error) error.classList.add("hidden");
+      if (nameInput) nameInput.focus();
+    });
+  }
+
+  // Back to profiles button inside Create
+  const createBackBtn = document.getElementById("auth-btn-create-back");
+  if (createBackBtn) {
+    createBackBtn.addEventListener("click", () => {
+      showAuthOverlay();
+    });
+  }
+
+  // Submit Profile Registration
+  const createSubmitBtn = document.getElementById("auth-btn-create-submit");
+  if (createSubmitBtn) {
+    createSubmitBtn.addEventListener("click", async () => {
+      const nameInput = document.getElementById("auth-create-username");
+      const passInput = document.getElementById("auth-create-password");
+      const error = document.getElementById("auth-create-error");
+      
+      const username = nameInput ? nameInput.value.trim() : "";
+      const password = passInput ? passInput.value : "";
+      
+      if (!username) {
+        if (error) {
+          error.textContent = "Username is required.";
+          error.classList.remove("hidden");
+        }
+        return;
+      }
+      
+      // Validate PIN: must be exactly 4 digits if provided
+      if (password.length > 0 && !/^\d{4}$/.test(password)) {
+        if (error) {
+          error.textContent = "PIN must be exactly 4 digits.";
+          error.classList.remove("hidden");
+        }
+        return;
+      }
+      
+      // Check if username already exists
+      const exists = profilesList.some(p => p.username.toLowerCase() === username.toLowerCase());
+      if (exists) {
+        if (error) {
+          error.textContent = "Profile name already exists.";
+          error.classList.remove("hidden");
+        }
+        return;
+      }
+      
+      const hasPassword = password.length > 0;
+      const passwordHash = hasPassword ? await hashPassword(password) : "";
+      
+      // Create new profile item
+      const newProfile = {
+        username: username,
+        hasPassword: hasPassword,
+        passwordHash: passwordHash
+      };
+      
+      profilesList.push(newProfile);
+      await saveProfilesList();
+      
+      // Auto login to new profile
+      await loginToProfile(username);
     });
   }
 }

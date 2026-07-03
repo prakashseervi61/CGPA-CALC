@@ -71,39 +71,16 @@ input, select, textarea {
    ============================ */
 
 .left-panel {
-  scrollbar-width: thin;
-  scrollbar-color: rgba(0, 0, 0, 0.15) transparent;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
 .dark .left-panel {
-  scrollbar-color: rgba(255, 255, 255, 0.15) transparent;
+  scrollbar-width: none;
 }
 
 .left-panel::-webkit-scrollbar {
-  width: 8px;
-}
-
-.left-panel::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.left-panel::-webkit-scrollbar-thumb {
-  background-color: rgba(0, 0, 0, 0.12);
-  border: 2.5px solid transparent;
-  background-clip: padding-box;
-  border-radius: 9999px;
-}
-
-.left-panel::-webkit-scrollbar-thumb:hover {
-  background-color: rgba(0, 0, 0, 0.25);
-}
-
-.dark .left-panel::-webkit-scrollbar-thumb {
-  background-color: rgba(255, 255, 255, 0.12);
-}
-
-.dark .left-panel::-webkit-scrollbar-thumb:hover {
-  background-color: rgba(255, 255, 255, 0.25);
+  display: none;
 }
 
 .right-panel-scroll {
@@ -146,7 +123,7 @@ input, select, textarea {
 /* Semester Tab Grid */
 .sem-tab {
   position: relative;
-  padding: 12px 8px;
+  padding: 9px 6px;
   border-radius: 8px;
   border: 1.5px solid transparent;
   cursor: pointer;
@@ -468,3 +445,34 @@ input, select, textarea {
   display: none !important;
 }
 
+/* ==========================================
+   CLIENT-SIDE PROFILE LOGIN SYSTEM
+   ========================================== */
+
+#auth-gatekeeper-overlay {
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+#auth-gatekeeper-overlay.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  display: none !important;
+}
+
+/* User Card in Grid */
+.auth-profile-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.auth-profile-card:hover {
+  border-color: var(--color-primary);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.1);
+}
+
+.dark .auth-profile-card:hover {
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
+}

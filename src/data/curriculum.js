@@ -2,7 +2,7 @@
  * Curriculum presets for the GPA/CGPA Calculator.
  * Contains pre-populated subjects and credits from the SKCET B.Tech Information Technology (2024-2028 Batch) Regulation 2022.
  */
-const CURRICULUM_PRESETS = {
+export const CURRICULUM_PRESETS = {
   skcet_it_24_28: {
     name: "SKCET - B.Tech Information Technology (2024-2028)",
     description: "Curriculum Regulation 2022 for the 2024-2028 Batch of Sri Krishna College of Engineering & Technology.",
@@ -33,8 +33,7 @@ const CURRICULUM_PRESETS = {
           { code: "23CS201", name: "Data Structures and Algorithms", credits: 3, grade: "" },
           { code: "23IT201", name: "Database Management Systems", credits: 3, grade: "" },
           { code: "23CY203", name: "Programming in Java", credits: 3, grade: "" },
-          { code: "23TA201", name: "Tamils and Technology", credits: 1, grade: "" },
-          { code: "23MC102", name: "Environmental Sciences (Mandatory)", credits: 0, grade: "" }
+          { code: "23TA201", name: "Tamils and Technology", credits: 1, grade: "" }
         ]
       },
       {
@@ -114,7 +113,7 @@ const CURRICULUM_PRESETS = {
         name: "Semester 8",
         included: false,
         courses: [
-          { code: "23IT801", name: "Project - II", credits: 12, grade: "" }
+          { code: "23IT801", name: "Project - II / Industrial Project", credits: 6, grade: "" }
         ]
       }
     ]

@@ -1,0 +1,175 @@
+import React from 'react';
+import { BookOpen, Info, XCircle } from 'lucide-react';
+import Card from '../ui/Card';
+import Badge from '../ui/Badge';
+
+const PASTEL_CIRCLES = [
+  'bg-[#E0E7FF] text-[#4F46E5]', // Indigo
+  'bg-[#D1FAE5] text-emerald-800', // Green
+  'bg-[#FEF3C7] text-amber-800', // Yellow
+  'bg-[#DBEAFE] text-blue-800', // Blue
+  'bg-[#FEE2E2] text-rose-700', // Red
+];
+
+export default function SubjectTable({ 
+  courses = [], 
+  gradeOptions = ['O', 'A+', 'A', 'B+', 'B', 'C', 'U'],
+  gradePoints = { 'O': 10, 'A+': 9, 'A': 8, 'B+': 7, 'B': 6, 'C': 5, 'U': 0 },
+  included = true,
+  onToggleInclude,
+  onUpdateCourse
+}) {
+  return (
+    <Card className="shadow-sm border border-slate-100 p-5">
+      {/* Header */}
+      <div className="flex flex-wrap items-center justify-between gap-3 mb-4 pb-3 border-b border-slate-100">
+        <div className="flex items-center gap-2.5">
+          <div className="w-9 h-9 rounded-xl bg-[#E0E7FF] text-[#4F46E5] flex items-center justify-center shrink-0">
+            <BookOpen className="w-5 h-5" />
+          </div>
+          <div>
+            <h3 className="text-lg font-extrabold text-slate-900">Your Subjects</h3>
+            <p className="text-xs text-slate-500 font-semibold">Select grades for each subject to calculate GPA & CGPA</p>
+          </div>
+        </div>
+
+        {/* Toggle Semester Include / Exclude (Clean Transparent Background & Larger Text) */}
+        {onToggleInclude && (
+          <button
+            type="button"
+            onClick={onToggleInclude}
+            className="flex items-center gap-2.5 bg-transparent hover:opacity-85 transition-all duration-200 cursor-pointer select-none active:scale-95 py-1 px-1"
+            title={included ? "Click to exclude this semester from CGPA" : "Click to include this semester in CGPA"}
+          >
+            <div className={`w-11 h-6 rounded-full p-1 transition-colors duration-200 shrink-0 ${included ? 'bg-[#4F46E5]' : 'bg-slate-300'}`}>
+              <div className={`w-4 h-4 rounded-full bg-white shadow-xs transition-transform duration-200 ${included ? 'translate-x-5' : 'translate-x-0'}`} />
+            </div>
+            <span className="text-sm sm:text-base font-black text-slate-800">
+              {included ? 'Included in CGPA' : 'Excluded from CGPA'}
+            </span>
+          </button>
+        )}
+      </div>
+
+      {/* Excluded Semester Alert Banner if Excluded */}
+      {!included && (
+        <div className="mb-4 px-3.5 py-2 rounded-xl bg-amber-50 border border-amber-200 text-amber-900 text-xs font-bold flex items-center gap-2">
+          <XCircle className="w-4 h-4 text-amber-600 shrink-0" />
+          <span>This semester is currently excluded from your overall CGPA calculation. Toggle the button above to include it.</span>
+        </div>
+      )}
+
+      {/* Table Container */}
+      <div className="overflow-x-auto -mx-2">
+        <table className="w-full text-left border-collapse min-w-[500px]">
+          <thead>
+            <tr className="text-xs sm:text-sm font-black uppercase tracking-wider text-slate-400 border-b border-slate-100 pb-2">
+              <th className="py-3 px-3 w-10 text-center">#</th>
+              <th className="py-3 px-3">Subject Name</th>
+              <th className="py-3 px-3 w-28 text-center">Credits</th>
+              <th className="py-3 px-3 w-36 text-center">Grade</th>
+              <th className="py-3 px-3 w-32 text-center">Grade Point</th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-slate-100 font-semibold">
+            {courses.length === 0 ? (
+              <tr>
+                <td colSpan="5" className="py-6 text-center text-slate-400 font-medium">
+                  No subjects listed for this semester.
+                </td>
+              </tr>
+            ) : (
+              courses.map((course, idx) => {
+                const circleColor = PASTEL_CIRCLES[idx % PASTEL_CIRCLES.length];
+                const key = course.code || course.id || idx;
+                const point = course.grade ? (gradePoints[course.grade] ?? 0) : '-';
+
+                return (
+                  <tr 
+                    key={key} 
+                    className="hover:bg-slate-50/80 transition-colors duration-150 group"
+                  >
+                    {/* Number Badge */}
+                    <td className="py-3 px-3 text-center">
+                      <span className={`inline-flex items-center justify-center w-7 h-7 rounded-full text-xs font-black ${circleColor}`}>
+                        {idx + 1}
+                      </span>
+                    </td>
+
+                    {/* Subject Name */}
+                    <td className="py-3 px-3 text-slate-800">
+                      <div>
+                        <span className="font-black text-slate-900 text-sm sm:text-base tracking-tight leading-snug">
+                          {course.name}
+                        </span>
+                        {course.code && (
+                          <span className="ml-2.5 text-xs font-bold text-slate-400">
+                            ({course.code})
+                          </span>
+                        )}
+                      </div>
+                    </td>
+
+                    {/* Credits */}
+                    <td className="py-3 px-3 text-center">
+                      <Badge variant="purple" size="md">
+                        {course.credits} {course.credits === 1 ? 'Credit' : 'Credits'}
+                      </Badge>
+                    </td>
+
+                    {/* Grade Selector */}
+                    <td className="py-3 px-3 text-center">
+                      <select
+                        value={course.grade || ''}
+                        onChange={(e) => {
+                          const newGrade = e.target.value;
+                          if (onUpdateCourse) {
+                            onUpdateCourse(idx, { ...course, grade: newGrade });
+                          }
+                        }}
+                        className={`
+                          px-3.5 py-1.5 rounded-xl font-black text-xs sm:text-sm border transition-all cursor-pointer focus:outline-none
+                          ${course.grade 
+                            ? 'bg-[#4F46E5] text-white border-transparent shadow-xs shadow-indigo-500/20' 
+                            : 'bg-slate-100 text-slate-700 border-slate-200/80 hover:bg-slate-200/60 font-bold'
+                          }
+                        `}
+                      >
+                        <option value="" className="bg-white text-slate-400">
+                          Select
+                        </option>
+                        {gradeOptions.map((g) => (
+                          <option key={g} value={g} className="bg-white text-slate-800 font-extrabold">
+                            Grade {g}
+                          </option>
+                        ))}
+                      </select>
+                    </td>
+
+                    {/* Grade Point Badge */}
+                    <td className="py-3 px-3 text-center">
+                      <Badge 
+                        variant={point !== '-' && point > 0 ? 'green' : point === 0 ? 'red' : 'slate'}
+                        size="lg"
+                      >
+                        {point !== '-' ? `${point}.0 Pts` : '--'}
+                      </Badge>
+                    </td>
+                  </tr>
+                );
+              })
+            )}
+          </tbody>
+        </table>
+      </div>
+
+      {/* Information Alert Box */}
+      <div className="mt-4 p-3.5 rounded-xl bg-[#DBEAFE]/70 border border-blue-200/80 flex items-start gap-2.5">
+        <Info className="w-4.5 h-4.5 text-blue-700 shrink-0 mt-0.5" />
+        <div className="text-xs text-blue-950 leading-relaxed font-semibold">
+          <span className="font-extrabold text-blue-900">Formula Tip:</span> SGPA is calculated as <code className="bg-blue-100 px-1.5 py-0.5 rounded text-[11px] font-mono font-bold text-blue-900">Σ(Credits × Grade Points) / Σ(Credits)</code>. Select grades for all subjects to calculate SGPA & CGPA dynamically.
+        </div>
+      </div>
+    </Card>
+  );
+}

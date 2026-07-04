@@ -1,0 +1,342 @@
+import React, { useState } from 'react';
+import { 
+  Settings, User, KeyRound, Shield, Database, Download, RotateCcw, Trash2, 
+  Check, Target, GraduationCap, Award, Info, Edit2, X
+} from 'lucide-react';
+import Card from '../ui/Card';
+import Button from '../ui/Button';
+import Badge from '../ui/Badge';
+
+export default function SettingsPage({ 
+  user = { name: 'Prakash', studentId: '7377241IT001', pin: '1234' },
+  onUpdateUser,
+  onResetGrades,
+  onExportData,
+  onDeleteProfile
+}) {
+  const [isEditingProfile, setIsEditingProfile] = useState(false);
+  const [isEditingPin, setIsEditingPin] = useState(false);
+
+  const [name, setName] = useState(user?.name || 'Prakash');
+  const [studentId, setStudentId] = useState(user?.studentId || '7377241IT001');
+  const [targetCgpa, setTargetCgpa] = useState('9.00');
+  const [savedNotice, setSavedNotice] = useState(false);
+
+  // PIN change state
+  const [currentPin, setCurrentPin] = useState('');
+  const [newPin, setNewPin] = useState('');
+  const [pinMessage, setPinMessage] = useState(null);
+
+  const handleProfileSave = (e) => {
+    e.preventDefault();
+    if (onUpdateUser) {
+      onUpdateUser({
+        ...user,
+        name,
+        studentId
+      });
+    }
+    setIsEditingProfile(false);
+    setSavedNotice(true);
+    setTimeout(() => setSavedNotice(false), 3000);
+  };
+
+  const handlePinChangeSubmit = (e) => {
+    e.preventDefault();
+    if (user?.pin && currentPin !== user.pin) {
+      setPinMessage({ type: 'error', text: 'Current PIN is incorrect.' });
+      return;
+    }
+    if (newPin.length !== 4 || !/^\d{4}$/.test(newPin)) {
+      setPinMessage({ type: 'error', text: 'New PIN must be exactly 4 digits.' });
+      return;
+    }
+
+    if (onUpdateUser) {
+      onUpdateUser({
+        ...user,
+        pin: newPin
+      });
+    }
+    setIsEditingPin(false);
+    setPinMessage({ type: 'success', text: '4-Digit PIN updated successfully!' });
+    setCurrentPin('');
+    setNewPin('');
+    setTimeout(() => setPinMessage(null), 3500);
+  };
+
+  return (
+    <div className="space-y-6 max-w-4xl select-none animate-in fade-in duration-200">
+      {/* Page Header */}
+      <div className="flex items-center justify-between pb-2 border-b border-slate-100">
+        <div>
+          <h2 className="text-2xl font-black text-slate-900 flex items-center gap-2.5">
+            <div className="w-9 h-9 rounded-xl bg-[#E0E7FF] text-[#4F46E5] flex items-center justify-center shrink-0">
+              <Settings className="w-5 h-5" />
+            </div>
+            Settings & Preferences
+          </h2>
+          <p className="text-xs text-slate-500 font-semibold mt-1">
+            Manage student profile info, 4-digit security PIN, target CGPA goals & data exports
+          </p>
+        </div>
+
+        {savedNotice && (
+          <Badge variant="green" size="md" className="animate-in fade-in">
+            ✓ Profile Saved!
+          </Badge>
+        )}
+      </div>
+
+      {/* SECTION 1: Student Profile Information with Edit / Save Toggle */}
+      <Card className="p-6 border border-slate-100 shadow-sm space-y-4">
+        <div className="flex items-center justify-between pb-3 border-b border-slate-100">
+          <div className="flex items-center gap-2.5">
+            <div className="w-8 h-8 rounded-xl bg-indigo-50 text-[#4F46E5] flex items-center justify-center shrink-0">
+              <User className="w-4 h-4" />
+            </div>
+            <div>
+              <h3 className="text-base font-extrabold text-slate-900">Student Profile</h3>
+              <p className="text-xs text-slate-400 font-semibold">Display name & registration number</p>
+            </div>
+          </div>
+
+          {!isEditingProfile ? (
+            <Button
+              type="button"
+              variant="secondary"
+              size="sm"
+              icon={Edit2}
+              onClick={() => setIsEditingProfile(true)}
+            >
+              Edit Profile
+            </Button>
+          ) : (
+            <button
+              type="button"
+              onClick={() => {
+                setIsEditingProfile(false);
+                setName(user?.name || 'Prakash');
+                setStudentId(user?.studentId || '7377241IT001');
+              }}
+              className="text-xs font-bold text-slate-400 hover:text-slate-600 flex items-center gap-1 transition-colors px-2 py-1 rounded-lg hover:bg-slate-100"
+            >
+              <X className="w-3.5 h-3.5" /> Cancel
+            </button>
+          )}
+        </div>
+
+        <form onSubmit={handleProfileSave} className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label className="block text-xs font-black uppercase text-slate-400 mb-1.5 tracking-wider">
+              Student Name
+            </label>
+            <input
+              type="text"
+              required
+              disabled={!isEditingProfile}
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              placeholder="Enter your name"
+              className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-sm font-bold text-slate-800 bg-slate-50/50 focus:bg-white focus:border-[#4F46E5] focus:outline-none transition-all disabled:bg-slate-100/70 disabled:text-slate-600 disabled:border-slate-200 disabled:cursor-not-allowed"
+            />
+          </div>
+
+          <div>
+            <label className="block text-xs font-black uppercase text-slate-400 mb-1.5 tracking-wider">
+              Register / Student ID
+            </label>
+            <input
+              type="text"
+              required
+              disabled={!isEditingProfile}
+              value={studentId}
+              onChange={(e) => setStudentId(e.target.value)}
+              placeholder="Enter your reg no"
+              className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-sm font-bold text-slate-800 bg-slate-50/50 focus:bg-white focus:border-[#4F46E5] focus:outline-none transition-all disabled:bg-slate-100/70 disabled:text-slate-600 disabled:border-slate-200 disabled:cursor-not-allowed"
+            />
+          </div>
+
+          {isEditingProfile && (
+            <div className="sm:col-span-2 pt-1 flex justify-end animate-in fade-in duration-150">
+              <Button type="submit" variant="primary" size="md" icon={Check}>
+                Save Profile Changes
+              </Button>
+            </div>
+          )}
+        </form>
+      </Card>
+
+      {/* SECTION 2: Security & 4-Digit PIN with Edit / Save Toggle */}
+      <Card className="p-6 border border-slate-100 shadow-sm space-y-4">
+        <div className="flex items-center justify-between pb-3 border-b border-slate-100">
+          <div className="flex items-center gap-2.5">
+            <div className="w-8 h-8 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center shrink-0">
+              <KeyRound className="w-4 h-4" />
+            </div>
+            <div>
+              <h3 className="text-base font-extrabold text-slate-900">Security & 4-Digit PIN</h3>
+              <p className="text-xs text-slate-400 font-semibold">Profile unlock security PIN</p>
+            </div>
+          </div>
+
+          {!isEditingPin ? (
+            <Button
+              type="button"
+              variant="secondary"
+              size="sm"
+              icon={Edit2}
+              onClick={() => setIsEditingPin(true)}
+            >
+              Edit PIN
+            </Button>
+          ) : (
+            <button
+              type="button"
+              onClick={() => {
+                setIsEditingPin(false);
+                setCurrentPin('');
+                setNewPin('');
+                setPinMessage(null);
+              }}
+              className="text-xs font-bold text-slate-400 hover:text-slate-600 flex items-center gap-1 transition-colors px-2 py-1 rounded-lg hover:bg-slate-100"
+            >
+              <X className="w-3.5 h-3.5" /> Cancel
+            </button>
+          )}
+        </div>
+
+        <form onSubmit={handlePinChangeSubmit} className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label className="block text-xs font-black uppercase text-slate-400 mb-1.5 tracking-wider">
+              Current PIN
+            </label>
+            <input
+              type="password"
+              maxLength={4}
+              inputMode="numeric"
+              pattern="[0-9]*"
+              required={isEditingPin}
+              disabled={!isEditingPin}
+              value={currentPin}
+              onChange={(e) => setCurrentPin(e.target.value)}
+              placeholder="••••"
+              className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-sm font-black text-[#4F46E5] bg-slate-50/50 focus:bg-white focus:border-[#4F46E5] focus:outline-none transition-all disabled:bg-slate-100/70 disabled:text-slate-400 disabled:border-slate-200 disabled:cursor-not-allowed"
+            />
+          </div>
+
+          <div>
+            <label className="block text-xs font-black uppercase text-slate-400 mb-1.5 tracking-wider">
+              New 4-Digit PIN
+            </label>
+            <input
+              type="password"
+              maxLength={4}
+              inputMode="numeric"
+              pattern="[0-9]*"
+              required={isEditingPin}
+              disabled={!isEditingPin}
+              value={newPin}
+              onChange={(e) => setNewPin(e.target.value)}
+              placeholder="••••"
+              className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-sm font-black text-[#4F46E5] bg-slate-50/50 focus:bg-white focus:border-[#4F46E5] focus:outline-none transition-all disabled:bg-slate-100/70 disabled:text-slate-400 disabled:border-slate-200 disabled:cursor-not-allowed"
+            />
+          </div>
+
+          {pinMessage && (
+            <div className={`sm:col-span-2 p-3 rounded-xl text-xs font-bold ${
+              pinMessage.type === 'success' ? 'bg-emerald-50 text-emerald-800 border border-emerald-200' : 'bg-rose-50 text-rose-800 border border-rose-200'
+            }`}>
+              {pinMessage.text}
+            </div>
+          )}
+
+          {isEditingPin && (
+            <div className="sm:col-span-2 pt-1 flex justify-end animate-in fade-in duration-150">
+              <Button type="submit" variant="primary" size="md" icon={Check}>
+                Update Security PIN
+              </Button>
+            </div>
+          )}
+        </form>
+      </Card>
+
+      {/* SECTION 3: Academic Target & Curriculum */}
+      <Card className="p-6 border border-slate-100 shadow-sm space-y-4">
+        <div className="flex items-center gap-2.5 pb-3 border-b border-slate-100">
+          <div className="w-8 h-8 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">
+            <Target className="w-4 h-4" />
+          </div>
+          <div>
+            <h3 className="text-base font-extrabold text-slate-900">Academic Goals & Regulation</h3>
+            <p className="text-xs text-slate-400 font-semibold">SKCET B.Tech IT Regulation 2022 presets</p>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs font-semibold">
+          <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-100 space-y-1">
+            <span className="text-[10px] uppercase font-black text-slate-400">Institution & Regulation</span>
+            <p className="text-sm font-extrabold text-slate-900">Sri Krishna College of Engineering & Technology</p>
+            <p className="text-slate-500 font-bold">B.Tech Information Technology (2024-2028)</p>
+          </div>
+
+          <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-100 space-y-1">
+            <label className="text-[10px] uppercase font-black text-slate-400 block">Target CGPA Goal</label>
+            <div className="flex items-center gap-2">
+              <input
+                type="text"
+                value={targetCgpa}
+                onChange={(e) => setTargetCgpa(e.target.value)}
+                className="w-24 px-3 py-1.5 rounded-lg border border-slate-200 text-sm font-black text-slate-900 focus:outline-none focus:border-[#4F46E5]"
+              />
+              <span className="text-xs text-slate-500 font-bold">out of 10.0</span>
+            </div>
+          </div>
+        </div>
+      </Card>
+
+      {/* SECTION 4: Data Management & Export */}
+      <Card className="p-6 border border-slate-100 shadow-sm space-y-4">
+        <div className="flex items-center gap-2.5 pb-3 border-b border-slate-100">
+          <div className="w-8 h-8 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
+            <Database className="w-4 h-4" />
+          </div>
+          <div>
+            <h3 className="text-base font-extrabold text-slate-900">Data Management & Export</h3>
+            <p className="text-xs text-slate-400 font-semibold">Export academic grades as CSV file or reset calculations</p>
+          </div>
+        </div>
+
+        <div className="flex flex-wrap items-center gap-3">
+          {/* Export Grades CSV */}
+          <Button
+            type="button"
+            variant="primary"
+            size="md"
+            icon={Download}
+            onClick={() => {
+              if (onExportData) onExportData();
+            }}
+          >
+            Export Grades (.csv)
+          </Button>
+
+          {/* Reset All Grades */}
+          <Button
+            type="button"
+            variant="secondary"
+            size="md"
+            icon={RotateCcw}
+            onClick={() => {
+              if (window.confirm('Are you sure you want to reset all selected grades back to unselected?')) {
+                if (onResetGrades) onResetGrades();
+              }
+            }}
+          >
+            Reset Grades
+          </Button>
+        </div>
+      </Card>
+    </div>
+  );
+}

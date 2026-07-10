@@ -9,22 +9,22 @@
 **Goal:** Eliminate systemic crash patterns so the app is reliably usable on any network condition and across all navigation paths.
 
 ### Deliverables
-- [ ] Offline resilience: graceful fallback when Firestore `get().await()` fails (cache-first via Firestore persistence, error card + auto-retry UI, pull-to-refresh on Semester tab)
-- [ ] First-grade-entry crash fix: `.set(merge())` already on grade write paths — verified during acceptance testing
-- [ ] Tab-switch crash: ViewModel state preserved (NavOptions fix already applied) — verified during acceptance testing
-- [ ] Profile-edit crash: `updatePin`, `updateUsername` changed to `.set(SetOptions.merge())` — no crash on missing doc
-- [ ] Remove dead Room code: `AppDatabase`, DAOs, Room dependencies, KSP processor config — deleted
-- [ ] Remove dead `HomeViewModel` MutableStateFlow — removed (verified clean)
+- [x] Offline resilience: graceful fallback when Firestore `get().await()` fails (cache-first via Firestore persistence, error card + auto-retry UI, pull-to-refresh on Semester tab)
+- [x] First-grade-entry crash fix: `.set(merge())` already on grade write paths — verified during acceptance testing
+- [x] Tab-switch crash: ViewModel state preserved (NavOptions fix already applied) — verified during acceptance testing
+- [x] Profile-edit crash: `updatePin`, `updateUsername` changed to `.set(SetOptions.merge())` — no crash on missing doc
+- [x] Remove dead Room code: `AppDatabase`, DAOs, Room dependencies, KSP processor config — deleted
+- [x] Remove dead `HomeViewModel` MutableStateFlow — removed (verified clean)
 
 ### Success Criteria
 - 30-minute continuous use (add 6 semesters of grades, switch tabs, go offline, come back) produces zero crashes
 
 ### Plans
-- **2 plans**
+- **2 plans ✓**
 
 Plans:
-- [ ] `01-01-PLAN.md` — Dead code sweep: remove preload system, Room deps/source/migration, profile edit crash fix
-- [ ] `01-02-PLAN.md` — Error handling UI: error cards + auto-retry across all tabs, pull-to-refresh on Semester tab
+- [x] `01-01-PLAN.md` — Dead code sweep: remove preload system, Room deps/source/migration, profile edit crash fix
+- [x] `01-02-PLAN.md` — Error handling UI: error cards + auto-retry across all tabs, pull-to-refresh on Semester tab
 
 ---
 

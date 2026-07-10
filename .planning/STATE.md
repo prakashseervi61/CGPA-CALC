@@ -2,14 +2,14 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: executing
-last_updated: "2026-07-10T14:07:35.463Z"
+status: completed
+last_updated: "2026-07-10T14:14:46.182Z"
 progress:
   total_phases: 5
-  completed_phases: 0
+  completed_phases: 1
   total_plans: 2
-  completed_plans: 1
-  percent: 0
+  completed_plans: 2
+  percent: 20
 ---
 
 # Semora — Project State
@@ -19,8 +19,7 @@ progress:
 ## Current Phase
 
 - **Phase 1:** Stability Hardening
-- **Status:** Executing Phase 01 (Wave 1/2 done)
-- **Current position:** Wave 2: error handling + pull-to-refresh
+- **Status:** ✓ Complete
 
 ## Accumulated Context
 
@@ -28,6 +27,7 @@ progress:
 
 - **2026-07-10:** Phase 1 context gathered — offline behavior, error UX, Room removal, cache decisions captured
 - **2026-07-10 (Wave 1):** Dead code sweep complete — removed preload, Room, KSP config, dead StateFlow. Fixed profile-edit crash with `.set(merge())`.
+- **2026-07-10 (Wave 2):** Error handling + pull-to-refresh complete — inline error cards with retry on Home/Profile/Semester, auto-retry (1× after 2s), pull-to-refresh on Semester tab, cold-offline empty state.
 
 ### Roadmap Evolution
 

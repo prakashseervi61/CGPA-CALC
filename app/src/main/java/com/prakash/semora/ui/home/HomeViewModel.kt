@@ -9,6 +9,7 @@ import com.prakash.semora.data.SemesterCurriculum
 import com.prakash.semora.data.remote.FirestoreAuthRepository
 import com.prakash.semora.data.remote.FirestoreSemesterRepository
 import com.prakash.semora.utils.SessionManager
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 data class HomeDashboardData(
@@ -34,7 +35,12 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
     private val _isLoading = MutableLiveData(false)
     val isLoading: LiveData<Boolean> = _isLoading
 
+    private val _errorMessage = MutableLiveData<String?>()
+    val errorMessage: LiveData<String?> = _errorMessage
+
     private var cachedDashboard: HomeDashboardData? = null
+
+    fun clearError() { _errorMessage.value = null }
 
     fun loadDashboard() {
         val profileId = sessionManager.getFirebaseProfileId() ?: ""
@@ -60,8 +66,14 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
 
             val semesters = try {
                 FirestoreSemesterRepository.getSemesters(deviceUid, profileId)
-            } catch (e: Exception) {
-                null
+            } catch (e1: Exception) {
+                delay(2000)
+                try {
+                    FirestoreSemesterRepository.getSemesters(deviceUid, profileId)
+                } catch (e2: Exception) {
+                    _errorMessage.value = "Couldn't load dashboard — check your connection"
+                    null
+                }
             }
             if (semesters == null) {
                 if (cachedDashboard == null) {

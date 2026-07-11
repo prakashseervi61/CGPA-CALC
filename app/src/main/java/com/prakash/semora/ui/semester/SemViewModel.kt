@@ -18,7 +18,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-class SemViewModel(
+class SemViewModel @JvmOverloads constructor(
     application: Application,
     private val repo: FirestoreSemesterRepository = FirestoreSemesterRepository
 ) : AndroidViewModel(application) {

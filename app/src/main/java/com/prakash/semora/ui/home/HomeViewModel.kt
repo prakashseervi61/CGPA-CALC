@@ -25,7 +25,7 @@ data class HomeDashboardData(
     val creditsProgress: Int = 0
 )
 
-class HomeViewModel(
+class HomeViewModel @JvmOverloads constructor(
     application: Application,
     private val repo: FirestoreSemesterRepository = FirestoreSemesterRepository
 ) : AndroidViewModel(application) {

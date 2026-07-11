@@ -44,6 +44,9 @@ class MainActivity : BaseActivity() {
 
         binding.bottomNavContainer.post {
             tabWidth = binding.bottomNavContainer.width / 3
+            val lp = binding.navPill.layoutParams
+            lp.width = tabWidth
+            binding.navPill.layoutParams = lp
         }
 
         navController.addOnDestinationChangedListener { _, destination, _ ->

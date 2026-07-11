@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- MD3 Dark Palette -->
+    <color name="md3_primary">#9EC5FF</color>
+    <color name="md3_on_primary">#00317A</color>
+    <color name="md3_primary_container">#004BB0</color>
+    <color name="md3_on_primary_container">#D6E4FF</color>
+
+    <color name="md3_secondary">#BBC7DB</color>
+    <color name="md3_on_secondary">#253140</color>
+    <color name="md3_secondary_container">#3B4858</color>
+    <color name="md3_on_secondary_container">#D7E3F7</color>
+
+    <color name="md3_tertiary">#EFBAEF</color>
+    <color name="md3_on_tertiary">#3E2946</color>
+    <color name="md3_tertiary_container">#553F5D</color>
+    <color name="md3_on_tertiary_container">#F7D8FF</color>
+
+    <color name="md3_error">#FFB4AB</color>
+    <color name="md3_on_error">#690005</color>
+    <color name="md3_error_container">#93000A</color>
+    <color name="md3_on_error_container">#FFDAD6</color>
+
+    <color name="md3_background">#111318</color>
+    <color name="md3_on_background">#E2E2E6</color>
+    <color name="md3_surface">#111318</color>
+    <color name="md3_on_surface">#E2E2E6</color>
+    <color name="md3_surface_variant">#44474F</color>
+    <color name="md3_on_surface_variant">#C4C6D0</color>
+
+    <color name="md3_outline">#8E9099</color>
+    <color name="md3_outline_variant">#44474F</color>
+
+    <color name="md3_surface_container_lowest">#0C0E11</color>
+    <color name="md3_surface_container_low">#191B1E</color>
+    <color name="md3_surface_container">#1D1F22</color>
+    <color name="md3_surface_container_high">#282A2D</color>
+    <color name="md3_surface_container_highest">#333538</color>
+
+    <color name="md3_primary_track">#339EC5FF</color>
+
+    <color name="md3_inverse_surface">#E2E2E6</color>
+    <color name="md3_inverse_on_surface">#1A1C1E</color>
+    <color name="md3_inverse_primary">#2563EB</color>
+
+    <!-- Grade Band Colors -->
+    <color name="grade_o">#9EC5FF</color>
+    <color name="grade_aplus">#34D399</color>
+    <color name="grade_b">#FBBF24</color>
+    <color name="grade_c">#FB923C</color>
+    <color name="grade_u">#F87171</color>
+</resources>

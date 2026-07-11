@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Corner Radii -->
+    <dimen name="corner_small">8dp</dimen>
+    <dimen name="corner_medium">16dp</dimen>
+    <dimen name="corner_large">24dp</dimen>
+    <dimen name="corner_xlarge">28dp</dimen>
+
+    <!-- Spacing -->
+    <dimen name="spacing_xxs">4dp</dimen>
+    <dimen name="spacing_xs">8dp</dimen>
+    <dimen name="spacing_sm">12dp</dimen>
+    <dimen name="spacing_md">16dp</dimen>
+    <dimen name="spacing_lg">24dp</dimen>
+    <dimen name="spacing_xl">32dp</dimen>
+    <dimen name="spacing_xxl">48dp</dimen>
+
+    <!-- Avatar Sizes -->
+    <dimen name="avatar_size_sm">40dp</dimen>
+    <dimen name="avatar_size_md">64dp</dimen>
+    <dimen name="avatar_size_lg">96dp</dimen>
+    <dimen name="avatar_size_xl">120dp</dimen>
+
+    <!-- PIN Entry -->
+    <dimen name="pin_box_size">32dp</dimen>
+    <dimen name="pin_box_gap">12dp</dimen>
+
+    <!-- Bottom Navigation -->
+    <dimen name="bottom_nav_height">72dp</dimen>
+
+
+
+    <!-- Grade Chip -->
+    <dimen name="grade_chip_height">44dp</dimen>
+    <dimen name="grade_chip_width">64dp</dimen>
+
+    <!-- Subject Card -->
+    <dimen name="subject_card_elevation">2dp</dimen>
+    <dimen name="subject_card_graded_elevation">4dp</dimen>
+
+    <!-- Hero -->
+    <dimen name="hero_cgpa_size">48sp</dimen>
+    <dimen name="hero_stat_size">32sp</dimen>
+
+    <!-- Button -->
+    <dimen name="button_height">56dp</dimen>
+    <dimen name="button_corner">16dp</dimen>
+</resources>

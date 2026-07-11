@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cardSubject"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/spacing_sm"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?attr/selectableItemBackground"
+    app:cardCornerRadius="@dimen/corner_medium"
+    app:cardBackgroundColor="@color/md3_surface_container"
+    app:strokeWidth="0dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="@dimen/spacing_md">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvSubjectName"
+                style="@style/TextAppearance.Semora.BodySmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLines="2"
+                android:textColor="@color/md3_on_surface"
+                tools:text="Operating Systems" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_xxs"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tvSubjectCode"
+                    style="@style/TextAppearance.Semora.Caption"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/md3_on_surface_variant"
+                    tools:text="23CY202" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/spacing_xs"
+                    android:text="•"
+                    android:textColor="@color/md3_on_surface_variant"
+                    android:textSize="10sp"
+                    android:alpha="0.4" />
+
+                <TextView
+                    android:id="@+id/tvSubjectCredits"
+                    style="@style/TextAppearance.Semora.Caption"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/md3_on_surface_variant"
+                    tools:text="4 Credits" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <FrameLayout
+            android:layout_width="@dimen/grade_chip_width"
+            android:layout_height="@dimen/grade_chip_height">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnGrade"
+                style="@style/Widget.Material3.Button.TonalButton"
+                android:layout_width="@dimen/grade_chip_width"
+                android:layout_height="@dimen/grade_chip_height"
+                android:text="-"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:letterSpacing="0"
+                app:cornerRadius="@dimen/corner_small"
+                app:backgroundTint="@color/md3_surface_container_high"
+                android:stateListAnimator="@null" />
+        </FrameLayout>
+
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

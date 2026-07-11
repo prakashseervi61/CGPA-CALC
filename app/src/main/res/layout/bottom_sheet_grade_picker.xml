@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingHorizontal="@dimen/spacing_md"
+    android:paddingTop="@dimen/spacing_md"
+    android:paddingBottom="@dimen/spacing_lg">
+
+    <TextView
+        style="@style/TextAppearance.Semora.TitleMedium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Select Grade"
+        android:textColor="@color/md3_on_surface" />
+
+    <TextView
+        style="@style/TextAppearance.Semora.BodySmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_xxs"
+        android:text="Choose the grade for this subject."
+        android:textColor="@color/md3_on_surface_variant" />
+
+    <TextView
+        style="@style/TextAppearance.Semora.LabelSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_md"
+        android:text="PASSING GRADES"
+        android:textColor="@color/md3_primary"
+        android:textSize="11sp"
+        android:letterSpacing="0.06" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_sm"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/chipO"
+            style="@style/Widget.Material3.Button.UnelevatedButton"
+            android:layout_width="@dimen/grade_chip_width"
+            android:layout_height="@dimen/grade_chip_height"
+            android:layout_marginEnd="@dimen/spacing_sm"
+            android:text="O"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@color/md3_on_primary"
+            app:backgroundTint="@color/grade_o_bg"
+            app:cornerRadius="@dimen/corner_small" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/chipAPlus"
+            style="@style/Widget.Material3.Button.UnelevatedButton"
+            android:layout_width="@dimen/grade_chip_width"
+            android:layout_height="@dimen/grade_chip_height"
+            android:layout_marginEnd="@dimen/spacing_sm"
+            android:text="A+"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@color/md3_on_primary"
+            app:backgroundTint="@color/grade_a_bg"
+            app:cornerRadius="@dimen/corner_small" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/chipA"
+            style="@style/Widget.Material3.Button.UnelevatedButton"
+            android:layout_width="@dimen/grade_chip_width"
+            android:layout_height="@dimen/grade_chip_height"
+            android:layout_marginEnd="@dimen/spacing_sm"
+            android:text="A"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@color/md3_on_primary"
+            app:backgroundTint="@color/grade_a_bg"
+            app:cornerRadius="@dimen/corner_small" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/chipBPlus"
+            style="@style/Widget.Material3.Button.UnelevatedButton"
+            android:layout_width="@dimen/grade_chip_width"
+            android:layout_height="@dimen/grade_chip_height"
+            android:text="B+"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@color/md3_on_primary"
+            app:backgroundTint="@color/grade_b_bg"
+            app:cornerRadius="@dimen/corner_small" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_sm"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/chipB"
+            style="@style/Widget.Material3.Button.UnelevatedButton"
+            android:layout_width="@dimen/grade_chip_width"
+            android:layout_height="@dimen/grade_chip_height"
+            android:layout_marginEnd="@dimen/spacing_sm"
+            android:text="B"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@color/md3_on_primary"
+            app:backgroundTint="@color/grade_b_bg"
+            app:cornerRadius="@dimen/corner_small" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/chipC"
+            style="@style/Widget.Material3.Button.UnelevatedButton"
+            android:layout_width="@dimen/grade_chip_width"
+            android:layout_height="@dimen/grade_chip_height"
+            android:layout_marginEnd="@dimen/spacing_sm"
+            android:text="C"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@color/md3_on_primary"
+            app:backgroundTint="@color/grade_c_bg"
+            app:cornerRadius="@dimen/corner_small" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/chipU"
+            style="@style/Widget.Material3.Button.UnelevatedButton"
+            android:layout_width="@dimen/grade_chip_width"
+            android:layout_height="@dimen/grade_chip_height"
+            android:text="U"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@color/md3_on_primary"
+            app:backgroundTint="@color/grade_u_bg"
+            app:cornerRadius="@dimen/corner_small" />
+    </LinearLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnClearGrade"
+        style="@style/Widget.Material3.Button.TextButton"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="@dimen/spacing_sm"
+        android:text="Clear Grade"
+        android:textColor="@color/md3_error" />
+
+</LinearLayout>

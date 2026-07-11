@@ -1,0 +1,39 @@
+<resources>
+    <string name="app_name">Semora</string>
+    <string name="title_home">Home</string>
+    <string name="title_semester">Semester</string>
+    <string name="title_profile">Profile</string>
+
+    <string name="register_title">Create Profile</string>
+    <string name="register_subtitle">Create your local academic account</string>
+    <string name="register_btn">Create Account</string>
+    <string name="register_have_account">Already have an account?</string>
+    <string name="register_login">Sign In</string>
+    <string name="register_username_helper">Choose a unique username</string>
+
+    <string name="username_label">Username</string>
+    <string name="pin_label">Security PIN</string>
+    <string name="confirm_pin_label">Confirm Security PIN</string>
+
+    <string name="content_desc_back">Back</string>
+    <string name="content_desc_logo">Semora logo</string>
+    <string name="content_desc_pin_digit">PIN digit %d</string>
+    <string name="content_desc_confirm_pin_digit">Confirm PIN digit %d</string>
+
+    <!-- Empty States -->
+    <string name="empty_home_title">No Grades Yet</string>
+    <string name="empty_home_subtitle">Start by grading your subjects in the Semester tab to see your CGPA here.</string>
+    <string name="empty_semester_title">No Subjects Graded</string>
+    <string name="empty_semester_subtitle">Tap a subject card and choose a grade to begin tracking your SGPA.</string>
+
+    <!-- Profile -->
+    <string name="profile_manage">Manage Profiles</string>
+    <string name="profile_edit">Edit Profile</string>
+    <string name="profile_change_pin">Change PIN</string>
+    <string name="theme_system">System</string>
+    <string name="profile_theme">Appearance</string>
+    <string name="logout">Log out</string>
+    <string name="profile_manage_desc">Create, switch or remove local profiles.</string>
+    <string name="profile_edit_desc">Update username and profile picture.</string>
+    <string name="profile_change_pin_desc">Update your 4-digit security PIN.</string>
+</resources>

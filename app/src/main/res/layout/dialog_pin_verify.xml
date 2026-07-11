@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="24dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="Enter PIN"
+        android:textColor="@color/md3_on_surface"
+        android:textSize="22sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvDialogSubtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_gravity="center_horizontal"
+        android:text="Enter your 4-digit PIN to switch profile"
+        android:textColor="@color/md3_on_surface_variant"
+        android:textSize="14sp" />
+
+    <LinearLayout
+        android:id="@+id/layoutPinBoxes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/etPin1"
+            style="@style/PinEditTextStyle"
+            android:layout_marginEnd="8dp" />
+
+        <EditText
+            android:id="@+id/etPin2"
+            style="@style/PinEditTextStyle"
+            android:layout_marginEnd="8dp" />
+
+        <EditText
+            android:id="@+id/etPin3"
+            style="@style/PinEditTextStyle"
+            android:layout_marginEnd="8dp" />
+
+        <EditText
+            android:id="@+id/etPin4"
+            style="@style/PinEditTextStyle" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvPinError"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:gravity="center"
+        android:textColor="@color/md3_error"
+        android:textSize="13sp"
+        android:visibility="gone"
+        tools:text="Incorrect PIN. Try again." />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal"
+        android:gravity="end">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnDialogCancel"
+            style="@style/Widget.Material3.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cancel"
+            android:textColor="@color/md3_on_surface_variant" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnDialogVerify"
+            style="@style/Widget.Material3.Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="Verify" />
+
+    </LinearLayout>
+
+</LinearLayout>

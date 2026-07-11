@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- MD3 Light Palette -->
+    <color name="md3_primary">#2563EB</color>
+    <color name="md3_on_primary">#FFFFFF</color>
+    <color name="md3_primary_container">#DBEAFE</color>
+    <color name="md3_on_primary_container">#001D3D</color>
+
+    <color name="md3_secondary">#535F70</color>
+    <color name="md3_on_secondary">#FFFFFF</color>
+    <color name="md3_secondary_container">#D7E3F7</color>
+    <color name="md3_on_secondary_container">#101C2B</color>
+
+    <color name="md3_tertiary">#6E5676</color>
+    <color name="md3_on_tertiary">#FFFFFF</color>
+    <color name="md3_tertiary_container">#F7D8FF</color>
+    <color name="md3_on_tertiary_container">#271430</color>
+
+    <color name="md3_error">#BA1A1A</color>
+    <color name="md3_on_error">#FFFFFF</color>
+    <color name="md3_error_container">#FFDAD6</color>
+    <color name="md3_on_error_container">#410002</color>
+
+    <color name="md3_background">#F8FAFC</color>
+    <color name="md3_on_background">#1A1C1E</color>
+    <color name="md3_surface">#F8FAFC</color>
+    <color name="md3_on_surface">#1A1C1E</color>
+    <color name="md3_surface_variant">#E0E2EC</color>
+    <color name="md3_on_surface_variant">#44474F</color>
+
+    <color name="md3_outline">#74777F</color>
+    <color name="md3_outline_variant">#C4C6D0</color>
+
+    <color name="md3_surface_container_lowest">#FFFFFF</color>
+    <color name="md3_surface_container_low">#F1F5F9</color>
+    <color name="md3_surface_container">#ECEEF3</color>
+    <color name="md3_surface_container_high">#DEE1E7</color>
+    <color name="md3_surface_container_highest">#D2D5DD</color>
+
+    <color name="md3_primary_track">#332563EB</color>
+
+    <color name="md3_inverse_surface">#2F3033</color>
+    <color name="md3_inverse_on_surface">#F0F0F4</color>
+    <color name="md3_inverse_primary">#9EC5FF</color>
+
+    <!-- Grade Band Colors -->
+    <color name="grade_o">#2563EB</color>
+    <color name="grade_aplus">#059669</color>
+    <color name="grade_b">#D97706</color>
+    <color name="grade_c">#EA580C</color>
+    <color name="grade_u">#DC2626</color>
+
+    <!-- Grade-band chip colors -->
+    <color name="grade_o_bg">#1A5CFF</color>
+    <color name="grade_a_bg">#059669</color>
+    <color name="grade_b_bg">#CA8A04</color>
+    <color name="grade_c_bg">#EA580C</color>
+    <color name="grade_u_bg">#DC2626</color>
+
+    <!-- Register screen glow (kept as named colors so values-night can override) -->
+    <color name="register_glow_a">#0D2563EB</color>
+    <color name="register_glow_b">#0D38BDF8</color>
+</resources>

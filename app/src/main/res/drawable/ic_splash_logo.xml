@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="120dp"
+    android:height="120dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+
+    <path
+        android:name="arch"
+        android:pathData="M4.5,19 C4.5,2.5 19.5,2.5 19.5,19"
+        android:strokeWidth="2"
+        android:strokeColor="@color/md3_primary"
+        android:fillColor="@android:color/transparent"
+        android:strokeLineCap="round"
+        android:trimPathEnd="0" />
+
+    <path
+        android:name="arrow"
+        android:pathData="M12,10.5 L7.5,15 L10,15 L10,18.5 L14,18.5 L14,15 L16.5,15 Z"
+        android:fillColor="@color/md3_primary"
+        android:fillAlpha="0" />
+
+    <group
+        android:name="diamond_group"
+        android:pivotX="12"
+        android:pivotY="6.5"
+        android:scaleX="0"
+        android:scaleY="0">
+        <path
+            android:name="diamond"
+            android:pathData="M12,4 L14,6.5 L12,9 L10,6.5 Z"
+            android:fillColor="@color/md3_primary_container" />
+    </group>
+
+</vector>
+

@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/md3_background"
+    android:orientation="vertical">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/md3_background"
+        app:navigationIcon="@drawable/ic_back"
+        app:navigationContentDescription="@string/content_desc_back"
+        app:title="Change PIN"
+        app:titleTextAppearance="@style/TextAppearance.Semora.EditProfileToolbar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:paddingHorizontal="24dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- Step 1: Current PIN -->
+            <LinearLayout
+                android:id="@+id/stepCurrentPin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="32dp"
+                    android:text="Verify your identity"
+                    android:textColor="@color/md3_on_surface"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Enter your current PIN to continue."
+                    android:textColor="@color/md3_on_surface_variant"
+                    android:textSize="14sp" />
+
+                <LinearLayout
+                    android:id="@+id/currentPinContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="32dp"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:paddingVertical="6dp"
+                    android:paddingHorizontal="8dp">
+
+                    <EditText
+                        android:id="@+id/etCurrentPin1"
+                        style="@style/PinEditTextStyle"
+                        android:contentDescription="@string/content_desc_pin_digit" />
+
+                    <Space
+                        android:layout_width="12dp"
+                        android:layout_height="wrap_content" />
+
+                    <EditText
+                        android:id="@+id/etCurrentPin2"
+                        style="@style/PinEditTextStyle"
+                        android:contentDescription="@string/content_desc_pin_digit" />
+
+                    <Space
+                        android:layout_width="12dp"
+                        android:layout_height="wrap_content" />
+
+                    <EditText
+                        android:id="@+id/etCurrentPin3"
+                        style="@style/PinEditTextStyle"
+                        android:contentDescription="@string/content_desc_pin_digit" />
+
+                    <Space
+                        android:layout_width="12dp"
+                        android:layout_height="wrap_content" />
+
+                    <EditText
+                        android:id="@+id/etCurrentPin4"
+                        style="@style/PinEditTextStyle"
+                        android:contentDescription="@string/content_desc_pin_digit" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tvCurrentPinError"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:gravity="center"
+                    android:textColor="@color/md3_error"
+                    android:textSize="14sp"
+                    android:visibility="gone"
+                    tools:text="Incorrect current PIN."
+                    tools:visibility="visible" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnVerify"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:layout_marginTop="32dp"
+                    android:text="Verify"
+                    android:textAllCaps="false"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:cornerRadius="16dp" />
+
+            </LinearLayout>
+
+            <!-- Step 2: New PIN -->
+            <LinearLayout
+                android:id="@+id/stepNewPin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="32dp"
+                    android:text="Create new PIN"
+                    android:textColor="@color/md3_on_surface"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Enter a new 4-digit PIN for your account."
+                    android:textColor="@color/md3_on_surface_variant"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:text="New PIN"
+                    android:textColor="@color/md3_on_surface"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:id="@+id/newPinContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:paddingVertical="6dp"
+                    android:paddingHorizontal="8dp">
+
+                    <EditText
+                        android:id="@+id/etNewPin1"
+                        style="@style/PinEditTextStyle"
+                        android:contentDescription="@string/content_desc_pin_digit" />
+
+                    <Space
+                        android:layout_width="12dp"
+                        android:layout_height="wrap_content" />
+
+                    <EditText
+                        android:id="@+id/etNewPin2"
+                        style="@style/PinEditTextStyle"
+                        android:contentDescription="@string/content_desc_pin_digit" />
+
+                    <Space
+                        android:layout_width="12dp"
+                        android:layout_height="wrap_content" />
+
+                    <EditText
+                        android:id="@+id/etNewPin3"
+                        style="@style/PinEditTextStyle"
+                        android:contentDescription="@string/content_desc_pin_digit" />
+
+                    <Space
+                        android:layout_width="12dp"
+                        android:layout_height="wrap_content" />
+
+                    <EditText
+                        android:id="@+id/etNewPin4"
+                        style="@style/PinEditTextStyle"
+                        android:contentDescription="@string/content_desc_pin_digit" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tvNewPinError"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center"
+                    android:textColor="@color/md3_error"
+                    android:textSize="14sp"
+                    android:visibility="gone"
+                    tools:text="PIN must be exactly 4 digits"
+                    tools:visibility="visible" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:text="Confirm New PIN"
+                    android:textColor="@color/md3_on_surface"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:id="@+id/confirmPinContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:paddingVertical="6dp"
+                    android:paddingHorizontal="8dp">
+
+                    <EditText
+                        android:id="@+id/etConfirmPin1"
+                        style="@style/PinEditTextStyle"
+                        android:contentDescription="@string/content_desc_pin_digit" />
+
+                    <Space
+                        android:layout_width="12dp"
+                        android:layout_height="wrap_content" />
+
+                    <EditText
+                        android:id="@+id/etConfirmPin2"
+                        style="@style/PinEditTextStyle"
+                        android:contentDescription="@string/content_desc_pin_digit" />
+
+                    <Space
+                        android:layout_width="12dp"
+                        android:layout_height="wrap_content" />
+
+                    <EditText
+                        android:id="@+id/etConfirmPin3"
+                        style="@style/PinEditTextStyle"
+                        android:contentDescription="@string/content_desc_pin_digit" />
+
+                    <Space
+                        android:layout_width="12dp"
+                        android:layout_height="wrap_content" />
+
+                    <EditText
+                        android:id="@+id/etConfirmPin4"
+                        style="@style/PinEditTextStyle"
+                        android:contentDescription="@string/content_desc_pin_digit" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tvConfirmPinError"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center"
+                    android:textColor="@color/md3_error"
+                    android:textSize="14sp"
+                    android:visibility="gone"
+                    tools:text="PINs do not match"
+                    tools:visibility="visible" />
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:layout_marginTop="32dp">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnUpdatePin"
+                        android:layout_width="match_parent"
+                        android:layout_height="56dp"
+                        android:text="Update PIN"
+                        android:textAllCaps="false"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        app:cornerRadius="16dp" />
+
+                    <ProgressBar
+                        android:id="@+id/btnProgress"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_gravity="center"
+                        android:indeterminateTint="@color/md3_primary"
+                        android:visibility="gone" />
+
+                </FrameLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

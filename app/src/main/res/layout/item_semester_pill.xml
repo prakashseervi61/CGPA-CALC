@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="44dp"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:paddingHorizontal="20dp"
+    android:background="@drawable/bg_semester_chip_inactive"
+    android:clickable="true"
+    android:focusable="true">
+
+    <TextView
+        android:id="@+id/tvPillNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="S1"
+        android:textColor="@color/md3_on_surface"
+        android:textSize="13sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvPillLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Semester 1"
+        android:textColor="@color/md3_on_surface_variant"
+        android:textSize="10sp"
+        android:layout_marginTop="-1dp" />
+</LinearLayout>

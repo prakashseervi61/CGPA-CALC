@@ -98,8 +98,6 @@ class HomeViewModel(
     }
 
     internal fun computeDashboard(semesters: List<SemesterDoc>): HomeDashboardData {
-        _isLoading.value = false
-
         var totalWeightedPoints = 0.0
         var totalGradedCredits = 0
         val semestersWithGrades = mutableSetOf<Int>()

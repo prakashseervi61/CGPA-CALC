@@ -21,7 +21,7 @@ data class SemesterDoc(
 )
 
 object FirestoreSemesterRepository {
-    private val db = FirebaseFirestore.getInstance()
+    private val db by lazy { FirebaseFirestore.getInstance() }
 
     private fun semestersRef(deviceUid: String, profileId: String) =
         db.collection("devices").document(deviceUid)

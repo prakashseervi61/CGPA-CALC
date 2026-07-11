@@ -5,7 +5,7 @@ import com.google.firebase.auth.FirebaseUser
 import kotlinx.coroutines.tasks.await
 
 object FirestoreAuthRepository {
-    private val auth = FirebaseAuth.getInstance()
+    private val auth by lazy { FirebaseAuth.getInstance() }
 
     suspend fun ensureSignedIn(): String? {
         auth.currentUser?.let { return it.uid }

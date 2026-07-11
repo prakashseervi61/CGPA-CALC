@@ -20,7 +20,7 @@ data class ProfileDoc(
 }
 
 object FirestoreProfileRepository {
-    private val db = FirebaseFirestore.getInstance()
+    private val db by lazy { FirebaseFirestore.getInstance() }
 
     private fun profilesRef(deviceUid: String) =
         db.collection("devices").document(deviceUid).collection("profiles")

@@ -33,18 +33,26 @@ Plans:
 **Goal:** Full Material Design 3 consistency across all screens. Proper empty/error/loading states everywhere. Smooth transitions.
 
 ### Deliverables
-- [ ] M3 theme audit: consistent color surface/background/primary across all layouts
-- [ ] Bottom nav: proper Material ripple, animated dot indicator
-- [ ] Empty states: illustrations/text for "No semesters yet", "No courses", "No profiles"
-- [ ] Loading states: replace skeleton layouts with cleaner shimmer or M3 `LinearProgressIndicator`
-- [ ] Error states: inline error cards with retry button (currently just `_errorMessage` text)
-- [ ] Smooth transitions: shared element transitions between semester card → semester detail
-- [ ] Edge-to-edge: verify `enableEdgeToEdge()` handles system bars on all screens
+- [x] M3 theme audit: consistent color surface/background/primary across all 19 layouts
+- [x] Bottom nav: M3 ripple, animated pill indicator replacing dot indicator
+- [x] Empty states: text-only banners (no illustrations) — profile picker CTA, semester grade hint
+- [x] Loading states: keep skeleton layouts, add shimmer overlay animation
+- [x] Error states: M3-polished inline error cards with retry (built on Phase 1 work)
+- [x] Smooth transitions: horizontal slide for tab switches, fade-in for semester card → detail
+- [x] Edge-to-edge: `enableEdgeToEdge()` in BaseActivity for all screens, keyboard inset handling
 
 ### Success Criteria
 - All 19 XML layouts reviewed and updated for M3 consistency
 - Every screen has empty / loading / error state handled
 - No flicker or jump during navigation transitions
+
+### Plans
+- **3 plans**
+
+Plans:
+- [ ] `02-01-PLAN.md` — M3 foundation: dialog theme overlay, edge-to-edge + keyboard, shimmer/animation drawables, AlertDialog migration, STRUCTURE.md fix
+- [ ] `02-02-PLAN.md` — Bottom nav pill indicator + tab transitions: pill animation, ripple, slide/fade NavOptions
+- [ ] `02-03-PLAN.md` — State integration: shimmer wiring in 3 fragments, skeleton polish, empty state text updates, error card polish
 
 ---
 

@@ -2,9 +2,9 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: completed
-stopped_at: Phase 2 execution complete
-last_updated: "2026-07-11T13:57:00.000Z"
+status: discussing
+stopped_at: Phase 3 discuss — context captured
+last_updated: "2026-07-11T14:30:00.000Z"
 progress:
   total_phases: 5
   completed_phases: 2
@@ -19,8 +19,11 @@ progress:
 
 ## Current Phase
 
-- **Phase 2:** UI Polish (M3 + States)
-- **Status:** ✓ Complete
+- **Phase 3:** Test Coverage
+- **Status:** 📋 Planned (2 plans)
+### Plans
+- [ ] `03-01-PLAN.md` — Test infra + source extraction (MockK, SgpaCalculator, internal visibility)
+- [ ] `03-02-PLAN.md` — Write all unit tests (7 test targets, ~25-30 methods)
 
 ## Accumulated Context
 
@@ -36,6 +39,6 @@ progress:
 
 ## Session
 
-**Last session:** 2026-07-11T13:57
-**Stopped at:** Phase 2 execution complete
-**Resume file:** .planning/phases/03-test-coverage/
+**Last session:** 2026-07-11T14:30
+**Stopped at:** Phase 3 discuss — context captured
+**Resume file:** .planning/phases/03-test-coverage/03-CONTEXT.md

@@ -69,7 +69,7 @@ object FirestoreProfileRepository {
         profilesRef(deviceUid).document(profileId).delete().await()
     }
 
-    private fun docToProfile(id: String, data: Map<String, Any>): ProfileDoc {
+    internal fun docToProfile(id: String, data: Map<String, Any>): ProfileDoc {
         return ProfileDoc(
             id = id,
             username = data["username"] as? String ?: "",

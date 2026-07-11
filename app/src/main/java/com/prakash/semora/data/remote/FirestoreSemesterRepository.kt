@@ -96,7 +96,7 @@ object FirestoreSemesterRepository {
         }
     }
 
-    private fun docToSemester(id: String, data: Map<String, Any>): SemesterDoc {
+    internal fun docToSemester(id: String, data: Map<String, Any>): SemesterDoc {
         val gradesRaw = data["grades"] as? Map<String, Any> ?: emptyMap()
         val grades = gradesRaw.mapValues { (_, value) ->
             val g = value as? Map<String, Any> ?: emptyMap()

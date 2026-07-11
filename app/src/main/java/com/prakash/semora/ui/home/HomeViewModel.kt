@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.prakash.semora.data.SemesterCurriculum
 import com.prakash.semora.data.remote.FirestoreAuthRepository
 import com.prakash.semora.data.remote.FirestoreSemesterRepository
+import com.prakash.semora.data.remote.SemesterDoc
 import com.prakash.semora.utils.SessionManager
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -24,7 +25,10 @@ data class HomeDashboardData(
     val creditsProgress: Int = 0
 )
 
-class HomeViewModel(application: Application) : AndroidViewModel(application) {
+class HomeViewModel(
+    application: Application,
+    private val repo: FirestoreSemesterRepository = FirestoreSemesterRepository
+) : AndroidViewModel(application) {
 
     private val sessionManager = SessionManager(application)
     private var deviceUid: String = ""
@@ -93,7 +97,7 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    private fun computeDashboard(semesters: List<com.prakash.semora.data.remote.SemesterDoc>): HomeDashboardData {
+    internal fun computeDashboard(semesters: List<SemesterDoc>): HomeDashboardData {
         _isLoading.value = false
 
         var totalWeightedPoints = 0.0

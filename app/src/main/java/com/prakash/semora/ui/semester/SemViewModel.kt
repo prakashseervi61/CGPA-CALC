@@ -11,13 +11,17 @@ import com.prakash.semora.data.remote.SemesterDoc
 import com.prakash.semora.model.Course
 import com.prakash.semora.model.SemesterState
 import com.prakash.semora.utils.SessionManager
+import com.prakash.semora.utils.SgpaCalculator
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-class SemViewModel(application: Application) : AndroidViewModel(application) {
+class SemViewModel(
+    application: Application,
+    private val repo: FirestoreSemesterRepository = FirestoreSemesterRepository
+) : AndroidViewModel(application) {
 
     private val sessionManager = SessionManager(application)
     private val profileId get() = sessionManager.getFirebaseProfileId() ?: ""
@@ -157,13 +161,7 @@ class SemViewModel(application: Application) : AndroidViewModel(application) {
     private fun computeState(number: Int, courses: List<Course>): SemesterState {
         val graded = courses.filter { it.grade.isNotEmpty() }
         val totalGradedCredits = graded.sumOf { it.credits }
-        var weightedSum = 0.0
-        for (c in courses) {
-            if (c.grade.isNotEmpty()) {
-                weightedSum += SemesterCurriculum.gradeToPoint(c.grade) * c.credits
-            }
-        }
-        val sgpa = if (totalGradedCredits > 0) weightedSum / totalGradedCredits else 0.0
+        val sgpa = SgpaCalculator.compute(courses)
         return SemesterState(
             semesterNumber = number,
             courses = courses,

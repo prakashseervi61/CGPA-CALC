@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- ============================================= -->
+    <!-- Base Theme                                     -->
+    <!-- ============================================= -->
+    <style name="Base.Theme.Semora" parent="Theme.Material3.Light.NoActionBar">
+        <!-- Primary -->
+        <item name="colorPrimary">@color/md3_primary</item>
+        <item name="colorOnPrimary">@color/md3_on_primary</item>
+        <item name="colorPrimaryContainer">@color/md3_primary_container</item>
+        <item name="colorOnPrimaryContainer">@color/md3_on_primary_container</item>
+
+        <!-- Secondary -->
+        <item name="colorSecondary">@color/md3_secondary</item>
+        <item name="colorOnSecondary">@color/md3_on_secondary</item>
+        <item name="colorSecondaryContainer">@color/md3_secondary_container</item>
+        <item name="colorOnSecondaryContainer">@color/md3_on_secondary_container</item>
+
+        <!-- Tertiary -->
+        <item name="colorTertiary">@color/md3_tertiary</item>
+        <item name="colorOnTertiary">@color/md3_on_tertiary</item>
+        <item name="colorTertiaryContainer">@color/md3_tertiary_container</item>
+        <item name="colorOnTertiaryContainer">@color/md3_on_tertiary_container</item>
+
+        <!-- Error -->
+        <item name="colorError">@color/md3_error</item>
+        <item name="colorOnError">@color/md3_on_error</item>
+        <item name="colorErrorContainer">@color/md3_error_container</item>
+        <item name="colorOnErrorContainer">@color/md3_on_error_container</item>
+
+        <!-- Surface / Background -->
+        <item name="android:windowBackground">@color/md3_background</item>
+        <item name="colorSurface">@color/md3_surface</item>
+        <item name="colorOnSurface">@color/md3_on_surface</item>
+        <item name="colorSurfaceVariant">@color/md3_surface_variant</item>
+        <item name="colorOnSurfaceVariant">@color/md3_on_surface_variant</item>
+
+        <!-- Surface containers -->
+        <item name="colorSurfaceContainerLowest">@color/md3_surface_container_lowest</item>
+        <item name="colorSurfaceContainerLow">@color/md3_surface_container_low</item>
+        <item name="colorSurfaceContainer">@color/md3_surface_container</item>
+        <item name="colorSurfaceContainerHigh">@color/md3_surface_container_high</item>
+        <item name="colorSurfaceContainerHighest">@color/md3_surface_container_highest</item>
+
+        <!-- Inverse -->
+        <item name="colorOnSurfaceInverse">@color/md3_inverse_on_surface</item>
+        <item name="colorSurfaceInverse">@color/md3_inverse_surface</item>
+        <item name="colorPrimaryInverse">@color/md3_inverse_primary</item>
+
+        <!-- Outline -->
+        <item name="colorOutline">@color/md3_outline</item>
+        <item name="colorOutlineVariant">@color/md3_outline_variant</item>
+
+        <!-- Status bar -->
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightNavigationBar">true</item>
+
+        <!-- Shape appearance -->
+        <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.Semora.MediumComponent</item>
+        <item name="shapeAppearanceLargeComponent">@style/ShapeAppearance.Semora.LargeComponent</item>
+    </style>
+
+    <style name="Theme.Semora" parent="Base.Theme.Semora" />
+
+    <!-- ============================================= -->
+    <!-- Shape Appearances                              -->
+    <!-- ============================================= -->
+    <style name="ShapeAppearance.Semora.MediumComponent" parent="ShapeAppearance.Material3.MediumComponent">
+        <item name="cornerSize">@dimen/corner_medium</item>
+    </style>
+
+    <style name="ShapeAppearance.Semora.LargeComponent" parent="ShapeAppearance.Material3.LargeComponent">
+        <item name="cornerSize">@dimen/corner_large</item>
+    </style>
+
+    <style name="ShapeAppearance.Semora.XLargeComponent" parent="ShapeAppearance.Material3.LargeComponent">
+        <item name="cornerSize">@dimen/corner_xlarge</item>
+    </style>
+
+    <!-- ============================================= -->
+    <!-- Typography — Inter Geometric Sans               -->
+    <!-- ============================================= -->
+    <style name="TextAppearance.Semora.Display" parent="TextAppearance.Material3.DisplayLarge">
+        <item name="android:fontFamily">@font/inter_semibold</item>
+        <item name="android:textSize">48sp</item>
+        <item name="android:letterSpacing">-0.02</item>
+    </style>
+
+    <style name="TextAppearance.Semora.Headline" parent="TextAppearance.Material3.HeadlineLarge">
+        <item name="android:fontFamily">@font/inter_bold</item>
+        <item name="android:textSize">28sp</item>
+        <item name="android:letterSpacing">-0.01</item>
+    </style>
+
+    <style name="TextAppearance.Semora.HeadlineSmall" parent="TextAppearance.Material3.HeadlineSmall">
+        <item name="android:fontFamily">@font/inter_semibold</item>
+        <item name="android:textSize">24sp</item>
+    </style>
+
+    <style name="TextAppearance.Semora.Title" parent="TextAppearance.Material3.TitleLarge">
+        <item name="android:fontFamily">@font/inter_semibold</item>
+        <item name="android:textSize">22sp</item>
+    </style>
+
+    <style name="TextAppearance.Semora.TitleMedium" parent="TextAppearance.Material3.TitleMedium">
+        <item name="android:fontFamily">@font/inter_semibold</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="TextAppearance.Semora.TitleSmall" parent="TextAppearance.Material3.TitleSmall">
+        <item name="android:fontFamily">@font/inter_medium</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="TextAppearance.Semora.Body" parent="TextAppearance.Material3.BodyLarge">
+        <item name="android:fontFamily">@font/inter_regular</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:lineSpacingExtra">4sp</item>
+    </style>
+
+    <style name="TextAppearance.Semora.BodySmall" parent="TextAppearance.Material3.BodySmall">
+        <item name="android:fontFamily">@font/inter_regular</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="TextAppearance.Semora.Label" parent="TextAppearance.Material3.LabelMedium">
+        <item name="android:fontFamily">@font/inter_medium</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:letterSpacing">0.03</item>
+    </style>
+
+    <style name="TextAppearance.Semora.LabelSmall" parent="TextAppearance.Material3.LabelSmall">
+        <item name="android:fontFamily">@font/inter_medium</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:letterSpacing">0.04</item>
+    </style>
+
+    <style name="TextAppearance.Semora.Caption" parent="TextAppearance.Material3.BodySmall">
+        <item name="android:fontFamily">@font/inter_regular</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="TextAppearance.Semora.Metric" parent="TextAppearance.Material3.HeadlineLarge">
+        <item name="android:fontFamily">@font/inter_bold</item>
+        <item name="android:textSize">@dimen/hero_cgpa_size</item>
+        <item name="android:letterSpacing">-0.02</item>
+    </style>
+
+    <style name="TextAppearance.Semora.MetricSmall" parent="TextAppearance.Material3.HeadlineSmall">
+        <item name="android:fontFamily">@font/inter_bold</item>
+        <item name="android:textSize">@dimen/hero_stat_size</item>
+    </style>
+
+    <!-- ============================================= -->
+    <!-- Component Styles                               -->
+    <!-- ============================================= -->
+    <style name="PinEditTextStyle" parent="Widget.AppCompat.EditText">
+        <item name="android:layout_width">@dimen/pin_box_size</item>
+        <item name="android:layout_height">@dimen/pin_box_size</item>
+        <item name="android:inputType">number</item>
+        <item name="android:maxLength">1</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">0sp</item>
+        <item name="android:textColor">@android:color/transparent</item>
+        <item name="android:background">@drawable/bg_pin_dot_empty</item>
+        <item name="android:fontFamily">@font/inter_semibold</item>
+        <item name="android:importantForAccessibility">yes</item>
+        <item name="android:padding">0dp</item>
+        <item name="android:cursorVisible">false</item>
+        <item name="android:minHeight">@dimen/pin_box_size</item>
+        <item name="android:minWidth">@dimen/pin_box_size</item>
+    </style>
+
+    <!-- Toolbar -->
+    <style name="TextAppearance.Semora.EditProfileToolbar" parent="TextAppearance.Material3.TitleMedium">
+        <item name="android:fontFamily">@font/inter_semibold</item>
+    </style>
+
+    <style name="TextAppearance.Semora.ProfileToolbar" parent="TextAppearance.Material3.TitleMedium">
+        <item name="android:fontFamily">@font/inter_semibold</item>
+    </style>
+
+    <!-- Register screen -->
+    <style name="TextAppearance.Semora.Subtitle" parent="TextAppearance.Material3.BodyMedium">
+        <item name="android:fontFamily">@font/inter_regular</item>
+        <item name="android:textColor">@color/md3_on_surface_variant</item>
+    </style>
+
+    <style name="TextAppearance.Semora.FieldLabel" parent="TextAppearance.Material3.LabelLarge">
+        <item name="android:fontFamily">@font/inter_medium</item>
+        <item name="android:textColor">@color/md3_on_surface</item>
+    </style>
+
+    <style name="TextAppearance.Semora.Button" parent="TextAppearance.Material3.LabelLarge">
+        <item name="android:fontFamily">@font/inter_semibold</item>
+    </style>
+
+    <!-- Dialog Theme Overlay -->
+    <style name="ThemeOverlay.Semora.Dialog" parent="ThemeOverlay.Material3.Dialog">
+        <item name="colorSurface">@color/md3_surface</item>
+        <item name="shapeAppearance">@style/ShapeAppearance.Semora.MediumComponent</item>
+        <item name="colorOnSurface">@color/md3_on_surface</item>
+        <item name="colorOnSurfaceVariant">@color/md3_on_surface_variant</item>
+    </style>
+
+    <style name="ThemeOverlay.Semora.Dialog.Destructive" parent="ThemeOverlay.Semora.Dialog">
+        <item name="buttonBarPositiveButtonStyle">@style/Widget.Semora.Dialog.DestructiveButton</item>
+    </style>
+
+    <style name="Widget.Semora.Dialog.DestructiveButton" parent="Widget.Material3.Button.TextButton">
+        <item name="android:textColor">@color/md3_error</item>
+        <item name="backgroundTint">@color/md3_error_container</item>
+    </style>
+
+</resources>

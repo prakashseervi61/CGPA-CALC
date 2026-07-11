@@ -18,6 +18,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.semora.databinding.FragmentSemesterBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.prakash.semora.ui.utils.ShimmerDrawable
 import com.google.android.material.snackbar.Snackbar
 import com.example.semora.R
 import com.prakash.semora.model.Course
@@ -31,6 +32,7 @@ class SemesterFragment : Fragment() {
     private lateinit var adapter: SubjectAdapter
     private lateinit var viewModel: SemViewModel
     private var resetDialog: androidx.appcompat.app.AlertDialog? = null
+    private var shimmerDrawable: ShimmerDrawable? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -52,6 +54,10 @@ class SemesterFragment : Fragment() {
         observeLoading()
         observeErrors()
         setupPullToRefresh()
+
+        shimmerDrawable = ShimmerDrawable().apply {
+            binding.loadingShimmer.background = this
+        }
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -93,6 +99,7 @@ class SemesterFragment : Fragment() {
                     binding.loadingShimmer.visibility = if (loading) View.VISIBLE else View.GONE
                     binding.nestedScrollView.visibility = if (loading) View.GONE else View.VISIBLE
                     binding.layoutBottomPanel.visibility = if (loading) View.GONE else View.VISIBLE
+                    if (loading) shimmerDrawable?.startShimmer() else shimmerDrawable?.stopShimmer()
                 }
             }
         }
@@ -217,7 +224,7 @@ class SemesterFragment : Fragment() {
     private fun showResetDialog() {
         if (_binding == null) return
         val number = viewModel.currentState.value.semesterNumber
-        resetDialog = MaterialAlertDialogBuilder(requireContext())
+        resetDialog = MaterialAlertDialogBuilder(requireContext(), R.style.ThemeOverlay_Semora_Dialog_Destructive)
             .setTitle("Reset Semester?")
             .setMessage(
                 "This will remove all selected grades for Semester $number " +
@@ -234,6 +241,8 @@ class SemesterFragment : Fragment() {
     }
 
     override fun onDestroyView() {
+        shimmerDrawable?.stopShimmer()
+        shimmerDrawable = null
         resetDialog?.dismiss()
         resetDialog = null
         super.onDestroyView()

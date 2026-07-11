@@ -1,6 +1,6 @@
 # Semora — Roadmap
 
-**Last updated:** 2026-07-10
+**Last updated:** 2026-07-11
 
 ---
 
@@ -50,9 +50,9 @@ Plans:
 - **3 plans**
 
 Plans:
-- [ ] `02-01-PLAN.md` — M3 foundation: dialog theme overlay, edge-to-edge + keyboard, shimmer/animation drawables, AlertDialog migration, STRUCTURE.md fix
-- [ ] `02-02-PLAN.md` — Bottom nav pill indicator + tab transitions: pill animation, ripple, slide/fade NavOptions
-- [ ] `02-03-PLAN.md` — State integration: shimmer wiring in 3 fragments, skeleton polish, empty state text updates, error card polish
+- [x] `02-01-PLAN.md` — M3 foundation: dialog theme overlay, edge-to-edge + keyboard, shimmer/animation drawables, AlertDialog migration, STRUCTURE.md fix
+- [x] `02-02-PLAN.md` — Bottom nav pill indicator + tab transitions: pill animation, ripple, slide/fade NavOptions
+- [x] `02-03-PLAN.md` — State integration: shimmer wiring in 3 fragments, skeleton polish, empty state text updates, error card polish
 
 ---
 

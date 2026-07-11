@@ -10,8 +10,10 @@ import android.view.animation.OvershootInterpolator
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.example.semora.R
 import com.example.semora.databinding.FragmentProfileBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.prakash.semora.ui.utils.ShimmerDrawable
 import com.prakash.semora.ui.auth.ProfilePickerActivity
 import com.prakash.semora.utils.SessionManager
 
@@ -21,6 +23,7 @@ class ProfileFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var sessionManager: SessionManager
     private lateinit var viewModel: ProfileViewModel
+    private var shimmerDrawable: ShimmerDrawable? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -45,6 +48,11 @@ class ProfileFragment : Fragment() {
         observeErrors()
         setupClickListeners()
         updateThemeLabel()
+
+        shimmerDrawable = ShimmerDrawable().apply {
+            binding.loadingShimmer.background = this
+        }
+
         viewModel.loadProfile()
     }
 
@@ -53,6 +61,7 @@ class ProfileFragment : Fragment() {
             if (_binding == null) return@observe
             binding.loadingShimmer.visibility = if (loading) View.VISIBLE else View.GONE
             binding.scrollContent.visibility = if (loading) View.GONE else View.VISIBLE
+            if (loading) shimmerDrawable?.startShimmer() else shimmerDrawable?.stopShimmer()
         }
     }
 
@@ -119,7 +128,7 @@ class ProfileFragment : Fragment() {
             else -> 0
         }
 
-        MaterialAlertDialogBuilder(requireContext())
+        MaterialAlertDialogBuilder(requireContext(), R.style.ThemeOverlay_Semora_Dialog)
             .setTitle("App theme")
             .setSingleChoiceItems(modes, checkedItem) { dialog, which ->
                 val mode = when (which) {
@@ -147,7 +156,7 @@ class ProfileFragment : Fragment() {
 
     private fun showLogoutConfirm() {
         if (!isAdded) return
-        MaterialAlertDialogBuilder(requireContext())
+        MaterialAlertDialogBuilder(requireContext(), R.style.ThemeOverlay_Semora_Dialog_Destructive)
             .setTitle("Log out")
             .setMessage("Are you sure you want to log out? All local data will remain saved.")
             .setNegativeButton("Cancel", null)
@@ -178,6 +187,8 @@ class ProfileFragment : Fragment() {
     }
 
     override fun onDestroyView() {
+        shimmerDrawable?.stopShimmer()
+        shimmerDrawable = null
         super.onDestroyView()
         _binding = null
     }

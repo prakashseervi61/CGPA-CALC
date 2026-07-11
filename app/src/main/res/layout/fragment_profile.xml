@@ -28,6 +28,7 @@
             android:visibility="gone"
             app:cardBackgroundColor="@color/md3_error_container"
             app:cardElevation="0dp"
+            app:strokeWidth="0dp"
             app:contentPadding="12dp"
             android:layout_margin="8dp">
 
@@ -433,9 +434,9 @@
             android:layout_weight="1" />
 
         <com.google.android.material.card.MaterialCardView
-            android:layout_width="72dp"
-            android:layout_height="72dp"
-            app:cardCornerRadius="36dp"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            app:cardCornerRadius="48dp"
             app:cardElevation="0dp"
             app:cardBackgroundColor="@color/md3_surface"
             app:strokeWidth="0dp" />

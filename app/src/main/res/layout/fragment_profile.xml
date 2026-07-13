@@ -20,49 +20,6 @@
             app:titleTextAppearance="@style/TextAppearance.Semora.ProfileToolbar"
             app:navigationIcon="@null" />
 
-        <!-- Error Card -->
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/errorCard"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            app:cardBackgroundColor="@color/md3_error_container"
-            app:cardElevation="0dp"
-            app:strokeWidth="0dp"
-            app:contentPadding="12dp"
-            android:layout_margin="8dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical">
-
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@drawable/ic_error"
-                    android:importantForAccessibility="no"
-                    app:tint="@color/md3_error" />
-
-                <TextView
-                    android:id="@+id/errorText"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginHorizontal="8dp"
-                    android:textAppearance="?attr/textAppearanceBodySmall" />
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/retryButton"
-                    style="@style/Widget.Material3.Button.TextButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Retry" />
-
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
-
         <androidx.core.widget.NestedScrollView
             android:id="@+id/scrollContent"
             android:layout_width="match_parent"
@@ -95,7 +52,8 @@
                         android:layout_height="96dp"
                         app:cardCornerRadius="48dp"
                         app:cardElevation="0dp"
-                        app:strokeWidth="0dp">
+                        app:strokeColor="@color/md3_primary"
+                        app:strokeWidth="4dp">
 
                         <TextView
                             android:id="@+id/tvAvatarInitial"
@@ -129,15 +87,6 @@
                     android:textColor="@color/md3_on_surface"
                     tools:text="Alex Johnson" />
 
-                <TextView
-                    android:id="@+id/tvBranch"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
-                    android:textColor="@color/md3_on_surface_variant"
-                    android:textSize="15sp"
-                    tools:text="Computer Science Engineering" />
-
             </LinearLayout>
 
             <!-- Settings Section Card -->
@@ -145,9 +94,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/spacing_lg"
-                app:cardCornerRadius="@dimen/corner_medium"
+                app:cardCornerRadius="@dimen/corner_large"
                 app:cardElevation="0dp"
-                app:cardBackgroundColor="@color/md3_surface"
+                app:cardBackgroundColor="@color/md3_surface_container_low"
                 app:strokeWidth="0dp">
 
                 <LinearLayout
@@ -327,9 +276,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/spacing_sm"
-                app:cardCornerRadius="@dimen/corner_medium"
+                app:cardCornerRadius="@dimen/corner_large"
                 app:cardElevation="0dp"
-                app:cardBackgroundColor="@color/md3_surface"
+                app:cardBackgroundColor="@color/md3_surface_container_low"
                 app:strokeWidth="0dp">
 
                 <LinearLayout
@@ -401,9 +350,9 @@
                 android:layout_marginTop="@dimen/spacing_sm"
                 android:text="@string/logout"
                 android:textAllCaps="false"
-                android:textColor="@color/md3_on_error_container"
-                app:backgroundTint="@color/md3_error_container"
-                app:cornerRadius="@dimen/corner_medium" />
+                android:textColor="@color/md3_on_error"
+                app:backgroundTint="@color/md3_error"
+                app:shapeAppearance="@style/ShapeAppearance.Semora.HeroCard" />
 
             <TextView
                 android:id="@+id/tvAppVersion"

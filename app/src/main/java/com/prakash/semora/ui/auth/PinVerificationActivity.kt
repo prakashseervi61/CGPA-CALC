@@ -13,8 +13,6 @@ import androidx.lifecycle.lifecycleScope
 import com.example.semora.BaseActivity
 import com.example.semora.MainActivity
 import com.example.semora.databinding.ActivityPinVerificationBinding
-import com.prakash.semora.data.remote.FirestoreAuthRepository
-import com.prakash.semora.data.remote.FirestoreProfileRepository
 import com.prakash.semora.utils.PinInputHelper
 import com.prakash.semora.utils.SessionManager
 import kotlinx.coroutines.launch
@@ -27,7 +25,7 @@ class PinVerificationActivity : BaseActivity() {
 
     private lateinit var pinInput: PinInputHelper
 
-    private var profileId: String = ""
+    private var profileId: Int = -1
     private var username: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,7 +33,7 @@ class PinVerificationActivity : BaseActivity() {
         binding = ActivityPinVerificationBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        profileId = intent.getStringExtra("profile_id") ?: ""
+        profileId = intent.getIntExtra("profile_id", -1)
         username = intent.getStringExtra("username") ?: ""
         val avatarColor = intent.getIntExtra("avatar_color", 0xFF1A73E8.toInt())
 
@@ -125,17 +123,9 @@ class PinVerificationActivity : BaseActivity() {
     }
 
     private fun setupObservers() {
-        viewModel.authResult.observe(this) { profile ->
-            if (profile != null) {
-                lifecycleScope.launch {
-                    val deviceUid = FirestoreAuthRepository.getUid()
-                    if (deviceUid != null) {
-                        FirestoreProfileRepository.updateLastOpened(
-                            deviceUid, profile.id, System.currentTimeMillis()
-                        )
-                    }
-                }
-                sessionManager.saveFirebaseSession(profile.id, profile.username)
+        viewModel.authResult.observe(this) { user ->
+            if (user != null) {
+                sessionManager.saveUserSession(user.id, user.username)
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
                 finish()

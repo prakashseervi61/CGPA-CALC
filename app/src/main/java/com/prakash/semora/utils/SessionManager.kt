@@ -14,7 +14,6 @@ class SessionManager(context: Context) {
         private const val PREF_NAME = "semora_session"
         private const val KEY_IS_LOGGED_IN = "isLoggedIn"
         private const val KEY_USER_ID = "userId"
-        private const val KEY_FIREBASE_PROFILE_ID = "firebaseProfileId"
         private const val KEY_USERNAME = "username"
         private const val KEY_THEME_MODE = "theme_mode"
     }
@@ -26,12 +25,7 @@ class SessionManager(context: Context) {
         editor.apply()
     }
 
-    fun saveFirebaseSession(profileId: String, username: String) {
-        editor.putBoolean(KEY_IS_LOGGED_IN, true)
-        editor.putString(KEY_FIREBASE_PROFILE_ID, profileId)
-        editor.putString(KEY_USERNAME, username)
-        editor.apply()
-    }
+
 
     fun isLoggedIn(): Boolean {
         return sharedPreferences.getBoolean(KEY_IS_LOGGED_IN, false)
@@ -41,9 +35,7 @@ class SessionManager(context: Context) {
         return sharedPreferences.getInt(KEY_USER_ID, -1)
     }
 
-    fun getFirebaseProfileId(): String? {
-        return sharedPreferences.getString(KEY_FIREBASE_PROFILE_ID, null)
-    }
+
 
     fun getUsername(): String? {
         return sharedPreferences.getString(KEY_USERNAME, null)

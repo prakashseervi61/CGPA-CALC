@@ -9,8 +9,8 @@
     android:clickable="true"
     android:focusable="true"
     android:foreground="?attr/selectableItemBackground"
-    app:cardCornerRadius="@dimen/corner_medium"
-    app:cardBackgroundColor="@color/md3_surface_container"
+    app:cardCornerRadius="@dimen/corner_large"
+    app:cardBackgroundColor="@color/md3_surface_container_low"
     app:strokeWidth="0dp">
 
     <LinearLayout
@@ -82,7 +82,7 @@
                 android:textSize="14sp"
                 android:textStyle="bold"
                 android:letterSpacing="0"
-                app:cornerRadius="@dimen/corner_small"
+                app:cornerRadius="10dp"
                 app:backgroundTint="@color/md3_surface_container_high"
                 android:stateListAnimator="@null" />
         </FrameLayout>

@@ -87,8 +87,6 @@ object SemesterCurriculum {
         allSemesters.sumOf { semester -> semester.courses.sumOf { it.credits } }
     }
 
-    val grades = listOf("O", "A+", "A", "B+", "B", "C", "U")
-
     fun gradeToPoint(grade: String): Double = when (grade) {
         "O" -> 10.0
         "A+" -> 9.0

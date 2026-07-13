@@ -5,8 +5,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.prakash.semora.data.remote.FirestoreAuthRepository
-import com.prakash.semora.data.remote.FirestoreProfileRepository
+import com.prakash.semora.data.local.AppDatabase
 import com.prakash.semora.utils.SessionManager
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
@@ -15,7 +14,6 @@ import java.util.Locale
 
 data class EditProfileState(
     val username: String = "",
-    val branch: String = "Information Technology",
     val avatarInitial: String = "U",
     val createdAt: String = "",
     val usernameError: String? = null,
@@ -26,25 +24,22 @@ data class EditProfileState(
 
 class EditProfileViewModel(application: Application) : AndroidViewModel(application) {
 
+    private val userDao = AppDatabase.getDatabase(application).userDao()
+
     private val _state = MutableLiveData(EditProfileState())
     val state: LiveData<EditProfileState> = _state
 
-    private var profileId: String = ""
+    private var profileId: Int = -1
     private var originalUsername: String = ""
-    private var deviceUid: String = ""
 
-    fun loadProfile(profileId: String, username: String, branch: String, createdAtTimestamp: Long) {
+    fun loadProfile(profileId: Int, username: String, createdAtTimestamp: Long) {
         this.profileId = profileId
         originalUsername = username
         _state.value = EditProfileState(
             username = username,
-            branch = branch,
             avatarInitial = username.firstOrNull()?.uppercase()?.toString() ?: "U",
             createdAt = formatDate(createdAtTimestamp)
         )
-        viewModelScope.launch {
-            deviceUid = FirestoreAuthRepository.getUid() ?: ""
-        }
     }
 
     fun hasUnsavedChanges(): Boolean {
@@ -84,16 +79,16 @@ class EditProfileViewModel(application: Application) : AndroidViewModel(applicat
 
         viewModelScope.launch {
             try {
-                if (deviceUid.isEmpty() || profileId.isEmpty()) {
+                if (profileId == -1) {
                     _state.value = _state.value?.copy(
                         isSaving = false,
                         saveMessage = "Update failed. Please try again."
                     )
                     return@launch
                 }
-                val profiles = FirestoreProfileRepository.getProfiles(deviceUid)
-                val existing = profiles.firstOrNull { it.username == currentUsername && it.id != profileId }
-                if (existing != null) {
+                
+                val existing = userDao.getUserByUsername(currentUsername)
+                if (existing != null && existing.id != profileId) {
                     _state.value = _state.value?.copy(
                         isSaving = false,
                         usernameError = "Username already exists"
@@ -101,10 +96,10 @@ class EditProfileViewModel(application: Application) : AndroidViewModel(applicat
                     return@launch
                 }
 
-                FirestoreProfileRepository.updateUsername(deviceUid, profileId, currentUsername)
+                userDao.updateUsername(profileId, currentUsername)
 
                 val sessionManager = SessionManager(getApplication())
-                sessionManager.saveFirebaseSession(profileId, currentUsername)
+                sessionManager.saveUserSession(profileId, currentUsername)
 
                 _state.value = _state.value?.copy(
                     isSaving = false,

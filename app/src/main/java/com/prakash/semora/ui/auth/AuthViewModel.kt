@@ -5,9 +5,8 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.prakash.semora.data.remote.FirestoreAuthRepository
-import com.prakash.semora.data.remote.FirestoreProfileRepository
-import com.prakash.semora.data.remote.ProfileDoc
+import com.prakash.semora.data.local.AppDatabase
+import com.prakash.semora.model.User
 import com.prakash.semora.utils.PinHasher
 import kotlinx.coroutines.launch
 
@@ -19,8 +18,10 @@ data class RegisterFormState(
 
 class AuthViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val _authResult = MutableLiveData<ProfileDoc?>()
-    val authResult: LiveData<ProfileDoc?> = _authResult
+    private val userDao = AppDatabase.getDatabase(application).userDao()
+
+    private val _authResult = MutableLiveData<User?>()
+    val authResult: LiveData<User?> = _authResult
 
     private val _authMessage = MutableLiveData<String>()
     val authMessage: LiveData<String> = _authMessage
@@ -35,28 +36,22 @@ class AuthViewModel(application: Application) : AndroidViewModel(application) {
     val registrationSuccess: LiveData<Boolean> = _registrationSuccess
 
     fun register(username: String, pin: String, confirmPin: String) {
-        val currentErrors = mutableMapOf<String, String?>()
+        var usernameError: String? = null
+        var pinError: String? = null
+        var confirmPinError: String? = null
 
-        if (username.isBlank()) {
-            currentErrors["username"] = "Username is required"
-        }
+        if (username.isBlank()) usernameError = "Username is required"
 
-        if (pin.length != 4 || !pin.all { it.isDigit() }) {
-            currentErrors["pin"] = "PIN must be exactly 4 digits"
-        }
+        if (pin.length != 4 || !pin.all { it.isDigit() }) pinError = "PIN must be exactly 4 digits"
 
         if (confirmPin.length != 4 || !confirmPin.all { it.isDigit() }) {
-            currentErrors["confirmPin"] = "Please confirm your PIN"
+            confirmPinError = "Please confirm your PIN"
         } else if (pin != confirmPin) {
-            currentErrors["confirmPin"] = "PINs do not match"
+            confirmPinError = "PINs do not match"
         }
 
-        if (currentErrors.isNotEmpty()) {
-            _formState.value = RegisterFormState(
-                usernameError = currentErrors["username"],
-                pinError = currentErrors["pin"],
-                confirmPinError = currentErrors["confirmPin"]
-            )
+        if (usernameError != null || pinError != null || confirmPinError != null) {
+            _formState.value = RegisterFormState(usernameError, pinError, confirmPinError)
             return
         }
 
@@ -65,28 +60,21 @@ class AuthViewModel(application: Application) : AndroidViewModel(application) {
 
         viewModelScope.launch {
             try {
-                val deviceUid = FirestoreAuthRepository.getUid()
-                if (deviceUid == null) {
-                    _authMessage.value = "Registration failed. Please try again."
-                    _isLoading.value = false
-                    return@launch
-                }
-
-                val existing = FirestoreProfileRepository.getProfiles(deviceUid)
-                    .firstOrNull { it.username == username }
+                val existing = userDao.getUserByUsername(username)
                 if (existing != null) {
                     _formState.value = RegisterFormState(usernameError = "Username already exists")
                     _authMessage.value = "Username already exists"
                 } else {
                     val salt = PinHasher.generateSalt()
-                    val profile = ProfileDoc(
+                    val user = User(
                         username = username,
-                        pinHash = PinHasher.hash(pin, salt),
-                        pinSalt = salt,
-                        pinVersion = 1
+                        pin = PinHasher.hash(pin, salt),
+                        salt = salt,
+                        avatarColor = 0,
+                        createdAt = System.currentTimeMillis()
                     )
-                    val profileId = FirestoreProfileRepository.createProfile(deviceUid, profile)
-                    val created = profile.copy(id = profileId)
+                    val userId = userDao.insertUser(user).toInt()
+                    val created = user.copy(id = userId)
                     _authResult.value = created
                     _authMessage.value = "Profile created"
                     _registrationSuccess.value = true
@@ -110,19 +98,9 @@ class AuthViewModel(application: Application) : AndroidViewModel(application) {
         }
 
         viewModelScope.launch {
-            val deviceUid = FirestoreAuthRepository.getUid() ?: return@launch
-            val profiles = try {
-                FirestoreProfileRepository.getProfiles(deviceUid)
-            } catch (e: Exception) {
-                _authMessage.value = "Could not connect. Check your connection."
-                return@launch
-            }
-            val user = profiles.firstOrNull { it.username == username }
-            if (user != null && PinHasher.verify(pin, user.pinHash, user.pinSalt, user.pinVersion)) {
-                if (user.pinVersion == 0) {
-                    val newHash = PinHasher.hash(pin, user.pinSalt)
-                    FirestoreProfileRepository.updatePin(deviceUid, user.id, newHash, user.pinSalt, 1)
-                }
+            val user = userDao.getUserByUsername(username)
+            if (user != null && PinHasher.verify(pin, user.pin, user.salt)) {
+                userDao.updateLastOpened(user.id, System.currentTimeMillis())
                 _authResult.value = user
             } else {
                 _authResult.value = null

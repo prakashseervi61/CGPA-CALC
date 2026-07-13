@@ -6,11 +6,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.prakash.semora.data.SemesterCurriculum
-import com.prakash.semora.data.remote.FirestoreAuthRepository
-import com.prakash.semora.data.remote.FirestoreSemesterRepository
-import com.prakash.semora.data.remote.SemesterDoc
+import com.prakash.semora.data.local.AppDatabase
+import com.prakash.semora.model.GradeEntity
+import com.prakash.semora.model.Semester
 import com.prakash.semora.utils.SessionManager
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 data class HomeDashboardData(
@@ -25,13 +24,13 @@ data class HomeDashboardData(
     val creditsProgress: Int = 0
 )
 
-class HomeViewModel @JvmOverloads constructor(
-    application: Application,
-    private val repo: FirestoreSemesterRepository = FirestoreSemesterRepository
-) : AndroidViewModel(application) {
+class HomeViewModel(app: Application) : AndroidViewModel(app) {
 
-    private val sessionManager = SessionManager(application)
-    private var deviceUid: String = ""
+    private val sessionManager = SessionManager(app)
+    private var profileId: Int = -1
+
+    private val semesterDao = AppDatabase.getDatabase(app).semesterDao()
+    private val gradeDao = AppDatabase.getDatabase(app).gradeDao()
 
     private val _dashboard = MutableLiveData<HomeDashboardData>()
     val dashboard: LiveData<HomeDashboardData> = _dashboard
@@ -47,76 +46,81 @@ class HomeViewModel @JvmOverloads constructor(
     fun clearError() { _errorMessage.value = null }
 
     fun loadDashboard() {
-        val profileId = sessionManager.getFirebaseProfileId() ?: ""
-
-        cachedDashboard?.let {
-            _dashboard.value = it
+        profileId = sessionManager.getUserId()
+        if (profileId == -1) {
+            val empty = computeDashboard(emptyList(), emptyList())
+            cachedDashboard = empty
+            _dashboard.value = empty
             _isLoading.value = false
-        } ?: run {
-            _isLoading.value = true
+            _errorMessage.value = null
+            return
         }
 
-        viewModelScope.launch {
-            deviceUid = FirestoreAuthRepository.getUid() ?: ""
-            if (deviceUid.isEmpty() || profileId.isEmpty()) {
-                val empty = computeDashboard(emptyList())
-                if (cachedDashboard != empty) {
-                    cachedDashboard = empty
-                    _dashboard.value = empty
-                }
-                _isLoading.value = false
-                return@launch
-            }
+        _errorMessage.value = null
+        cachedDashboard?.let { _dashboard.value = it }
+        _isLoading.value = cachedDashboard == null
 
-            val semesters = try {
-                FirestoreSemesterRepository.getSemesters(deviceUid, profileId)
-            } catch (e1: Exception) {
-                delay(2000)
-                try {
-                    FirestoreSemesterRepository.getSemesters(deviceUid, profileId)
-                } catch (e2: Exception) {
-                    _errorMessage.value = "Couldn't load dashboard — check your connection"
-                    null
+        viewModelScope.launch {
+            try {
+                val semesters = semesterDao.getSemesters(profileId)
+                val allGrades = gradeDao.getGradesForUser(profileId)
+
+                if (semesters.isEmpty()) {
+                    if (cachedDashboard == null) {
+                        val empty = computeDashboard(emptyList(), emptyList())
+                        cachedDashboard = empty
+                        _dashboard.value = empty
+                    }
+                    _isLoading.value = false
+                    _errorMessage.value = null
+                    return@launch
                 }
-            }
-            if (semesters == null) {
-                if (cachedDashboard == null) {
-                    val empty = computeDashboard(emptyList())
-                    cachedDashboard = empty
-                    _dashboard.value = empty
+
+                _errorMessage.value = null
+                val fresh = computeDashboard(semesters, allGrades)
+                if (fresh != cachedDashboard) {
+                    cachedDashboard = fresh
+                    _dashboard.value = fresh
                 }
                 _isLoading.value = false
-                return@launch
+            } catch (e: Exception) {
+                _isLoading.value = false
+                if (cachedDashboard == null) {
+                    _errorMessage.value = "Couldn't load data."
+                }
             }
-            val fresh = computeDashboard(semesters)
-            if (fresh != cachedDashboard) {
-                cachedDashboard = fresh
-                _dashboard.value = fresh
-            }
-            _isLoading.value = false
         }
     }
 
-    internal fun computeDashboard(semesters: List<SemesterDoc>): HomeDashboardData {
+    private fun cgpaMessage(cgpa: Double): String = when {
+        cgpa == 0.0 -> ""
+        cgpa >= 9.5 -> "Outstanding"
+        cgpa >= 9.0 -> "Excellent"
+        cgpa >= 8.0 -> "Very Good"
+        cgpa >= 7.0 -> "Good"
+        cgpa >= 6.0 -> "Keep Improving"
+        else -> "Needs Improvement"
+    }
+
+    internal fun computeDashboard(semesters: List<Semester>, grades: List<GradeEntity>): HomeDashboardData {
         var totalWeightedPoints = 0.0
         var totalGradedCredits = 0
-        val semestersWithGrades = mutableSetOf<Int>()
+        val semesterSubjectCount = mutableMapOf<Int, Int>()
 
-        for (sem in semesters) {
-            for ((_, g) in sem.grades) {
-                if (g.grade.isEmpty()) continue
-                val point = SemesterCurriculum.gradeToPoint(g.grade)
-                totalWeightedPoints += point * g.credits
-                totalGradedCredits += g.credits
-                semestersWithGrades.add(sem.semesterNumber)
-            }
+        for (g in grades) {
+            if (g.grade.isEmpty()) continue
+            val point = SemesterCurriculum.gradeToPoint(g.grade)
+            totalWeightedPoints += point * g.credits
+            totalGradedCredits += g.credits
+            semesterSubjectCount[g.semesterNumber] = (semesterSubjectCount[g.semesterNumber] ?: 0) + 1
         }
 
-        val completedCount = semestersWithGrades.count { semNum ->
-            val totalCourses = SemesterCurriculum.getSemester(semNum).courses.size
-            val sem = semesters.find { it.semesterNumber == semNum }
-            val gradedCount = sem?.grades?.count { (_, g) -> g.grade.isNotEmpty() } ?: 0
-            gradedCount == totalCourses
+        var completedCount = 0
+        for ((semNum, count) in semesterSubjectCount) {
+            val expectedCount = SemesterCurriculum.getSemester(semNum).courses.size
+            if (count >= expectedCount && expectedCount > 0) {
+                completedCount++
+            }
         }
 
         val totalSemesters = SemesterCurriculum.getAllSemesters().size
@@ -134,15 +138,5 @@ class HomeViewModel @JvmOverloads constructor(
             totalCurriculumCredits = totalCredits,
             creditsProgress = if (totalCredits > 0) (totalGradedCredits.toFloat() / totalCredits * 100).toInt() else 0
         )
-    }
-
-    private fun cgpaMessage(cgpa: Double): String = when {
-        cgpa == 0.0 -> ""
-        cgpa >= 9.5 -> "Outstanding"
-        cgpa >= 9.0 -> "Excellent"
-        cgpa >= 8.0 -> "Very Good"
-        cgpa >= 7.0 -> "Good"
-        cgpa >= 6.0 -> "Keep Improving"
-        else -> "Needs Improvement"
     }
 }

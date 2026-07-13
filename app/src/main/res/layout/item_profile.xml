@@ -1,60 +1,123 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cardRoot"
+    style="@style/Widget.Semora.ProfileCard"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="180dp"
     android:clickable="true"
     android:focusable="true"
-    android:foreground="?attr/selectableItemBackground"
-    app:cardCornerRadius="20dp"
-    app:cardElevation="2dp"
-    app:cardBackgroundColor="@color/md3_surface_container_low"
-    app:strokeWidth="1dp"
-    app:strokeColor="@color/md3_outline_variant"
-    app:contentPadding="16dp">
+    android:foreground="?attr/selectableItemBackground">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:padding="12dp">
 
-        <TextView
-            android:id="@+id/tvAvatar"
-            android:layout_width="56dp"
-            android:layout_height="56dp"
-            android:gravity="center"
-            android:textSize="22sp"
-            android:textColor="@color/md3_on_primary"
-            android:fontFamily="@font/inter_bold"
-            android:importantForAccessibility="no"
-            tools:text="P" />
+        <!-- Avatar + Menu row -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
 
+            <TextView
+                android:id="@+id/tvAvatar"
+                android:layout_width="52dp"
+                android:layout_height="52dp"
+                android:gravity="center"
+                android:textSize="20sp"
+                android:textColor="@android:color/white"
+                android:fontFamily="@font/poppins"
+                android:fontWeight="600"
+                android:layout_centerHorizontal="true"
+                android:importantForAccessibility="no"
+                tools:text="P" />
+
+            <ImageButton
+                android:id="@+id/btnMenu"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/pp_ic_more_vert"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="@string/pp_menu_edit"
+                android:scaleType="center" />
+        </RelativeLayout>
+
+        <!-- Name -->
         <TextView
-            android:id="@+id/tvUsername"
+            android:id="@+id/tvName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:ellipsize="end"
             android:gravity="center"
+            android:textAppearance="@style/TextAppearance.Semora.PoppinsSemiBold"
+            android:textColor="@color/pp_on_surface"
             android:maxLines="1"
-            android:textColor="@color/md3_on_surface"
-            android:textSize="14sp"
-            android:textStyle="bold"
+            android:ellipsize="end"
             tools:text="Prakash" />
 
+        <!-- Department -->
+        <TextView
+            android:id="@+id/tvDepartment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/pp_department"
+            android:textAppearance="@style/TextAppearance.Semora.NunitoCaption"
+            android:textColor="@color/pp_on_surface_variant"
+            android:layout_marginTop="2dp" />
+
+        <!-- Semester + CGPA row -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginTop="6dp"
+            android:weightSum="2">
+
+            <!-- Semester chip -->
+            <TextView
+                android:id="@+id/tvSemester"
+                android:layout_width="wrap_content"
+                android:layout_height="26dp"
+                android:gravity="center"
+                android:paddingHorizontal="10dp"
+                android:textAppearance="@style/TextAppearance.Semora.NunitoCaption"
+                android:textColor="@color/pp_on_surface_variant"
+                android:background="@drawable/bg_chip_outline"
+                android:layout_marginEnd="6dp"
+                tools:text="Sem 2" />
+
+            <!-- CGPA badge -->
+            <TextView
+                android:id="@+id/tvCgpa"
+                android:layout_width="wrap_content"
+                android:layout_height="26dp"
+                android:gravity="center"
+                android:paddingHorizontal="10dp"
+                android:textAppearance="@style/TextAppearance.Semora.NunitoMedium"
+                android:textColor="@android:color/white"
+                android:background="@drawable/bg_chip_cgpa"
+                tools:text="8.5" />
+        </LinearLayout>
+
+        <!-- Last opened -->
         <TextView
             android:id="@+id/tvLastOpened"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
             android:gravity="center"
-            android:textColor="@color/md3_on_surface_variant"
-            android:textSize="11sp"
+            android:textAppearance="@style/TextAppearance.Semora.NunitoCaption"
+            android:textColor="@color/pp_on_surface_variant"
+            android:alpha="0.7"
+            android:layout_marginTop="4dp"
             android:visibility="gone"
             tools:text="Opened 2h ago"
             tools:visibility="visible" />
-
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>

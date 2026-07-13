@@ -12,33 +12,21 @@ class PinHasherTest {
     fun `hash and verify with valid PIN returns true`() {
         val salt = PinHasher.generateSalt()
         val hash = PinHasher.hash("1234", salt)
-        assertTrue(PinHasher.verify("1234", hash, salt, 1))
+        assertTrue(PinHasher.verify("1234", hash, salt))
     }
 
     @Test
     fun `verify with wrong PIN returns false`() {
         val salt = PinHasher.generateSalt()
         val hash = PinHasher.hash("1234", salt)
-        assertFalse(PinHasher.verify("5678", hash, salt, 1))
+        assertFalse(PinHasher.verify("5678", hash, salt))
     }
 
     @Test
     fun `verify with empty PIN returns false`() {
         val salt = PinHasher.generateSalt()
         val hash = PinHasher.hash("1234", salt)
-        assertFalse(PinHasher.verify("", hash, salt, 1))
-    }
-
-    @Test
-    fun `legacy v1 verify with correct PIN returns true`() {
-        val hash = PinHasher.hashLegacy("1234")
-        assertTrue(PinHasher.verify("1234", hash, "", 0))
-    }
-
-    @Test
-    fun `legacy v1 verify with wrong PIN returns false`() {
-        val hash = PinHasher.hashLegacy("1234")
-        assertFalse(PinHasher.verify("5678", hash, "", 0))
+        assertFalse(PinHasher.verify("", hash, salt))
     }
 
     @Test

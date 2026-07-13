@@ -5,9 +5,8 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.prakash.semora.data.remote.FirestoreAuthRepository
-import com.prakash.semora.data.remote.FirestoreProfileRepository
-import com.prakash.semora.data.remote.ProfileDoc
+import com.prakash.semora.data.local.AppDatabase
+import com.prakash.semora.model.User
 import com.prakash.semora.utils.PinHasher
 import com.prakash.semora.utils.SessionManager
 import kotlinx.coroutines.launch
@@ -15,6 +14,7 @@ import kotlinx.coroutines.launch
 class ChangePinViewModel(application: Application) : AndroidViewModel(application) {
 
     private val sessionManager = SessionManager(application)
+    private val userDao = AppDatabase.getDatabase(application).userDao()
 
     private val _step = MutableLiveData(1)
     val step: LiveData<Int> = _step
@@ -37,46 +37,33 @@ class ChangePinViewModel(application: Application) : AndroidViewModel(applicatio
     private val _message = MutableLiveData<String?>(null)
     val message: LiveData<String?> = _message
 
-    private var currentProfile: ProfileDoc? = null
+    private var currentUser: User? = null
     private var storedPinHash: String = ""
-    private var deviceUid: String = ""
 
     fun loadUser() {
         viewModelScope.launch {
-            deviceUid = FirestoreAuthRepository.getUid() ?: ""
-            val profileId = sessionManager.getFirebaseProfileId() ?: ""
-            if (deviceUid.isEmpty() || profileId.isEmpty()) return@launch
+            val profileId = sessionManager.getUserId()
+            if (profileId == -1) return@launch
             try {
-                val profile = FirestoreProfileRepository.getProfile(deviceUid, profileId)
-                currentProfile = profile
-                storedPinHash = profile?.pinHash ?: ""
+                val profile = userDao.getUserById(profileId)
+                currentUser = profile
+                storedPinHash = profile?.pin ?: ""
             } catch (e: Exception) {
-                _message.value = "Could not load profile. Check your connection."
+                _message.value = "Could not load profile."
             }
         }
     }
 
     fun verifyCurrentPin(enteredPin: String) {
-        val profile = currentProfile ?: return
+        val profile = currentUser ?: return
         if (enteredPin.length != 4 || !enteredPin.all { it.isDigit() }) {
             _currentPinError.value = "Enter your 4-digit PIN"
             return
         }
 
-        if (!PinHasher.verify(enteredPin, profile.pinHash, profile.pinSalt, profile.pinVersion)) {
+        if (!PinHasher.verify(enteredPin, profile.pin, profile.salt)) {
             _currentPinError.value = "Incorrect current PIN."
             return
-        }
-
-        if (profile.pinVersion == 0) {
-            val newHash = PinHasher.hash(enteredPin, profile.pinSalt)
-            viewModelScope.launch {
-                try {
-                    FirestoreProfileRepository.updatePin(deviceUid, profile.id, newHash, profile.pinSalt, 1)
-                } catch (e: Exception) {
-                    _message.value = "Could not upgrade PIN. Check your connection."
-                }
-            }
         }
 
         _currentPinError.value = null
@@ -86,13 +73,13 @@ class ChangePinViewModel(application: Application) : AndroidViewModel(applicatio
     }
 
     fun updatePin(newPin: String, confirmPin: String) {
-        val profile = currentProfile ?: return
+        val profile = currentUser ?: return
         if (newPin.length != 4 || !newPin.all { it.isDigit() }) {
             _newPinError.value = "PIN must be exactly 4 digits"
             return
         }
 
-        if (PinHasher.verify(newPin, storedPinHash, profile.pinSalt, 1)) {
+        if (PinHasher.verify(newPin, storedPinHash, profile.salt)) {
             _newPinError.value = "New PIN cannot be the same as current PIN"
             return
         }
@@ -108,8 +95,8 @@ class ChangePinViewModel(application: Application) : AndroidViewModel(applicatio
 
         viewModelScope.launch {
             try {
-                val newHash = PinHasher.hash(newPin, profile.pinSalt)
-                FirestoreProfileRepository.updatePin(deviceUid, profile.id, newHash, profile.pinSalt, 1)
+                val newHash = PinHasher.hash(newPin, profile.salt)
+                userDao.updatePin(profile.id, newHash, profile.salt)
                 _success.value = true
                 _message.value = "PIN updated successfully."
             } catch (e: Exception) {

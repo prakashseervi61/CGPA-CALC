@@ -80,13 +80,93 @@
         <item name="cornerSize">@dimen/corner_xlarge</item>
     </style>
 
+    <!-- M3 Expressive: Asymmetric hero card (diagonal pairing) -->
+    <style name="ShapeAppearance.Semora.HeroCard" parent="ShapeAppearance.Material3.LargeComponent">
+        <item name="cornerSizeTopLeft">@dimen/corner_hero</item>
+        <item name="cornerSizeTopRight">@dimen/corner_hero_sm</item>
+        <item name="cornerSizeBottomLeft">@dimen/corner_hero_sm</item>
+        <item name="cornerSizeBottomRight">@dimen/corner_hero</item>
+    </style>
+
+    
     <!-- ============================================= -->
     <!-- Typography — Inter Geometric Sans               -->
     <!-- ============================================= -->
+
+    <!-- Poppins font family aliases (for Profile Picker) -->
+    <style name="TextAppearance.Semora.PoppinsBold" parent="TextAppearance.Material3.HeadlineLarge">
+        <item name="android:fontFamily">@font/poppins</item>
+        <item name="android:fontWeight">700</item>
+        <item name="android:textSize">28sp</item>
+        <item name="android:letterSpacing">-0.01</item>
+    </style>
+
+    <style name="TextAppearance.Semora.PoppinsSemiBold" parent="TextAppearance.Material3.TitleLarge">
+        <item name="android:fontFamily">@font/poppins</item>
+        <item name="android:fontWeight">600</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="TextAppearance.Semora.PoppinsMedium" parent="TextAppearance.Material3.BodyLarge">
+        <item name="android:fontFamily">@font/poppins</item>
+        <item name="android:fontWeight">500</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="TextAppearance.Semora.NunitoRegular" parent="TextAppearance.Material3.BodyMedium">
+        <item name="android:fontFamily">@font/nunito</item>
+        <item name="android:fontWeight">400</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="TextAppearance.Semora.NunitoMedium" parent="TextAppearance.Material3.LabelLarge">
+        <item name="android:fontFamily">@font/nunito</item>
+        <item name="android:fontWeight">500</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="TextAppearance.Semora.NunitoCaption" parent="TextAppearance.Material3.BodySmall">
+        <item name="android:fontFamily">@font/nunito</item>
+        <item name="android:fontWeight">400</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="TextAppearance.Semora.PoppinsButton" parent="TextAppearance.Material3.LabelLarge">
+        <item name="android:fontFamily">@font/poppins</item>
+        <item name="android:fontWeight">600</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <!-- Profile Picker Gradient Button -->
+    <style name="Widget.Semora.Button.Gradient" parent="Widget.Material3.Button.UnelevatedButton">
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="android:textAppearance">@style/TextAppearance.Semora.PoppinsButton</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="cornerRadius">@dimen/corner_medium</item>
+        <item name="android:stateListAnimator">@null</item>
+    </style>
+
+    <!-- Profile Card Styles -->
+    <style name="Widget.Semora.ProfileCard" parent="Widget.Material3.CardView.Filled">
+        <item name="cardCornerRadius">@dimen/corner_medium</item>
+        <item name="cardElevation">2dp</item>
+        <item name="strokeWidth">0dp</item>
+        <item name="contentPadding">12dp</item>
+    </style>
+
     <style name="TextAppearance.Semora.Display" parent="TextAppearance.Material3.DisplayLarge">
         <item name="android:fontFamily">@font/inter_semibold</item>
         <item name="android:textSize">48sp</item>
         <item name="android:letterSpacing">-0.02</item>
+    </style>
+
+    <!-- Hero metric: extra-large bold number for CGPA display -->
+    <style name="TextAppearance.Semora.DisplayLarge" parent="TextAppearance.Material3.DisplayLarge">
+        <item name="android:fontFamily">@font/inter_bold</item>
+        <item name="android:textSize">56sp</item>
+        <item name="android:letterSpacing">-0.03</item>
+        <item name="android:includeFontPadding">false</item>
     </style>
 
     <style name="TextAppearance.Semora.Headline" parent="TextAppearance.Material3.HeadlineLarge">
@@ -157,6 +237,13 @@
     <!-- ============================================= -->
     <!-- Component Styles                               -->
     <!-- ============================================= -->
+    <style name="Widget.Semora.Button.Primary" parent="Widget.Material3.Button">
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="android:textAppearance">@style/TextAppearance.Semora.Button</item>
+    </style>
+
+    
     <style name="PinEditTextStyle" parent="Widget.AppCompat.EditText">
         <item name="android:layout_width">@dimen/pin_box_size</item>
         <item name="android:layout_height">@dimen/pin_box_size</item>

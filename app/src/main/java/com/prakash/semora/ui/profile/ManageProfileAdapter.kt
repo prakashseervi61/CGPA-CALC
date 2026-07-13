@@ -2,11 +2,11 @@ package com.prakash.semora.ui.profile
 
 import android.graphics.drawable.GradientDrawable
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.semora.R
 import com.example.semora.databinding.ItemManageProfileBinding
 
 class ManageProfileAdapter(
@@ -30,29 +30,27 @@ class ManageProfileAdapter(
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: ProfileItem) {
-            val profile = item.profile
-
-            binding.tvAvatar.text = profile.initial.toString()
-            binding.tvUsername.text = profile.username
-            binding.tvBranch.text = profile.branch
-            binding.tvCgpa.text = "CGPA: ${item.cgpa}"
-            binding.tvSemester.text = item.currentSemester
+            val user = item.profile
+            binding.tvUsername.text = user.username
 
             val bg = GradientDrawable().apply {
                 shape = GradientDrawable.OVAL
-                setColor(profile.avatarColor)
+                setColor(user.avatarColor)
             }
             binding.tvAvatar.background = bg
+            binding.tvAvatar.text = user.username.firstOrNull()?.uppercaseChar()?.toString() ?: "?"
 
             if (item.isActive) {
-                binding.btnSwitch.visibility = android.view.View.GONE
-                binding.chipActive.visibility = android.view.View.VISIBLE
-                binding.chipActive.text = "Currently Using"
+                binding.btnSwitch.visibility = View.GONE
+                binding.chipActive.visibility = View.VISIBLE
             } else {
-                binding.btnSwitch.visibility = android.view.View.VISIBLE
-                binding.chipActive.visibility = android.view.View.GONE
+                binding.btnSwitch.visibility = View.VISIBLE
+                binding.chipActive.visibility = View.GONE
                 binding.btnSwitch.setOnClickListener { onSwitchClick(item) }
             }
+
+            binding.tvCgpa.text = "CGPA: ${item.cgpa}"
+            binding.tvSemester.text = item.currentSemester
 
             binding.rowEdit.setOnClickListener { onEditClick(item) }
             binding.rowDelete.setOnClickListener { onDeleteClick(item) }

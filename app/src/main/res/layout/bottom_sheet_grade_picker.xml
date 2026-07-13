@@ -51,7 +51,7 @@
             android:textStyle="bold"
             android:textColor="@color/md3_on_primary"
             app:backgroundTint="@color/grade_o_bg"
-            app:cornerRadius="@dimen/corner_small" />
+            app:cornerRadius="@dimen/corner_hero_sm" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/chipAPlus"
@@ -64,7 +64,7 @@
             android:textStyle="bold"
             android:textColor="@color/md3_on_primary"
             app:backgroundTint="@color/grade_a_bg"
-            app:cornerRadius="@dimen/corner_small" />
+            app:cornerRadius="@dimen/corner_hero_sm" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/chipA"
@@ -77,7 +77,7 @@
             android:textStyle="bold"
             android:textColor="@color/md3_on_primary"
             app:backgroundTint="@color/grade_a_bg"
-            app:cornerRadius="@dimen/corner_small" />
+            app:cornerRadius="@dimen/corner_hero_sm" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/chipBPlus"
@@ -89,7 +89,7 @@
             android:textStyle="bold"
             android:textColor="@color/md3_on_primary"
             app:backgroundTint="@color/grade_b_bg"
-            app:cornerRadius="@dimen/corner_small" />
+            app:cornerRadius="@dimen/corner_hero_sm" />
     </LinearLayout>
 
     <LinearLayout
@@ -110,7 +110,7 @@
             android:textStyle="bold"
             android:textColor="@color/md3_on_primary"
             app:backgroundTint="@color/grade_b_bg"
-            app:cornerRadius="@dimen/corner_small" />
+            app:cornerRadius="@dimen/corner_hero_sm" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/chipC"
@@ -123,7 +123,7 @@
             android:textStyle="bold"
             android:textColor="@color/md3_on_primary"
             app:backgroundTint="@color/grade_c_bg"
-            app:cornerRadius="@dimen/corner_small" />
+            app:cornerRadius="@dimen/corner_hero_sm" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/chipU"
@@ -135,7 +135,7 @@
             android:textStyle="bold"
             android:textColor="@color/md3_on_primary"
             app:backgroundTint="@color/grade_u_bg"
-            app:cornerRadius="@dimen/corner_small" />
+            app:cornerRadius="@dimen/corner_hero_sm" />
     </LinearLayout>
 
     <com.google.android.material.button.MaterialButton

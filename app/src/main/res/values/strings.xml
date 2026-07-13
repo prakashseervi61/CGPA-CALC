@@ -19,6 +19,7 @@
     <string name="content_desc_logo">Semora logo</string>
     <string name="content_desc_pin_digit">PIN digit %d</string>
     <string name="content_desc_confirm_pin_digit">Confirm PIN digit %d</string>
+    <string name="content_desc_add_profile">Add Profile Icon</string>
 
     <!-- Empty States -->
     <string name="empty_home_title">No Grades Yet</string>
@@ -36,4 +37,38 @@
     <string name="profile_manage_desc">Create, switch or remove local profiles.</string>
     <string name="profile_edit_desc">Update username and profile picture.</string>
     <string name="profile_change_pin_desc">Update your 4-digit security PIN.</string>
+    <!-- Profile Picker -->
+    <string name="pp_tagline">Smart Academic Companion</string>
+    <string name="pp_subtitle">Choose a profile to continue your learning journey.</string>
+    <string name="pp_empty_title">No Profiles Yet</string>
+    <string name="pp_empty_desc">Create your first academic profile to save semesters, calculate CGPA, and track your academic progress — all in one place.</string>
+    <string name="pp_btn_create_first">Create Your First Profile</string>
+    <string name="pp_btn_learn_more">Learn More</string>
+    <string name="pp_feature_semester_title">Track Semesters</string>
+    <string name="pp_feature_semester_desc">Manage all 8 semesters with your complete curriculum.</string>
+    <string name="pp_feature_cgpa_title">Calculate CGPA</string>
+    <string name="pp_feature_cgpa_desc">Get instant SGPA and CGPA with grade-based calculations.</string>
+    <string name="pp_feature_progress_title">Monitor Progress</string>
+    <string name="pp_feature_progress_desc">Visualize your academic growth with insightful stats.</string>
+    <string name="pp_footer">Made with ❤️ for Students</string>
+    <string name="pp_select_profile">Select Profile</string>
+    <string name="pp_create_new">Create New Profile</string>
+    <string name="pp_menu_edit">Edit</string>
+    <string name="pp_menu_delete">Delete</string>
+    <string name="pp_menu_switch">Switch Profile</string>
+    <string name="pp_delete_title">Delete Profile</string>
+    <string name="pp_delete_message">This will permanently delete this profile and all its data. This action cannot be undone.</string>
+    <string name="pp_delete_confirm">Delete</string>
+    <string name="pp_delete_cancel">Cancel</string>
+    <string name="pp_department">B.Tech IT</string>
+    <string name="pp_version">Version 1.0.0</string>
+    <string name="delete_profile">Delete</string>
+    <string name="cancel">Cancel</string>
+
+    <!-- Login -->
+    <string name="title_login">Sign In</string>
+    <string name="welcome_back">Welcome Back</string>
+    <string name="login_subtitle">Enter your username and PIN to access your account</string>
+    <string name="button_sign_in">Sign In</string>
+    <string name="login_help_text">Don\'t have an account? Create one to get started.</string>
 </resources>

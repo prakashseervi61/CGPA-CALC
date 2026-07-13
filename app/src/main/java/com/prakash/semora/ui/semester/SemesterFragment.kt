@@ -45,14 +45,16 @@ class SemesterFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProvider(this)[SemViewModel::class.java]
+        viewModel = ViewModelProvider(
+            this,
+            ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().application)
+        )[SemViewModel::class.java]
 
         initAdapter()
         buildSemesterChips()
         setupResetButton()
 
         observeLoading()
-        observeErrors()
         setupPullToRefresh()
 
         shimmerDrawable = ShimmerDrawable().apply {
@@ -68,23 +70,7 @@ class SemesterFragment : Fragment() {
         }
     }
 
-    private fun observeErrors() {
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.errorMessage.collect { msg ->
-                    if (_binding == null) return@collect
-                    binding.errorCard.visibility = if (msg != null) View.VISIBLE else View.GONE
-                    binding.errorText.text = msg
-                }
-            }
-        }
-    }
-
     private fun setupPullToRefresh() {
-        binding.retryButton.setOnClickListener {
-            viewModel.clearError()
-            viewModel.refresh()
-        }
         binding.swipeRefresh.setOnRefreshListener {
             viewModel.refresh()
             binding.swipeRefresh.isRefreshing = false
@@ -118,7 +104,11 @@ class SemesterFragment : Fragment() {
             course.grade.ifEmpty { null }
         )
         sheet.setOnGradeSelectedListener { grade ->
-            viewModel.updateGrade(course.code, grade)
+            viewLifecycleOwner.lifecycleScope.launch {
+                viewModel.updateGrade(course.code, grade)
+                _binding?.let {
+                }
+            }
         }
         sheet.show(parentFragmentManager, "grade_picker")
     }
@@ -234,10 +224,17 @@ class SemesterFragment : Fragment() {
             .setNegativeButton("Cancel", null)
             .setPositiveButton("Reset") { _, _ ->
                 viewModel.resetCurrentSemester()
-                Snackbar.make(binding.root, "Semester $number has been reset.", Snackbar.LENGTH_SHORT)
-                    .show()
+                _binding?.let {
+                    Snackbar.make(it.root, "Semester $number has been reset.", Snackbar.LENGTH_SHORT)
+                        .show()
+                }
             }
             .show()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.refresh()
     }
 
     override fun onDestroyView() {

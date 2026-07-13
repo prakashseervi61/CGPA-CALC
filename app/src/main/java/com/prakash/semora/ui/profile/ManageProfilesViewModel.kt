@@ -5,16 +5,13 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.prakash.semora.data.remote.FirestoreAuthRepository
-import com.prakash.semora.data.remote.FirestoreProfileRepository
-import com.prakash.semora.data.remote.FirestoreSemesterRepository
-import com.prakash.semora.data.remote.ProfileDoc
-import kotlinx.coroutines.async
-import kotlinx.coroutines.coroutineScope
+import com.prakash.semora.data.local.AppDatabase
+import com.prakash.semora.model.User
+import com.prakash.semora.model.Semester
 import kotlinx.coroutines.launch
 
 data class ProfileItem(
-    val profile: ProfileDoc,
+    val profile: User,
     val isActive: Boolean,
     val cgpa: String,
     val currentSemester: String,
@@ -29,29 +26,23 @@ data class ManageProfilesState(
 
 class ManageProfilesViewModel(application: Application) : AndroidViewModel(application) {
 
-    private var deviceUid: String = ""
+    private val userDao = AppDatabase.getDatabase(application).userDao()
+    private val semesterDao = AppDatabase.getDatabase(application).semesterDao()
 
     private val _state = MutableLiveData(ManageProfilesState())
     val state: LiveData<ManageProfilesState> = _state
 
-    private var activeProfileId: String = ""
+    private var activeProfileId: Int = -1
 
-    fun loadProfiles(activeProfileId: String) {
+    fun loadProfiles(activeProfileId: Int) {
         this.activeProfileId = activeProfileId
         viewModelScope.launch {
             _state.value = _state.value?.copy(isLoading = true)
-            deviceUid = FirestoreAuthRepository.getUid() ?: ""
-            if (deviceUid.isEmpty()) {
-                _state.value = ManageProfilesState(isLoading = false)
-                return@launch
-            }
             try {
-                val profiles = FirestoreProfileRepository.getProfiles(deviceUid)
-                val semestersByProfile = coroutineScope {
-                    profiles.map { profile ->
-                        async { profile.id to FirestoreSemesterRepository.getSemesters(deviceUid, profile.id) }
-                    }.map { it.await() }
-                }.toMap()
+                val profiles = userDao.getAllUsers()
+                val semestersByProfile = profiles.associate { profile ->
+                    profile.id to semesterDao.getSemesters(profile.id)
+                }
 
                 val items = profiles.map { profile ->
                     val semesters = semestersByProfile[profile.id] ?: emptyList()
@@ -68,12 +59,12 @@ class ManageProfilesViewModel(application: Application) : AndroidViewModel(appli
                 }
                 _state.value = ManageProfilesState(profiles = items, isLoading = false)
             } catch (e: Exception) {
-                _state.value = ManageProfilesState(isLoading = false, message = "Could not load profiles. Check your connection.")
+                _state.value = ManageProfilesState(isLoading = false, message = "Could not load profiles.")
             }
         }
     }
 
-    private fun calculateCgpa(semesters: List<com.prakash.semora.data.remote.SemesterDoc>): String {
+    private fun calculateCgpa(semesters: List<Semester>): String {
         if (semesters.isEmpty()) return "N/A"
         var weightedSum = 0.0
         var totalCredits = 0
@@ -86,13 +77,10 @@ class ManageProfilesViewModel(application: Application) : AndroidViewModel(appli
         return String.format("%.2f", cgpa)
     }
 
-    fun deleteProfile(profile: ProfileDoc, onComplete: () -> Unit) {
+    fun deleteProfile(profile: User, onComplete: () -> Unit) {
         viewModelScope.launch {
             try {
-                deviceUid = FirestoreAuthRepository.getUid() ?: ""
-                if (deviceUid.isEmpty()) return@launch
-                FirestoreSemesterRepository.deleteAllSemesters(deviceUid, profile.id)
-                FirestoreProfileRepository.deleteProfile(deviceUid, profile.id)
+                userDao.deleteUser(profile)
                 _state.value = _state.value?.copy(message = "Profile deleted")
                 loadProfiles(activeProfileId)
                 onComplete()

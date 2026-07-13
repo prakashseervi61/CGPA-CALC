@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 9,
-    "identityHash": "cf65cc3e0ffaafcd76920052c278f895",
+    "identityHash": "30f12a5372a7def401948f8265280950",
     "entities": [
       {
         "tableName": "users",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `username` TEXT NOT NULL, `pin` TEXT NOT NULL, `salt` TEXT NOT NULL, `pinVersion` INTEGER NOT NULL, `avatarColor` INTEGER NOT NULL, `branch` TEXT NOT NULL, `createdAt` INTEGER NOT NULL, `lastOpened` INTEGER)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `username` TEXT NOT NULL, `pin` TEXT NOT NULL, `salt` TEXT NOT NULL, `avatarColor` INTEGER NOT NULL, `createdAt` INTEGER NOT NULL, `lastOpened` INTEGER)",
         "fields": [
           {
             "fieldPath": "id",
@@ -33,21 +33,9 @@
             "notNull": true
           },
           {
-            "fieldPath": "pinVersion",
-            "columnName": "pinVersion",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
             "fieldPath": "avatarColor",
             "columnName": "avatarColor",
             "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "branch",
-            "columnName": "branch",
-            "affinity": "TEXT",
             "notNull": true
           },
           {
@@ -212,7 +200,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'cf65cc3e0ffaafcd76920052c278f895')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '30f12a5372a7def401948f8265280950')"
     ]
   }
 }

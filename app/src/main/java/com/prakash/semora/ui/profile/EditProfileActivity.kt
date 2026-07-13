@@ -10,12 +10,11 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.semora.BaseActivity
 import com.example.semora.databinding.ActivityEditProfileBinding
 import com.google.android.material.snackbar.Snackbar
-import com.prakash.semora.data.remote.FirestoreAuthRepository
-import com.prakash.semora.data.remote.FirestoreProfileRepository
 import com.prakash.semora.utils.SessionManager
-import kotlinx.coroutines.CoroutineScope
+import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class EditProfileActivity : BaseActivity() {
 
@@ -83,18 +82,15 @@ class EditProfileActivity : BaseActivity() {
     }
 
     private fun loadData() {
-        val profileId = intent.getStringExtra("profile_id") ?: sessionManager.getFirebaseProfileId() ?: ""
+        val profileId = intent.getIntExtra("profile_id", sessionManager.getUserId())
         val username = intent.getStringExtra("username") ?: sessionManager.getUsername() ?: "User"
 
-        CoroutineScope(Dispatchers.IO).launch {
-            val deviceUid = FirestoreAuthRepository.getUid()
-            val profile = if (deviceUid != null && profileId.isNotEmpty()) {
-                FirestoreProfileRepository.getProfile(deviceUid, profileId)
-            } else null
+        lifecycleScope.launch(Dispatchers.IO) {
+            val db = com.prakash.semora.data.local.AppDatabase.getDatabase(this@EditProfileActivity)
+            val profile = if (profileId != -1) db.userDao().getUserById(profileId) else null
             val createdAt = profile?.createdAt ?: System.currentTimeMillis()
-            val branch = profile?.branch ?: "Information Technology"
-            runOnUiThread {
-                viewModel.loadProfile(profileId, username, branch, createdAt)
+            withContext(Dispatchers.Main) {
+                viewModel.loadProfile(profileId, username, createdAt)
             }
         }
     }
@@ -108,10 +104,6 @@ class EditProfileActivity : BaseActivity() {
             if (binding.etCreatedAt.text?.toString() != state.createdAt) {
                 binding.etCreatedAt.setText(state.createdAt)
             }
-            if (binding.etBranch.text?.toString() != state.branch) {
-                binding.etBranch.setText(state.branch)
-            }
-
             if (state.usernameError != null) {
                 binding.tilUsername.error = state.usernameError
             } else {

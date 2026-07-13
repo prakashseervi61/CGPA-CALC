@@ -2,7 +2,14 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/md3_background">
+    android:background="@color/md3_surface">
+
+    <!-- Subtle gradient glow behind logo -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_register_screen"
+        android:alpha="0.4" />
 
     <ImageView
         android:id="@+id/ivSplashLogo"
@@ -15,7 +22,7 @@
         android:id="@+id/vWhiteOverlay"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/md3_background"
+        android:background="@color/md3_surface"
         android:alpha="0" />
 
 </FrameLayout>

@@ -1,81 +1,111 @@
 package com.prakash.semora.ui.home
 
-import com.prakash.semora.data.remote.GradeDoc
-import com.prakash.semora.mockApplication
-import com.prakash.semora.data.remote.SemesterDoc
+import android.app.Application
+import com.prakash.semora.data.SemesterCurriculum
+import com.prakash.semora.model.GradeEntity
+import io.mockk.mockk
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
 class HomeViewModelTest {
 
-    private fun makeViewModel() = HomeViewModel(mockApplication())
+    private val vm = HomeViewModel(mockk<Application>(relaxed = true))
 
     @Test
-    fun `empty semesters returns zero cgpa`() {
-        val vm = makeViewModel()
-        val result = vm.computeDashboard(emptyList())
+    fun `computeDashboard empty returns zeros`() {
+        val result = vm.computeDashboard(emptyList(), emptyList())
         assertEquals(0.0, result.cgpa, 0.001)
+        assertEquals("", result.cgpaMessage)
+        assertEquals(0, result.cgpaProgress)
         assertEquals(0, result.completedSemesters)
+        assertEquals(0, result.gradedCredits)
+        assertEquals(SemesterCurriculum.totalCurriculumCredits, result.totalCurriculumCredits)
     }
 
     @Test
-    fun `one semester with mixed grades computes correct cgpa`() {
-        val vm = makeViewModel()
-        val grades = mapOf(
-            "23MA101" to GradeDoc("23MA101", "Maths", 4, "O"),
-            "23CS101" to GradeDoc("23CS101", "CS", 3, "A"),
+    fun `computeDashboard single grade computes weighted CGPA`() {
+        val grades = listOf(GradeEntity(1, 1, "23MA101", "Maths", 4, "O"))
+        val result = vm.computeDashboard(emptyList(), grades)
+        assertEquals(10.0, result.cgpa, 0.001)
+        assertEquals(4, result.gradedCredits)
+    }
+
+    @Test
+    fun `computeDashboard mixed grades computes correct weighted average`() {
+        val grades = listOf(
+            GradeEntity(1, 1, "23MA101", "Maths", 4, "O"),
+            GradeEntity(1, 1, "23SB101", "Bio", 3, "A")
         )
-        val semesters = listOf(SemesterDoc(semesterNumber = 1, grades = grades))
-        val result = vm.computeDashboard(semesters)
-        val expected = (10.0 * 4 + 8.0 * 3) / (4 + 3)
+        val result = vm.computeDashboard(emptyList(), grades)
+        val expected = (10.0 * 4 + 8.0 * 3) / 7
         assertEquals(expected, result.cgpa, 0.001)
+        assertEquals(7, result.gradedCredits)
     }
 
     @Test
-    fun `all courses graded increments completed semesters`() {
-        val vm = makeViewModel()
-        val sem1Courses = SemesterDoc(semesterNumber = 1, grades = mapOf(
-            "23MA101" to GradeDoc("23MA101", "Maths", 4, "O"),
-            "23SB101" to GradeDoc("23SB101", "Biology", 3, "A+"),
-            "23AS101" to GradeDoc("23AS101", "Science", 4, "A"),
-            "23EC111" to GradeDoc("23EC111", "DLD", 4, "B+"),
-            "23CS101" to GradeDoc("23CS101", "C++", 3, "A"),
-            "23IT101" to GradeDoc("23IT101", "ADP", 3, "O"),
-            "23AS102" to GradeDoc("23AS102", "Science Lab", 2, "A+"),
-            "23TA101" to GradeDoc("23TA101", "Heritage", 1, "A"),
-        ))
-        val result = vm.computeDashboard(listOf(sem1Courses))
+    fun `computeDashboard no grades yields zero`() {
+        val grades = listOf(GradeEntity(1, 1, "23MA101", "Maths", 4, ""))
+        val result = vm.computeDashboard(emptyList(), grades)
+        assertEquals(0.0, result.cgpa, 0.001)
+        assertEquals(0, result.gradedCredits)
+    }
+
+    @Test
+    fun `computeDashboard detects completed semester when all subjects graded`() {
+        val sem1 = SemesterCurriculum.getSemester(1)
+        val grades = sem1.courses.mapIndexed { i, c ->
+            GradeEntity(1, 1, c.code, c.name, c.credits, "A+")
+        }
+        val result = vm.computeDashboard(emptyList(), grades)
         assertEquals(1, result.completedSemesters)
     }
 
     @Test
-    fun `no graded courses returns zero cgpa and zero completed`() {
-        val vm = makeViewModel()
-        val grades = mapOf(
-            "23MA101" to GradeDoc("23MA101", "Maths", 4, ""),
-            "23CS101" to GradeDoc("23CS101", "CS", 3, ""),
-        )
-        val semesters = listOf(SemesterDoc(semesterNumber = 1, grades = grades))
-        val result = vm.computeDashboard(semesters)
-        assertEquals(0.0, result.cgpa, 0.001)
+    fun `computeDashboard partial grades yields 0 completed semesters`() {
+        val grades = listOf(GradeEntity(1, 1, "23MA101", "Maths", 4, "A+"))
+        val result = vm.computeDashboard(emptyList(), grades)
         assertEquals(0, result.completedSemesters)
     }
 
     @Test
-    fun `zero graded credits returns zero cgpa`() {
-        val vm = makeViewModel()
-        val result = vm.computeDashboard(listOf(SemesterDoc(semesterNumber = 1)))
-        assertEquals(0.0, result.cgpa, 0.001)
+    fun `cgpa 0 yields empty message`() {
+        val result = vm.computeDashboard(emptyList(), emptyList())
+        assertEquals("", result.cgpaMessage)
     }
 
     @Test
-    fun `cgpa progress is percentage of 10`() {
-        val vm = makeViewModel()
-        val grades = mapOf(
-            "23MA101" to GradeDoc("23MA101", "Maths", 4, "O"),
-        )
-        val semesters = listOf(SemesterDoc(semesterNumber = 1, grades = grades))
-        val result = vm.computeDashboard(semesters)
-        assertEquals(100, result.cgpaProgress)
+    fun `cgpa 9_5 yields Outstanding`() {
+        val grades = listOf(GradeEntity(1, 1, "23MA101", "Maths", 4, "O"))
+        val result = vm.computeDashboard(emptyList(), grades)
+        assertEquals("Outstanding", result.cgpaMessage)
+    }
+
+    @Test
+    fun `cgpa 9_0 yields Excellent`() {
+        val grades = listOf(GradeEntity(1, 1, "23MA101", "Maths", 4, "A+"))
+        val result = vm.computeDashboard(emptyList(), grades)
+        assertEquals("Excellent", result.cgpaMessage)
+    }
+
+    @Test
+    fun `cgpa 8_0 yields Very Good`() {
+        val grades = listOf(GradeEntity(1, 1, "23MA101", "Maths", 4, "A"))
+        val result = vm.computeDashboard(emptyList(), grades)
+        assertEquals("Very Good", result.cgpaMessage)
+    }
+
+    @Test
+    fun `cgpa 5_0 yields Needs Improvement`() {
+        val grades = listOf(GradeEntity(1, 1, "23MA101", "Maths", 4, "C"))
+        val result = vm.computeDashboard(emptyList(), grades)
+        assertEquals("Needs Improvement", result.cgpaMessage)
+    }
+
+    @Test
+    fun `creditsProgress matches ratio`() {
+        val grades = listOf(GradeEntity(1, 1, "23MA101", "Maths", 4, "A"))
+        val result = vm.computeDashboard(emptyList(), grades)
+        val expected = (4f / SemesterCurriculum.totalCurriculumCredits * 100).toInt()
+        assertEquals(expected, result.creditsProgress)
     }
 }

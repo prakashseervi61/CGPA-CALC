@@ -45,37 +45,26 @@ class GradePickerBottomSheet : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val gradeToChip = mapOf(
-            "O" to R.id.chipO,
-            "A+" to R.id.chipAPlus,
-            "A" to R.id.chipA,
-            "B+" to R.id.chipBPlus,
-            "B" to R.id.chipB,
-            "C" to R.id.chipC,
-            "U" to R.id.chipU
+        data class GradeOption(val grade: String, val chipId: Int, val bgRes: Int)
+        val grades = listOf(
+            GradeOption("O", R.id.chipO, R.drawable.bg_grade_chip_o),
+            GradeOption("A+", R.id.chipAPlus, R.drawable.bg_grade_chip_a),
+            GradeOption("A", R.id.chipA, R.drawable.bg_grade_chip_a),
+            GradeOption("B+", R.id.chipBPlus, R.drawable.bg_grade_chip_b),
+            GradeOption("B", R.id.chipB, R.drawable.bg_grade_chip_b),
+            GradeOption("C", R.id.chipC, R.drawable.bg_grade_chip_c),
+            GradeOption("U", R.id.chipU, R.drawable.bg_grade_chip_u),
         )
 
-        val gradeToBg = mapOf(
-            "O" to R.drawable.bg_grade_chip_o,
-            "A+" to R.drawable.bg_grade_chip_a,
-            "A" to R.drawable.bg_grade_chip_a,
-            "B+" to R.drawable.bg_grade_chip_b,
-            "B" to R.drawable.bg_grade_chip_b,
-            "C" to R.drawable.bg_grade_chip_c,
-            "U" to R.drawable.bg_grade_chip_u
-        )
-
-        gradeToChip.forEach { (grade, chipId) ->
-            val chip = view.findViewById<MaterialButton>(chipId)
-            chip.text = grade
+        grades.forEach { option ->
+            val chip = view.findViewById<MaterialButton>(option.chipId)
+            chip.text = option.grade
             chip.setOnClickListener {
-                onGradeSelected?.invoke(grade)
+                onGradeSelected?.invoke(option.grade)
                 dismiss()
             }
-            if (grade == selectedGrade) {
-                gradeToBg[grade]?.let { bgRes ->
-                    chip.background = resources.getDrawable(bgRes, null)
-                }
+            if (option.grade == selectedGrade) {
+                chip.background = resources.getDrawable(option.bgRes, null)
             }
         }
 

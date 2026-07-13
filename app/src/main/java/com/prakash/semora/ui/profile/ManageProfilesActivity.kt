@@ -13,8 +13,6 @@ import com.example.semora.databinding.ActivityManageProfilesBinding
 import com.example.semora.R
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
-import com.prakash.semora.data.remote.FirestoreAuthRepository
-import com.prakash.semora.data.remote.FirestoreProfileRepository
 import com.prakash.semora.ui.auth.RegisterActivity
 import com.prakash.semora.utils.PinHasher
 import com.prakash.semora.utils.PinInputHelper
@@ -48,7 +46,7 @@ class ManageProfilesActivity : BaseActivity() {
 
     override fun onResume() {
         super.onResume()
-        viewModel.loadProfiles(sessionManager.getFirebaseProfileId() ?: "")
+        viewModel.loadProfiles(sessionManager.getUserId())
     }
 
     private fun setupToolbar() {
@@ -149,18 +147,16 @@ class ManageProfilesActivity : BaseActivity() {
                 return@setOnClickListener
             }
             val profile = item.profile
-            if (!PinHasher.verify(enteredPin, profile.pinHash, profile.pinSalt, profile.pinVersion)) {
+            if (!PinHasher.verify(enteredPin, profile.pin, profile.salt)) {
                 tvError.text = "Incorrect PIN. Try again."
                 tvError.visibility = View.VISIBLE
                 pinInput.clear()
                 return@setOnClickListener
             }
-            sessionManager.saveFirebaseSession(profile.id, profile.username)
+            sessionManager.saveUserSession(profile.id, profile.username)
             lifecycleScope.launch {
-                val deviceUid = FirestoreAuthRepository.getUid()
-                if (deviceUid != null) {
-                    FirestoreProfileRepository.updateLastOpened(deviceUid, profile.id, System.currentTimeMillis())
-                }
+                com.prakash.semora.data.local.AppDatabase.getDatabase(this@ManageProfilesActivity)
+                    .userDao().updateLastOpened(profile.id, System.currentTimeMillis())
             }
             dialog.dismiss()
             val intent = Intent(this, MainActivity::class.java)

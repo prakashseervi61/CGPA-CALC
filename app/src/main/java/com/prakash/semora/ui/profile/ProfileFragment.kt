@@ -45,7 +45,6 @@ class ProfileFragment : Fragment() {
 
         observeData()
         observeLoading()
-        observeErrors()
         setupClickListeners()
         updateThemeLabel()
 
@@ -80,28 +79,11 @@ class ProfileFragment : Fragment() {
             if (_binding == null) return@observe
             binding.cvAvatar.backgroundTintList = ColorStateList.valueOf(color)
         }
-
-        viewModel.branch.observe(viewLifecycleOwner) { branch ->
-            if (_binding == null) return@observe
-            binding.tvBranch.text = branch
-        }
-    }
-
-    private fun observeErrors() {
-        viewModel.errorMessage.observe(viewLifecycleOwner) { msg ->
-            if (_binding == null) return@observe
-            binding.errorCard.visibility = if (msg != null) View.VISIBLE else View.GONE
-            binding.errorText.text = msg
-        }
     }
 
     private fun setupClickListeners() {
         binding.cvAvatar.setOnClickListener { animateAvatarScale() }
         binding.ivEditAvatar.setOnClickListener { animateAvatarScale() }
-        binding.retryButton.setOnClickListener {
-            viewModel.clearError()
-            viewModel.loadProfile()
-        }
 
         binding.rowManageProfiles.setOnClickListener {
             startActivity(Intent(requireContext(), ManageProfilesActivity::class.java))

@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Corner Radii -->
+    <dimen name="corner_xs">6dp</dimen>
     <dimen name="corner_small">8dp</dimen>
     <dimen name="corner_medium">16dp</dimen>
     <dimen name="corner_large">24dp</dimen>
     <dimen name="corner_xlarge">28dp</dimen>
+    <dimen name="corner_hero">32dp</dimen>
+    <dimen name="corner_28">28dp</dimen>
+    <dimen name="corner_hero_sm">12dp</dimen>
+    <dimen name="corner_full">999dp</dimen>
 
     <!-- Spacing -->
     <dimen name="spacing_xxs">4dp</dimen>
@@ -13,8 +18,10 @@
     <dimen name="spacing_md">16dp</dimen>
     <dimen name="spacing_lg">24dp</dimen>
     <dimen name="spacing_xl">32dp</dimen>
+    <dimen name="spacing_2xl">40dp</dimen>
     <dimen name="spacing_xxl">48dp</dimen>
 
+    
     <!-- Avatar Sizes -->
     <dimen name="avatar_size_sm">40dp</dimen>
     <dimen name="avatar_size_md">64dp</dimen>
@@ -22,7 +29,7 @@
     <dimen name="avatar_size_xl">120dp</dimen>
 
     <!-- PIN Entry -->
-    <dimen name="pin_box_size">32dp</dimen>
+    <dimen name="pin_box_size">40dp</dimen>
     <dimen name="pin_box_gap">12dp</dimen>
 
     <!-- Bottom Navigation -->
@@ -45,4 +52,14 @@
     <!-- Button -->
     <dimen name="button_height">56dp</dimen>
     <dimen name="button_corner">16dp</dimen>
+
+    <!-- Profile Picker -->
+    <dimen name="pp_logo_size">80dp</dimen>
+    <dimen name="pp_logo_circle_size">100dp</dimen>
+    <dimen name="pp_empty_card_width">0dp</dimen>
+    <dimen name="pp_profile_card_height">180dp</dimen>
+    <dimen name="pp_avatar_size">52dp</dimen>
+    <dimen name="pp_chip_height">26dp</dimen>
+    <dimen name="pp_feature_icon_size">32dp</dimen>
+    <dimen name="pp_feature_card_height">100dp</dimen>
 </resources>

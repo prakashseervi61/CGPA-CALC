@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="160dp"
+    android:height="120dp"
+    android:viewportWidth="160"
+    android:viewportHeight="120">
+    <!-- Desk -->
+    <path
+        android:fillColor="#E2E8F0"
+        android:pathData="M20,95 L140,95 L140,100 L20,100 Z" />
+    <!-- Laptop screen -->
+    <path
+        android:fillColor="#CBD5E1"
+        android:pathData="M55,60 L105,60 L105,90 L55,90 Z" />
+    <!-- Screen inner -->
+    <path
+        android:fillColor="#F1F5F9"
+        android:pathData="M58,63 L102,63 L102,87 L58,87 Z" />
+    <!-- Dashboard bar chart on screen -->
+    <path
+        android:fillColor="@color/pp_primary"
+        android:pathData="M64,82 L68,82 L68,72 L64,72 Z" />
+    <path
+        android:fillColor="@color/pp_secondary"
+        android:pathData="M71,82 L75,82 L75,68 L71,68 Z" />
+    <path
+        android:fillColor="@color/pp_tertiary"
+        android:pathData="M78,82 L82,82 L82,74 L78,74 Z" />
+    <path
+        android:fillColor="@color/pp_secondary"
+        android:pathData="M85,82 L89,82 L89,70 L85,70 Z" />
+    <path
+        android:fillColor="@color/pp_primary"
+        android:pathData="M92,82 L96,82 L96,76 L92,76 Z" />
+    <!-- Screen line graph -->
+    <path
+        android:strokeColor="@color/pp_primary"
+        android:strokeWidth="1.5"
+        android:fillColor="@android:color/transparent"
+        android:pathData="M64,80 L72,72 L80,78 L88,66 L98,74" />
+    <!-- Laptop base -->
+    <path
+        android:fillColor="#94A3B8"
+        android:pathData="M45,90 L115,90 L120,95 L40,95 Z" />
+    <!-- Books -->
+    <path
+        android:fillColor="#93C5FD"
+        android:pathData="M20,65 L30,65 L30,90 L20,90 Z" />
+    <path
+        android:fillColor="#93C5FD"
+        android:pathData="M15,60 L25,60 L25,85 L15,85 Z" />
+    <path
+        android:fillColor="#BFDBFE"
+        android:pathData="M24,68 L34,68 L34,95 L24,95 Z" />
+    <!-- Book lines -->
+    <path
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="1"
+        android:fillColor="@android:color/transparent"
+        android:pathData="M18,65 L18,82" />
+    <path
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="1"
+        android:fillColor="@android:color/transparent"
+        android:pathData="M27,72 L27,92" />
+    <!-- Graduation cap -->
+    <path
+        android:fillColor="@color/pp_primary"
+        android:pathData="M130,38 L145,38 L150,44 L125,44 Z" />
+    <path
+        android:fillColor="@color/pp_primary"
+        android:pathData="M137,44 L137,52" />
+    <path
+        android:strokeColor="@color/pp_primary"
+        android:strokeWidth="1"
+        android:fillColor="@android:color/transparent"
+        android:pathData="M137,52 C135,55 132,57 129,58" />
+    <!-- Tassel -->
+    <path
+        android:strokeColor="@color/pp_tertiary"
+        android:strokeWidth="1"
+        android:fillColor="@android:color/transparent"
+        android:pathData="M137,44 L143,50" />
+    <!-- Stars floating -->
+    <path
+        android:fillColor="#FCD34D"
+        android:pathData="M130,22 L132,28 L138,28 L133,32 L135,38 L130,34 L125,38 L127,32 L122,28 L128,28 Z" />
+    <path
+        android:fillColor="#60A5FA"
+        android:pathData="M105,35 L106,38 L109,38 L107,40 L108,43 L105,41 L102,43 L103,40 L101,38 L104,38 Z" />
+    <!-- Sparkles -->
+    <path
+        android:fillColor="#3B82F6"
+        android:pathData="M120,20 L121,23 L124,24 L121,25 L120,28 L119,25 L116,24 L119,23 Z" />
+</vector>

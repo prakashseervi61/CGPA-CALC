@@ -1,15 +1,15 @@
 package com.prakash.semora.ui.home
 
-import android.animation.ValueAnimator
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AccelerateDecelerateInterpolator
+import android.view.animation.PathInterpolator
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.semora.MainActivity
+import com.example.semora.R
 import com.example.semora.databinding.FragmentHomeBinding
+import com.prakash.semora.ui.utils.MotionUtils
 import com.prakash.semora.ui.utils.ShimmerDrawable
 import com.prakash.semora.utils.SessionManager
 import java.util.Calendar
@@ -41,7 +41,6 @@ class HomeFragment : Fragment() {
         setupListeners()
         observeDashboard()
         observeLoading()
-        observeErrors()
 
         shimmerDrawable = ShimmerDrawable().apply {
             binding.loadingShimmer.background = this
@@ -65,18 +64,8 @@ class HomeFragment : Fragment() {
         binding.btnNotifications.setOnClickListener {
             // TODO: Open notifications
         }
-        binding.retryButton.setOnClickListener {
-            viewModel.clearError()
-            viewModel.loadDashboard()
-        }
         binding.btnEmptyRetry.setOnClickListener {
             viewModel.loadDashboard()
-        }
-        binding.cardSemesters.setOnClickListener {
-            (requireActivity() as? MainActivity)?.switchToSemesterTab()
-        }
-        binding.cardCredits.setOnClickListener {
-            (requireActivity() as? MainActivity)?.switchToSemesterTab()
         }
     }
 
@@ -93,48 +82,59 @@ class HomeFragment : Fragment() {
         viewModel.dashboard.observe(viewLifecycleOwner) { data ->
             if (_binding == null) return@observe
             binding.cardHero.visibility = View.VISIBLE
-            binding.cardSemesters.visibility = View.VISIBLE
-            binding.cardCredits.visibility = View.VISIBLE
             binding.emptyState.visibility = View.GONE
 
-            animateCgpaCount(data.cgpa)
-            binding.tvCgpaMessage.text = data.cgpaMessage
-            binding.cgpaProgress.progress = data.cgpaProgress
-            binding.tvProgressPercentage.text = "${data.cgpaProgress}%"
+            binding.tvCgpaValue.text = String.format("%.2f", data.cgpa)
+            binding.tvSemesterLabel.text = "Semester ${data.completedSemesters}"
+            binding.tvCreditsLabel.text = "${data.gradedCredits} Credits"
+            binding.tvPercentage.text = "≈ ${data.cgpaProgress}%"
+            binding.progressRing.setProgress(data.cgpa.toFloat())
 
-            binding.tvSemesterCount.text = data.completedSemesters.toString()
-            binding.tvTotalSemesters.text = "/ ${data.totalSemesters}"
-            binding.semesterProgressBar.progress = data.semesterProgress
+            val overlay = binding.cgpaBackgroundOverlay
+            when {
+                data.cgpa == 0.0 -> overlay.setBackgroundResource(android.R.color.transparent)
+                data.cgpa >= 9.0 -> overlay.setBackgroundResource(R.color.cgpa_excellent_overlay)
+                data.cgpa >= 8.0 -> overlay.setBackgroundResource(R.color.cgpa_good_overlay)
+                else -> overlay.setBackgroundResource(R.color.cgpa_needs_improvement_overlay)
+            }
 
-            binding.tvCreditsEarned.text = data.gradedCredits.toString()
-            binding.tvTotalCredits.text = "/ ${data.totalCurriculumCredits}"
-            binding.creditsProgressBar.progress = data.creditsProgress
-        }
-    }
+            binding.cardRecentSemester.icon.setImageResource(R.drawable.ic_school_rounded)
+            binding.cardRecentSemester.title.text = "Recent Semester"
+            binding.cardRecentSemester.value.text = "Semester ${data.completedSemesters}"
 
-    private fun observeErrors() {
-        viewModel.errorMessage.observe(viewLifecycleOwner) { msg ->
-            if (_binding == null) return@observe
-            binding.errorCard.visibility = if (msg != null) View.VISIBLE else View.GONE
-            binding.errorText.text = msg
-        }
-        viewModel.isLoading.observe(viewLifecycleOwner) { loading ->
-            if (_binding == null) return@observe
-            val data = viewModel.dashboard.value
-            val isOfflineEmpty = !loading && data != null && data.cgpa == 0.0 && data.completedSemesters == 0
-            binding.emptyOffline.visibility = if (isOfflineEmpty) View.VISIBLE else View.GONE
-        }
-    }
+            binding.cardTotalSubjects.icon.setImageResource(R.drawable.ic_school)
+            binding.cardTotalSubjects.title.text = "Total Subjects"
+            binding.cardTotalSubjects.value.text = "${data.completedSemesters * 6}"
 
-    private fun animateCgpaCount(target: Double) {
-        val animator = ValueAnimator.ofFloat(0f, target.toFloat())
-        animator.duration = 1000L
-        animator.interpolator = AccelerateDecelerateInterpolator()
-        animator.addUpdateListener { animation ->
-            if (_binding == null) return@addUpdateListener
-            binding.tvCgpa.text = String.format("%.2f", animation.animatedValue)
+            binding.cardCreditsEarned.icon.setImageResource(R.drawable.ic_credits)
+            binding.cardCreditsEarned.title.text = "Credits Earned"
+            binding.cardCreditsEarned.value.text = "${data.gradedCredits} / ${data.totalCurriculumCredits}"
+
+            binding.cardOverallPercentage.icon.setImageResource(R.drawable.ic_info)
+            binding.cardOverallPercentage.title.text = "Overall %"
+            binding.cardOverallPercentage.value.text = "${data.cgpaProgress}%"
+
+            binding.cardUpcomingExams.icon.setImageResource(R.drawable.ic_notification)
+            binding.cardUpcomingExams.title.text = "Upcoming Exams"
+            binding.cardUpcomingExams.value.text = "—"
+
+            binding.cardAcademicInsights.icon.setImageResource(R.drawable.ic_school_rounded)
+            binding.cardAcademicInsights.title.text = "Insights"
+            binding.cardAcademicInsights.value.text = data.cgpaMessage.ifEmpty { "Keep going!" }
+
+            binding.cardQuickActions.icon.setImageResource(R.drawable.ic_edit)
+            binding.cardQuickActions.title.text = "Quick Actions"
+            binding.cardQuickActions.value.text = "Tap to begin"
+
+            fun View.enter(delay: Long) {
+                if (!MotionUtils.areAnimationsEnabled(requireContext())) { alpha = 1f; translationY = 0f; return }
+                alpha = 0f; translationY = 24f * resources.displayMetrics.density
+                animate().alpha(1f).translationY(0f).setDuration(300L).setStartDelay(delay)
+                    .setInterpolator(PathInterpolator(0.05f, 0.7f, 0.1f, 1f)).start()
+            }
+            binding.cardHero.enter(0L)
+            binding.dashboardGrid.enter(100L)
         }
-        animator.start()
     }
 
     override fun onDestroyView() {
@@ -142,5 +142,10 @@ class HomeFragment : Fragment() {
         shimmerDrawable = null
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.loadDashboard()
     }
 }

@@ -38,8 +38,6 @@ class MainActivity : BaseActivity() {
     }
 
     private fun setupBottomNav() {
-        val icons = listOf(binding.ivNavHome, binding.ivNavSemester, binding.ivNavProfile)
-        val labels = listOf(binding.tvNavHome, binding.tvNavSemester, binding.tvNavProfile)
         val tabs = listOf(binding.navHome, binding.navSemester, binding.navProfile)
 
         binding.bottomNavContainer.post {
@@ -57,7 +55,10 @@ class MainActivity : BaseActivity() {
             }
         }
 
-        updateTabStates(0)
+        // Initialize selected index based on current destination to handle configuration changes
+        val currentIndex = tabIds.indexOf(navController.currentDestination?.id) ?: 0
+        selectedIndex = currentIndex
+        updateTabStates(currentIndex)
 
         tabs.forEachIndexed { index, tab ->
             tab.setOnClickListener { selectTab(index) }
@@ -67,6 +68,7 @@ class MainActivity : BaseActivity() {
     private fun selectTab(index: Int) {
         if (index == selectedIndex) return
         val fromIndex = selectedIndex
+
         selectedIndex = index
         updateTabStates(index)
 
@@ -94,9 +96,11 @@ class MainActivity : BaseActivity() {
         val primary = ContextCompat.getColor(this, R.color.md3_primary)
         val onSurfaceVariant = ContextCompat.getColor(this, R.color.md3_on_surface_variant)
 
+        val duration = 175L
+
         binding.navPill.animate()
             .translationX((tabWidth * selected).toFloat())
-            .setDuration(175L)
+            .setDuration(duration)
             .setInterpolator(AccelerateDecelerateInterpolator())
             .start()
 

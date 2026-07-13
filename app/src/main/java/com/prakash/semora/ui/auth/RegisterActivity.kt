@@ -9,14 +9,14 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.animation.AnimationUtils
 import android.view.animation.OvershootInterpolator
-import com.example.semora.R
-import com.google.android.material.snackbar.Snackbar
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import androidx.lifecycle.ViewModelProvider
+import com.example.semora.R
 import com.example.semora.BaseActivity
 import com.example.semora.MainActivity
 import com.example.semora.databinding.ActivityRegisterBinding
+import com.prakash.semora.ui.auth.LoginActivity
 import com.prakash.semora.utils.PinInputHelper
 import com.prakash.semora.utils.SessionManager
 
@@ -160,24 +160,20 @@ class RegisterActivity : BaseActivity() {
                 binding.btnRegister.text = ""
                 animateButtonLoading()
             } else {
-                binding.btnRegister.text = getString(com.example.semora.R.string.register_btn)
+                binding.btnRegister.text = getString(R.string.register_btn)
             }
         }
 
-        viewModel.authResult.observe(this) { profile ->
-            if (profile != null) {
-                sessionManager.saveFirebaseSession(profile.id, profile.username)
+        viewModel.authResult.observe(this) { user ->
+            if (user != null) {
+                sessionManager.saveUserSession(user.id, user.username)
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
                 finish()
             }
         }
 
-        viewModel.authMessage.observe(this) { message ->
-            if (message != "Profile created") {
-                Snackbar.make(binding.root, message, Snackbar.LENGTH_SHORT).show()
-            }
-        }
+        // login errors handled in LoginActivity
     }
 
     private fun animateButtonLoading() {
@@ -222,8 +218,11 @@ class RegisterActivity : BaseActivity() {
             finish()
         }
 
+        // Changed from finish() to navigate to LoginActivity
         binding.btnBackToLogin.setOnClickListener {
-            finish()
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
         }
     }
 

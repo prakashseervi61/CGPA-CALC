@@ -1,5 +1,5 @@
 import React from 'react';
-import { Zap, BookOpen, Star, Target, Check } from 'lucide-react';
+import { Zap, BookOpen, Star, Check } from 'lucide-react';
 import { useSesame } from '../../hooks/useSesame';
 import { useUser } from '../../hooks/useUser';
 

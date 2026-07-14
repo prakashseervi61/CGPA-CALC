@@ -1,6 +1,6 @@
-# Apex GPA — Modern Educational SGPA & CGPA Calculator
+# Semora — Academic Performance Tracker
 
-Apex GPA is a modern, educational, and accessible GPA/CGPA calculator designed to support students throughout their academic journey. Built with React 19, Vite, and Tailwind CSS, it features an intuitive interface, persistent data storage, goal-setting tools, learning resource integration, and comprehensive analytics to foster academic success.
+Semora is a modern, educational, and academic performance tracker designed to support students throughout their academic journey. Built with React 19, Vite, and Tailwind CSS, it features an intuitive interface, persistent data storage, goal-setting tools, learning resource integration, and comprehensive analytics to foster academic success.
 
 ## ✨ Features
 

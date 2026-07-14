@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import {
-  Settings, User, KeyRound, Shield, Database, Download, RotateCcw, Trash2,
-  Check, Target, GraduationCap, Award, Info, Edit2, X
+  Settings, User, KeyRound, Database, Download, RotateCcw, Check, Target, Edit2, X
 } from 'lucide-react';
 import Card from '../ui/Card';
 import Button from '../ui/Button';

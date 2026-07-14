@@ -3,7 +3,6 @@ import { BookOpen, Info, XCircle } from 'lucide-react';
 import Card from '../ui/Card';
 import Badge from '../ui/Badge';
 import { useSesame } from '../../hooks/useSesame';
-import { useNavigate } from 'react-router-dom';
 
 const PASTEL_CIRCLES = [
   'bg-primary-100 text-primary-800', // Indigo (our primary)
@@ -18,10 +17,9 @@ export default function SubjectTable() {
     activeSemester,
     handleUpdateCourse,
     handleDeleteCourse,
+    handleToggleSemesterInclude,
     gradePointsMap
   } = useSesame();
-
-  const navigate = useNavigate();
 
   const courses = activeSemester?.courses || [];
   const gradeOptions = Object.keys(gradePointsMap);
@@ -40,8 +38,6 @@ export default function SubjectTable() {
 
   const handleToggleInclude = () => {
     // We need to toggle the included flag for the active semester
-    // We'll use the handleToggleSemesterInclude from context
-    const { handleToggleSemesterInclude } = useSesame();
     handleToggleSemesterInclude(activeSemester.id);
   };
 

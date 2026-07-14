@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
-  HelpCircle, BookOpen, Calculator, CheckCircle2, ChevronDown, ChevronUp,
-  Award, FileText, Mail, ShieldAlert, Sparkles, Lightbulb
+  HelpCircle, ChevronDown, ChevronUp, Award, Lightbulb
 } from 'lucide-react';
 import Card from '../ui/Card';
 import Button from '../ui/Button';

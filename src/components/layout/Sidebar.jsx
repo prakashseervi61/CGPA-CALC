@@ -17,7 +17,7 @@ export default function Sidebar({ mobileOpen, setMobileOpen }) {
 
   const menuItems = [
     { id: 'dashboard', path: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
-    { id: 'cgpa-trends', path: '/trends', label: 'CGPA Trends', icon: TrendingUp },
+    { id: 'cgpa-trends', path: '/trends', label: 'Trends', icon: TrendingUp },
     { id: 'settings', path: '/settings', label: 'Settings', icon: Settings },
     { id: 'help', path: '/help', label: 'Help & Support', icon: HelpCircle }
   ];
@@ -37,7 +37,7 @@ export default function Sidebar({ mobileOpen, setMobileOpen }) {
           </div>
           <div>
             <h1 className="font-heading text-2xl font-bold text-slate-800 leading-tight">
-              CGPA Calculator
+              Semora
             </h1>
             <p className="text-[11px] text-slate-400 font-medium -mt-1">Academic Portal</p>
           </div>
@@ -73,20 +73,10 @@ export default function Sidebar({ mobileOpen, setMobileOpen }) {
                 }
               `}
             >
-              {({ isActive }) => (
-                <>
-                  <div className={`
-                    p-2 rounded-xl transition-colors duration-200 shrink-0
-                    ${isActive
-                      ? 'bg-primary-600 text-white shadow-sm shadow-primary-500/20'
-                      : 'bg-white text-slate-500 border border-slate-100'
-                    }
-                  `}>
-                    <Icon className="w-4 h-4" />
-                  </div>
-                  <span className="truncate">{item.label}</span>
-                </>
-              )}
+              <div className="p-2 rounded-xl transition-colors duration-200 shrink-0">
+                <Icon className="w-4 h-4" />
+              </div>
+              <span className="truncate">{item.label}</span>
             </NavLink>
           );
         })}

@@ -1,5 +1,5 @@
 /**
- * Curriculum presets for the GPA/CGPA Calculator.
+ * Curriculum presets for the Semora academic tracker.
  * Contains pre-populated subjects and credits from the SKCET B.Tech Information Technology (2024-2028 Batch) Regulation 2022.
  */
 export const CURRICULUM_PRESETS = {

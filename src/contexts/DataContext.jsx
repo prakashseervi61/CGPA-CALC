@@ -208,7 +208,6 @@ export const DataProvider = ({ children }) => {
   const value = {
     user,
     semesters,
-    setSemesters,
     currentSemesterId,
     setCurrentSemesterId,
     gradeScaleRules,

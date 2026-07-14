@@ -5,8 +5,8 @@ import React from 'react';
  */
 export default function Button({
   children,
-  variant = 'primary', // primary, secondary, outline, dashed, ghost, danger
-  size = 'md', // sm, md, lg, icon
+  variant = 'primary', // primary, secondary, outline
+  size = 'md', // sm, md, lg
   icon: Icon = null,
   iconPosition = 'left',
   className = '',
@@ -20,7 +20,6 @@ export default function Button({
     sm: 'px-3 py-1.5 text-xs gap-1.5',
     md: 'px-4 py-2 text-sm gap-2',
     lg: 'px-6 py-3 text-base gap-2.5',
-    icon: 'p-2 text-sm aspect-square rounded-xl',
   };
 
   const variantStyles = {
@@ -28,9 +27,6 @@ export default function Button({
     secondary: 'bg-primary-50 hover:bg-primary-100 text-primary-600 font-extrabold',
     pastelGreen: 'bg-emerald-100 hover:bg-emerald-200 text-emerald-800 font-extrabold',
     outline: 'border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 font-bold',
-    dashed: 'border-2 border-dashed border-primary-500/40 hover:border-primary-500 bg-primary-50/50 hover:bg-primary-100/50 text-primary-500 font-extrabold',
-    ghost: 'bg-transparent hover:bg-slate-100 text-slate-600 font-bold',
-    danger: 'bg-rose-50 hover:bg-rose-100 text-rose-600 font-bold',
   };
 
   return (

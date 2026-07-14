@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import {
   AreaChart, Area, BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid, Legend
 } from 'recharts';
-import { TrendingUp, Award, Zap, BookOpen, Layers, CheckCircle2, XCircle } from 'lucide-react';
+import { TrendingUp, Award, Zap, BookOpen, Layers, XCircle, Target } from 'lucide-react';
 import Card from '../ui/Card';
 import Badge from '../ui/Badge';
 import { useSesame } from '../../hooks/useSesame';

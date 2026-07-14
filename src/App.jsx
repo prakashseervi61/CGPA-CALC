@@ -46,28 +46,10 @@ function App() {
     return (
       <>
         <main className="flex-1 overflow-y-auto p-4 sm:p-6 md:p-8 space-y-6">
-          <SubjectTable
-            courses={activeSemester.courses || []}
-            gradeOptions={Object.keys(gradePointsMap)}
-            gradePoints={gradePointsMap}
-            included={activeSemester.included !== false}
-            onToggleInclude={() => handleToggleSemesterInclude(activeSemester.id)}
-            onUpdateCourse={handleUpdateCourse}
-            onDeleteCourse={handleDeleteCourse}
-          />
-          <GradeScale
-            gradeScale={gradeScaleRules}
-            onSaveGradeScale={setGradeScaleRules}
-          />
+          <SubjectTable />
+          <GradeScale />
         </main>
-        <RightPanel
-          cgpa={overallCgpaCalculations.cgpa}
-          sgpa={semesterCalculations.sgpa}
-          totalCredits={overallCgpaCalculations.totalCumCredits}
-          totalGradePoints={overallCgpaCalculations.totalCumPoints}
-          courses={activeSemester.courses || []}
-          activeSemesterName={activeSemester.name}
-        />
+        <RightPanel />
       </>
     );
   };
@@ -77,14 +59,7 @@ function App() {
     <>
       <Sidebar mobileOpen={mobileOpen} setMobileOpen={setMobileOpen} />
       <div className="flex-1 flex flex-col min-w-0 h-screen overflow-hidden">
-        <Navbar
-          mobileOpen={mobileOpen}
-          setMobileOpen={setMobileOpen}
-          userName={user?.name || 'Student'}
-          currentSemesterId={currentSemesterId}
-          setCurrentSemesterId={setCurrentSemesterId}
-          semesters={semesters}
-        />
+        <Navbar setMobileOpen={setMobileOpen} />
         <div className="flex-1 flex flex-col xl:flex-row min-h-0 overflow-hidden">
           {children}
         </div>
@@ -98,10 +73,7 @@ function App() {
         <Route
           path="/login"
           element={!isLoggedIn ? (
-            <LoginModal
-              isOpen={true}
-              handleLogin={handleLogin}
-            />
+            <LoginModal handleLogin={handleLogin} />
           ) : (
             <Navigate to="/dashboard" replace />
           )}
@@ -124,9 +96,7 @@ function App() {
             <ProtectedRoute>
               <AppShell>
                 <main className="flex-1 overflow-y-auto p-4 sm:p-6 md:p-8">
-                  <CGPATrendsPage
-                    /* props */
-                  />
+                  <CGPATrendsPage />
                 </main>
               </AppShell>
             </ProtectedRoute>
@@ -139,9 +109,7 @@ function App() {
             <ProtectedRoute>
               <AppShell>
                 <main className="flex-1 overflow-y-auto p-4 sm:p-6 md:p-8">
-                  <SettingsPage
-                    /* props */
-                  />
+                  <SettingsPage />
                 </main>
               </AppShell>
             </ProtectedRoute>

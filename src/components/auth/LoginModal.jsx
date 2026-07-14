@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { GraduationCap, ArrowLeft, ArrowRight, User, KeyRound, Trash2, Plus } from 'lucide-react';
+import { GraduationCap, ArrowLeft, ArrowRight, User, KeyRound, Plus } from 'lucide-react';
 import Button from '../ui/Button';
 import Card from '../ui/Card';
 import { useSesame } from '../../hooks/useSesame';
@@ -12,7 +12,7 @@ const CHROME_AVATAR_GRADIENTS = [
   'bg-gradient-to-br from-rose-600 to-rose-800',
 ];
 
-export default function LoginModal({ isOpen, onClose, handleLogin }) {
+export default function LoginModal({ handleLogin }) {
   const [mode, setMode] = useState('select'); // select, create, verify
   const [savedProfiles, setSavedProfiles] = useState([]);
   const [selectedProfile, setSelectedProfile] = useState(null);
@@ -117,7 +117,6 @@ export default function LoginModal({ isOpen, onClose, handleLogin }) {
   return (
     <div className={`
       fixed inset-0 z-50 flex items-center justify-center
-      ${isOpen ? 'block' : 'hidden'}
       bg-black/50 backdrop-blur-sm
       animate-in fade-in zoom-95 duration-200
     `}>
@@ -132,7 +131,7 @@ export default function LoginModal({ isOpen, onClose, handleLogin }) {
               <GraduationCap className="w-9 h-9" />
             </div>
             <h1 className="font-heading text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">
-              Who's using CGPA Calculator?
+              Who's using Semora?
             </h1>
             <p className="text-sm text-slate-500 font-semibold mt-1.5">
               Select an academic profile to enter your dashboard

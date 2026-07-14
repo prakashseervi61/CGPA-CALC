@@ -4,7 +4,6 @@
 :root {
   /* Fonts */
   --font-sans: 'Inter', sans-serif;
-  --font-heading: 'Inter', sans-serif; /* Using same for consistency, can change to Georgia if desired */
 
   /* Colors from tailwind config */
   --bg-app: rgb(252, 251, 255); /* background from theme */
@@ -13,14 +12,6 @@
   --text-main: rgb(15, 23, 42); /* slate-900 */
   --color-primary: rgb(94, 118, 255); /* brand-500 */
   --color-primary-hover: rgb(79, 70, 229); /* brand-600 */
-
-  /* Soft Pastel Accent Colors (from original, we can keep for variety) */
-  --pastel-indigo: #E0E7FF;
-  --pastel-green: #D1FAE5;
-  --pastel-yellow: #FEF3C7;
-  --pastel-red: #FEE2E2;
-  --pastel-blue: #CFFAFE;
-}
 
 body {
   font-family: var(--font-sans);
@@ -32,13 +23,6 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-.font-heading {
-  font-family: var(--font-heading);
-}
-
-.font-body {
-  font-family: var(--font-sans);
-}
 
 /* Custom Scrollbars */
 ::-webkit-scrollbar {

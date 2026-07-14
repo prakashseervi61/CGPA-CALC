@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-    <uses-permission android:name="android.permission.INTERNET"/>
-
     <application
         android:name="com.example.semora.SemoraApplication"
         android:allowBackup="true"
@@ -24,44 +22,9 @@
         </activity>
 
         <activity
-            android:name="com.prakash.semora.ui.auth.ProfilePickerActivity"
-            android:exported="false"
-            android:windowSoftInputMode="adjustResize"
-            android:theme="@style/Theme.Material3.DayNight.NoActionBar" />
-
-        <activity
-            android:name="com.prakash.semora.ui.auth.PinVerificationActivity"
-            android:exported="false"
-            android:windowSoftInputMode="adjustResize" />
-
-        <activity
-            android:name="com.prakash.semora.ui.auth.RegisterActivity"
-            android:exported="false"
-            android:windowSoftInputMode="adjustResize" />
-
-        <activity
-            android:name="com.prakash.semora.ui.auth.LoginActivity"
-            android:exported="false"
-            android:windowSoftInputMode="adjustResize" />
-
-        <activity
             android:name="com.example.semora.MainActivity"
             android:exported="false" />
 
-        <activity
-            android:name="com.prakash.semora.ui.profile.EditProfileActivity"
-            android:exported="false"
-            android:windowSoftInputMode="adjustResize" />
-
-        <activity
-            android:name="com.prakash.semora.ui.profile.ChangePinActivity"
-            android:exported="false"
-            android:windowSoftInputMode="adjustResize" />
-
-        <activity
-            android:name="com.prakash.semora.ui.profile.ManageProfilesActivity"
-            android:exported="false"
-            android:windowSoftInputMode="adjustResize" />
     </application>
 
 </manifest>

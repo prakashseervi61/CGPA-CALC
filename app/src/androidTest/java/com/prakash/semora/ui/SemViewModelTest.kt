@@ -7,6 +7,7 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.prakash.semora.data.local.AppDatabase
 import com.prakash.semora.ui.semester.SemViewModel
+import com.prakash.semora.model.GradeEntity
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import org.junit.After
@@ -69,10 +70,7 @@ class SemViewModelTest {
     fun updateGrade_persistsToDb() = runBlocking {
         val course = viewModel.currentState.first().courses.first()
         viewModel.updateGrade(course.code, "O")
-        val uid = com.prakash.semora.utils.SessionManager(
-            ApplicationProvider.getApplicationContext()
-        ).getUserId()
-        val grades = db.gradeDao().getGradesForSemester(uid, 1)
+        val grades = db.gradeDao().getGradesForSemester(1, 1)
         assertEquals(1, grades.size)
         assertEquals("O", grades[0].grade)
     }

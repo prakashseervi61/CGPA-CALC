@@ -9,7 +9,6 @@ import com.prakash.semora.data.SemesterCurriculum
 import com.prakash.semora.data.local.AppDatabase
 import com.prakash.semora.model.GradeEntity
 import com.prakash.semora.model.Semester
-import com.prakash.semora.utils.SessionManager
 import kotlinx.coroutines.launch
 
 data class HomeDashboardData(
@@ -26,8 +25,7 @@ data class HomeDashboardData(
 
 class HomeViewModel(app: Application) : AndroidViewModel(app) {
 
-    private val sessionManager = SessionManager(app)
-    private var profileId: Int = -1
+    private val profileId = 1
 
     private val semesterDao = AppDatabase.getDatabase(app).semesterDao()
     private val gradeDao = AppDatabase.getDatabase(app).gradeDao()
@@ -46,16 +44,6 @@ class HomeViewModel(app: Application) : AndroidViewModel(app) {
     fun clearError() { _errorMessage.value = null }
 
     fun loadDashboard() {
-        profileId = sessionManager.getUserId()
-        if (profileId == -1) {
-            val empty = computeDashboard(emptyList(), emptyList())
-            cachedDashboard = empty
-            _dashboard.value = empty
-            _isLoading.value = false
-            _errorMessage.value = null
-            return
-        }
-
         _errorMessage.value = null
         cachedDashboard?.let { _dashboard.value = it }
         _isLoading.value = cachedDashboard == null

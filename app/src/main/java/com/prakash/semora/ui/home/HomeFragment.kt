@@ -11,14 +11,12 @@ import com.example.semora.R
 import com.example.semora.databinding.FragmentHomeBinding
 import com.prakash.semora.ui.utils.MotionUtils
 import com.prakash.semora.ui.utils.ShimmerDrawable
-import com.prakash.semora.utils.SessionManager
 import java.util.Calendar
 
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
-    private lateinit var sessionManager: SessionManager
     private lateinit var viewModel: HomeViewModel
     private var shimmerDrawable: ShimmerDrawable? = null
 
@@ -33,8 +31,6 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        sessionManager = SessionManager(requireContext())
-
         viewModel = ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().application))[HomeViewModel::class.java]
 
         setGreeting()
@@ -57,7 +53,7 @@ class HomeFragment : Fragment() {
             else -> "Good evening"
         }
         binding.tvGreeting.text = greeting
-        binding.tvUsername.text = sessionManager.getUsername() ?: "Alex"
+        binding.tvUsername.text = "Student"
     }
 
     private fun setupListeners() {

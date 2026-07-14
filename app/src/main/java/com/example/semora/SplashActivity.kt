@@ -9,13 +9,11 @@ import android.os.Handler
 import android.os.Looper
 import androidx.core.content.ContextCompat
 import com.example.semora.databinding.ActivitySplashBinding
-import com.prakash.semora.ui.auth.ProfilePickerActivity
 import com.prakash.semora.ui.utils.MotionUtils
-import com.prakash.semora.utils.SessionManager
+
 class SplashActivity : BaseActivity() {
 
     private lateinit var binding: ActivitySplashBinding
-    private lateinit var sessionManager: SessionManager
     private var hasNavigated = false
 
     companion object {
@@ -27,7 +25,6 @@ class SplashActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        sessionManager = SessionManager(this)
         binding = ActivitySplashBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -58,7 +55,7 @@ class SplashActivity : BaseActivity() {
         hasNavigated = true
 
         if (!MotionUtils.areAnimationsEnabled(this)) {
-            navigateToProfilePicker()
+            navigateToMain()
             return
         }
 
@@ -75,21 +72,13 @@ class SplashActivity : BaseActivity() {
             .setDuration(OVERLAY_FADE_IN_MS)
             .setStartDelay(OVERLAY_START_DELAY_MS)
             .withEndAction {
-                navigateToProfilePicker()
+                navigateToMain()
             }
             .start()
     }
 
-    private fun navigateToProfilePicker() {
-        val isLoggedIn = sessionManager.isLoggedIn()
-        val hasProfile = sessionManager.getUserId() != -1
-        val intent = if (isLoggedIn && hasProfile) {
-            Intent(this, MainActivity::class.java)
-        } else {
-            if (isLoggedIn) sessionManager.logout()
-            Intent(this, ProfilePickerActivity::class.java)
-        }
-        startActivity(intent)
+    private fun navigateToMain() {
+        startActivity(Intent(this, MainActivity::class.java))
         @Suppress("DEPRECATION")
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
         finish()

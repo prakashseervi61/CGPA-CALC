@@ -36,7 +36,6 @@
     <color name="md3_surface_container_high">#DEE1E7</color>
     <color name="md3_surface_container_highest">#D2D5DD</color>
 
-    <color name="md3_primary_track">#332563EB</color>
 
     <color name="md3_inverse_surface">#2F3033</color>
     <color name="md3_inverse_on_surface">#F0F0F4</color>
@@ -60,8 +59,6 @@
     <!-- Hero card tonal surface -->
     <color name="md3_surface_bright">#F0F4FF</color>
 
-    <!-- Shimmer highlight -->
-    <color name="shimmer_highlight">#33FFFFFF</color>
 
     <!-- CGPA dynamic overlay colors -->
     <color name="cgpa_excellent_overlay">#10B98110</color>
@@ -93,8 +90,4 @@
     <color name="pp_gradient_end">#60A5FA</color>
     <color name="pp_logo_circle_bg">#33FFFFFF</color>
     <color name="pp_logo_circle_border">#40FFFFFF</color>
-    <color name="pp_cgpa_excellent">#10B981</color>
-    <color name="pp_cgpa_good">#2563EB</color>
-    <color name="pp_cgpa_average">#F59E0B</color>
-    <color name="pp_cgpa_needs_work">#EF4444</color>
 </resources>

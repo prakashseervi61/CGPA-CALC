@@ -9,7 +9,6 @@ import com.prakash.semora.model.Course
 import com.prakash.semora.model.GradeEntity
 import com.prakash.semora.model.Semester
 import com.prakash.semora.model.SemesterState
-import com.prakash.semora.utils.SessionManager
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -17,8 +16,7 @@ import kotlinx.coroutines.launch
 
 class SemViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val sessionManager = SessionManager(application)
-    private val profileId get() = sessionManager.getUserId()
+    private val profileId = 1
 
     private val semesterDao = AppDatabase.getDatabase(application).semesterDao()
     private val gradeDao = AppDatabase.getDatabase(application).gradeDao()

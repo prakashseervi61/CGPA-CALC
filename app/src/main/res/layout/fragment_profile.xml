@@ -1,99 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/md3_background">
+    android:background="@color/md3_background"
+    android:orientation="vertical">
 
-    <LinearLayout
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/md3_background"
+        app:title="Settings"
+        app:titleTextAppearance="@style/TextAppearance.Semora.ProfileToolbar"
+        app:navigationIcon="@null" />
+
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@color/md3_background"
-            app:title="Profile"
-            app:titleTextAppearance="@style/TextAppearance.Semora.ProfileToolbar"
-            app:navigationIcon="@null" />
-
-        <androidx.core.widget.NestedScrollView
-            android:id="@+id/scrollContent"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:clipToPadding="false"
-            android:paddingHorizontal="@dimen/spacing_md"
-            android:paddingTop="@dimen/spacing_xxs"
-            android:paddingBottom="@dimen/spacing_md">
+        android:paddingHorizontal="@dimen/spacing_md"
+        android:paddingTop="@dimen/spacing_sm">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <!-- Profile Header -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:orientation="vertical">
-
-                <FrameLayout
-                    android:id="@+id/avatarContainer"
-                    android:layout_width="96dp"
-                    android:layout_height="96dp">
-
-                    <com.google.android.material.card.MaterialCardView
-                        android:id="@+id/cvAvatar"
-                        android:layout_width="96dp"
-                        android:layout_height="96dp"
-                        app:cardCornerRadius="48dp"
-                        app:cardElevation="0dp"
-                        app:strokeColor="@color/md3_primary"
-                        app:strokeWidth="4dp">
-
-                        <TextView
-                            android:id="@+id/tvAvatarInitial"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:gravity="center"
-                            android:text="U"
-                            android:textColor="@color/md3_on_primary"
-                            android:textSize="36sp"
-                            android:textStyle="bold" />
-
-                    </com.google.android.material.card.MaterialCardView>
-
-                    <ImageView
-                        android:id="@+id/ivEditAvatar"
-                        android:layout_width="28dp"
-                        android:layout_height="28dp"
-                        android:layout_gravity="bottom|end"
-                        android:src="@drawable/ic_circle_edit"
-                        android:contentDescription="Edit profile picture"
-                        android:elevation="2dp" />
-
-                </FrameLayout>
-
-                <TextView
-                    android:id="@+id/tvUsername"
-                    style="@style/TextAppearance.Semora.HeadlineSmall"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/spacing_sm"
-                    android:textColor="@color/md3_on_surface"
-                    tools:text="Alex Johnson" />
-
-            </LinearLayout>
-
-            <!-- Settings Section Card -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_lg"
                 app:cardCornerRadius="@dimen/corner_large"
                 app:cardElevation="0dp"
                 app:cardBackgroundColor="@color/md3_surface_container_low"
@@ -105,189 +40,6 @@
                     android:orientation="vertical"
                     android:paddingVertical="@dimen/spacing_sm">
 
-                    <!-- Manage Profiles -->
-                    <LinearLayout
-                        android:id="@+id/rowManageProfiles"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:foreground="?attr/selectableItemBackground"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:paddingHorizontal="@dimen/spacing_md"
-                        android:paddingVertical="@dimen/spacing_sm">
-
-                        <ImageView
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:layout_gravity="center_vertical"
-                            android:src="@drawable/ic_people"
-                            android:tint="@color/md3_on_surface_variant" />
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:layout_marginStart="@dimen/spacing_md"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/profile_manage"
-                                android:textColor="@color/md3_on_surface"
-                                android:textSize="16sp" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="2dp"
-                                android:text="@string/profile_manage_desc"
-                                android:textColor="@color/md3_on_surface_variant"
-                                android:textSize="13sp" />
-                        </LinearLayout>
-
-                        <ImageView
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:layout_gravity="center_vertical"
-                            android:src="@drawable/ic_chevron_right"
-                            android:tint="@color/md3_on_surface_variant" />
-                    </LinearLayout>
-
-                    <com.google.android.material.divider.MaterialDivider
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/spacing_xl" />
-
-                    <!-- Edit Profile -->
-                    <LinearLayout
-                        android:id="@+id/rowEditProfile"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:foreground="?attr/selectableItemBackground"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:paddingHorizontal="@dimen/spacing_md"
-                        android:paddingVertical="@dimen/spacing_sm">
-
-                        <ImageView
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:layout_gravity="center_vertical"
-                            android:src="@drawable/ic_edit"
-                            android:tint="@color/md3_on_surface_variant" />
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:layout_marginStart="@dimen/spacing_md"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/profile_edit"
-                                android:textColor="@color/md3_on_surface"
-                                android:textSize="16sp" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="2dp"
-                                android:text="@string/profile_edit_desc"
-                                android:textColor="@color/md3_on_surface_variant"
-                                android:textSize="13sp" />
-                        </LinearLayout>
-
-                        <ImageView
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:layout_gravity="center_vertical"
-                            android:src="@drawable/ic_chevron_right"
-                            android:tint="@color/md3_on_surface_variant" />
-                    </LinearLayout>
-
-                    <com.google.android.material.divider.MaterialDivider
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/spacing_xl" />
-
-                    <!-- Change PIN -->
-                    <LinearLayout
-                        android:id="@+id/rowChangePin"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:foreground="?attr/selectableItemBackground"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:paddingHorizontal="@dimen/spacing_md"
-                        android:paddingVertical="@dimen/spacing_sm">
-
-                        <ImageView
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:layout_gravity="center_vertical"
-                            android:src="@drawable/ic_lock"
-                            android:tint="@color/md3_on_surface_variant" />
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:layout_marginStart="@dimen/spacing_md"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/profile_change_pin"
-                                android:textColor="@color/md3_on_surface"
-                                android:textSize="16sp" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="2dp"
-                                android:text="@string/profile_change_pin_desc"
-                                android:textColor="@color/md3_on_surface_variant"
-                                android:textSize="13sp" />
-                        </LinearLayout>
-
-                        <ImageView
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:layout_gravity="center_vertical"
-                            android:src="@drawable/ic_chevron_right"
-                            android:tint="@color/md3_on_surface_variant" />
-                    </LinearLayout>
-
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
-
-            <!-- Theme Section Card -->
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_sm"
-                app:cardCornerRadius="@dimen/corner_large"
-                app:cardElevation="0dp"
-                app:cardBackgroundColor="@color/md3_surface_container_low"
-                app:strokeWidth="0dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:paddingVertical="@dimen/spacing_sm">
-
-                    <!-- Theme Toggle -->
                     <LinearLayout
                         android:id="@+id/rowTheme"
                         android:layout_width="match_parent"
@@ -342,18 +94,6 @@
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- Logout -->
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/rowLogout"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:layout_marginTop="@dimen/spacing_sm"
-                android:text="@string/logout"
-                android:textAllCaps="false"
-                android:textColor="@color/md3_on_error"
-                app:backgroundTint="@color/md3_error"
-                app:shapeAppearance="@style/ShapeAppearance.Semora.HeroCard" />
-
             <TextView
                 android:id="@+id/tvAppVersion"
                 android:layout_width="match_parent"
@@ -365,63 +105,6 @@
                 android:textSize="@dimen/spacing_sm" />
 
         </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
+    </ScrollView>
 
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/loadingShimmer"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center_horizontal"
-        android:orientation="vertical"
-        android:visibility="gone">
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
-
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="96dp"
-            android:layout_height="96dp"
-            app:cardCornerRadius="48dp"
-            app:cardElevation="0dp"
-            app:cardBackgroundColor="@color/md3_surface"
-            app:strokeWidth="0dp" />
-
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="100dp"
-            android:layout_height="14dp"
-            android:layout_marginTop="@dimen/spacing_md"
-            app:cardCornerRadius="7dp"
-            app:cardElevation="0dp"
-            app:cardBackgroundColor="@color/md3_surface"
-            app:strokeWidth="0dp" />
-
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="140dp"
-            android:layout_height="12dp"
-            android:layout_marginTop="@dimen/spacing_sm"
-            app:cardCornerRadius="6dp"
-            app:cardElevation="0dp"
-            app:cardBackgroundColor="@color/md3_surface"
-            app:strokeWidth="0dp" />
-
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="match_parent"
-            android:layout_height="160dp"
-            android:layout_marginTop="@dimen/spacing_lg"
-            android:layout_marginHorizontal="@dimen/spacing_md"
-            app:cardCornerRadius="@dimen/corner_medium"
-            app:cardElevation="0dp"
-            app:cardBackgroundColor="@color/md3_surface"
-            app:strokeWidth="0dp" />
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
-    </LinearLayout>
-
-</FrameLayout>
+</LinearLayout>

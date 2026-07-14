@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
@@ -14,8 +15,6 @@ import com.example.semora.MainActivity
 import com.example.semora.R
 import com.prakash.semora.data.local.AppDatabase
 import com.prakash.semora.model.Semester
-import com.prakash.semora.model.User
-import com.prakash.semora.utils.SessionManager
 import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Before
@@ -36,10 +35,8 @@ class SemesterUiTest {
             .allowMainThreadQueries().build()
         AppDatabase.setTestInstance(db)
         runBlocking {
-            val uid = db.userDao().insertUser(User(username = "alice", pin = "hash", salt = "salt", avatarColor = 0, createdAt = System.currentTimeMillis()))
-            db.semesterDao().insertSemester(Semester(userId = uid.toInt(), semesterNumber = 1, sgpa = 9.0, totalCredits = 20))
+            db.semesterDao().insertSemester(Semester(userId = 1, semesterNumber = 1, sgpa = 9.0, totalCredits = 20))
         }
-        SessionManager(ctx).saveUserSession(1, "alice")
     }
 
     @After
@@ -56,7 +53,7 @@ class SemesterUiTest {
     @Test
     fun semesterTabHasSemester1Chip() {
         activityRule.launchActivity(Intent())
-        onView(withId(R.id.nav_semester)).perform(androidx.test.espresso.action.ViewActions.click())
+        onView(withId(R.id.nav_semester)).perform(click())
         try { Thread.sleep(500) } catch (_: Exception) {}
         onView(withText("Semester 1")).check(matches(isDisplayed()))
     }

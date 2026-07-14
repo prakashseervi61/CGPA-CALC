@@ -24,11 +24,11 @@ export default function Button({
   };
 
   const variantStyles = {
-    primary: 'bg-[#4F46E5] hover:bg-[#4338CA] text-white shadow-md shadow-indigo-500/20 hover:shadow-indigo-500/35',
-    secondary: 'bg-[#E0E7FF] hover:bg-[#C7D2FE] text-[#4F46E5] font-extrabold',
-    pastelGreen: 'bg-[#D1FAE5] hover:bg-[#A7F3D0] text-emerald-800 font-extrabold',
+    primary: 'bg-primary-600 hover:bg-primary-700 text-white shadow-md shadow-primary-500/20 hover:shadow-primary-500/35',
+    secondary: 'bg-primary-50 hover:bg-primary-100 text-primary-600 font-extrabold',
+    pastelGreen: 'bg-emerald-100 hover:bg-emerald-200 text-emerald-800 font-extrabold',
     outline: 'border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 font-bold',
-    dashed: 'border-2 border-dashed border-[#4F46E5]/40 hover:border-[#4F46E5] bg-indigo-50/50 hover:bg-indigo-100/50 text-[#4F46E5] font-extrabold',
+    dashed: 'border-2 border-dashed border-primary-500/40 hover:border-primary-500 bg-primary-50/50 hover:bg-primary-100/50 text-primary-500 font-extrabold',
     ghost: 'bg-transparent hover:bg-slate-100 text-slate-600 font-bold',
     danger: 'bg-rose-50 hover:bg-rose-100 text-rose-600 font-bold',
   };

@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
-import { 
-  HelpCircle, BookOpen, Calculator, CheckCircle2, ChevronDown, ChevronUp, 
+import { useNavigate } from 'react-router-dom';
+import {
+  HelpCircle, BookOpen, Calculator, CheckCircle2, ChevronDown, ChevronUp,
   Award, FileText, Mail, ShieldAlert, Sparkles, Lightbulb
 } from 'lucide-react';
 import Card from '../ui/Card';
 import Button from '../ui/Button';
 import Badge from '../ui/Badge';
 
-export default function HelpPage({ onReturnToDashboard }) {
+export default function HelpPage() {
+  const navigate = useNavigate();
   const [openFaq, setOpenFaq] = useState(0); // Open first FAQ by default
 
   const faqs = [
@@ -37,13 +39,17 @@ export default function HelpPage({ onReturnToDashboard }) {
     }
   ];
 
+  const handleReturnToDashboard = () => {
+    navigate('/dashboard');
+  };
+
   return (
     <div className="space-y-6 max-w-4xl select-none animate-in fade-in duration-200">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-2 border-b border-slate-100">
         <div>
           <h2 className="text-2xl font-black text-slate-900 flex items-center gap-2.5">
-            <div className="w-9 h-9 rounded-xl bg-[#E0E7FF] text-[#4F46E5] flex items-center justify-center shrink-0">
+            <div className="w-9 h-9 rounded-xl bg-primary-100 text-primary-600 flex items-center justify-center shrink-0">
               <HelpCircle className="w-5 h-5" />
             </div>
             Help & Support Guide
@@ -53,18 +59,16 @@ export default function HelpPage({ onReturnToDashboard }) {
           </p>
         </div>
 
-        {onReturnToDashboard && (
-          <Button variant="secondary" size="sm" onClick={onReturnToDashboard}>
-            Back to Dashboard
-          </Button>
-        )}
+        <Button variant="secondary" size="sm" onClick={handleReturnToDashboard}>
+          Back to Dashboard
+        </Button>
       </div>
 
       {/* 3-STEP QUICK START GUIDE */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         {/* Step 1 */}
         <Card className="p-4 border border-slate-100 bg-white shadow-sm space-y-2">
-          <div className="w-8 h-8 rounded-xl bg-indigo-100 text-[#4F46E5] flex items-center justify-center font-black text-sm">
+          <div className="w-8 h-8 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-black text-sm">
             1
           </div>
           <h3 className="font-extrabold text-sm text-slate-900">Select Active Semester</h3>
@@ -99,7 +103,7 @@ export default function HelpPage({ onReturnToDashboard }) {
       {/* FAQ SECTION */}
       <Card className="p-6 border border-slate-100 shadow-sm space-y-4">
         <div className="flex items-center gap-2.5 pb-3 border-b border-slate-100">
-          <div className="w-8 h-8 rounded-xl bg-indigo-50 text-[#4F46E5] flex items-center justify-center shrink-0">
+          <div className="w-8 h-8 rounded-xl bg-primary-50 text-primary-600 flex items-center justify-center shrink-0">
             <Lightbulb className="w-4 h-4" />
           </div>
           <div>
@@ -112,18 +116,18 @@ export default function HelpPage({ onReturnToDashboard }) {
           {faqs.map((faq, idx) => {
             const isOpen = openFaq === idx;
             return (
-              <div 
+              <div
                 key={idx}
                 className="border border-slate-200/80 rounded-2xl overflow-hidden transition-all duration-200 bg-slate-50/40"
               >
                 <button
                   type="button"
                   onClick={() => setOpenFaq(isOpen ? -1 : idx)}
-                  className="w-full flex items-center justify-between p-4 text-left font-black text-sm text-slate-800 hover:text-[#4F46E5] transition-colors"
+                  className="w-full flex items-center justify-between p-4 text-left font-black text-sm text-slate-800 hover:text-primary-600 transition-colors"
                 >
                   <span>{faq.q}</span>
                   {isOpen ? (
-                    <ChevronUp className="w-4 h-4 text-[#4F46E5] shrink-0" />
+                    <ChevronUp className="w-4 h-4 text-primary-600 shrink-0" />
                   ) : (
                     <ChevronDown className="w-4 h-4 text-slate-400 shrink-0" />
                   )}
@@ -135,7 +139,7 @@ export default function HelpPage({ onReturnToDashboard }) {
                   </div>
                 )}
               </div>
-            );
+              );
           })}
         </div>
       </Card>
@@ -173,7 +177,7 @@ export default function HelpPage({ onReturnToDashboard }) {
                 <td className="py-2.5 px-3 text-right font-bold text-slate-700">Outstanding</td>
               </tr>
               <tr className="hover:bg-slate-50">
-                <td className="py-2.5 px-3 font-black text-[#4F46E5]">A+</td>
+                <td className="py-2.5 px-3 font-black text-primary-600">A+</td>
                 <td className="py-2.5 px-3 text-center font-black text-slate-900">9.0</td>
                 <td className="py-2.5 px-3 text-center text-slate-600">81 – 90%</td>
                 <td className="py-2.5 px-3 text-right font-bold text-slate-700">Excellent</td>
@@ -205,7 +209,7 @@ export default function HelpPage({ onReturnToDashboard }) {
               <tr className="hover:bg-slate-50">
                 <td className="py-2.5 px-3 font-black text-rose-600">U</td>
                 <td className="py-2.5 px-3 text-center font-black text-slate-900">0.0</td>
-                <td className="py-2.5 px-3 text-center text-slate-600">&lt; 50%</td>
+                <td className="py-2.5 px-3 text-center text-slate-600">{'< 50%'}</td>
                 <td className="py-2.5 px-3 text-right font-bold text-rose-600">Reappear (Fail)</td>
               </tr>
             </tbody>

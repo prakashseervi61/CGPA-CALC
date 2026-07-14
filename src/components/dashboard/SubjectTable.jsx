@@ -2,29 +2,55 @@ import React from 'react';
 import { BookOpen, Info, XCircle } from 'lucide-react';
 import Card from '../ui/Card';
 import Badge from '../ui/Badge';
+import { useSesame } from '../../hooks/useSesame';
+import { useNavigate } from 'react-router-dom';
 
 const PASTEL_CIRCLES = [
-  'bg-[#E0E7FF] text-[#4F46E5]', // Indigo
-  'bg-[#D1FAE5] text-emerald-800', // Green
-  'bg-[#FEF3C7] text-amber-800', // Yellow
-  'bg-[#DBEAFE] text-blue-800', // Blue
-  'bg-[#FEE2E2] text-rose-700', // Red
+  'bg-primary-100 text-primary-800', // Indigo (our primary)
+  'bg-emerald-100 text-emerald-800', // Green
+  'bg-amber-100 text-amber-800', // Yellow
+  'bg-blue-100 text-blue-800', // Blue
+  'bg-rose-100 text-rose-800', // Red
 ];
 
-export default function SubjectTable({ 
-  courses = [], 
-  gradeOptions = ['O', 'A+', 'A', 'B+', 'B', 'C', 'U'],
-  gradePoints = { 'O': 10, 'A+': 9, 'A': 8, 'B+': 7, 'B': 6, 'C': 5, 'U': 0 },
-  included = true,
-  onToggleInclude,
-  onUpdateCourse
-}) {
+export default function SubjectTable() {
+  const {
+    activeSemester,
+    handleUpdateCourse,
+    handleDeleteCourse,
+    gradePointsMap
+  } = useSesame();
+
+  const navigate = useNavigate();
+
+  const courses = activeSemester?.courses || [];
+  const gradeOptions = Object.keys(gradePointsMap);
+  const gradePoints = gradePointsMap; // alias for clarity
+  const included = activeSemester?.included !== false;
+
+  const handleUpdateCourseWrapper = (index, updatedCourse) => {
+    // Find the actual course in the semesters state by index within the active semester
+    // We'll use the existing handleUpdateCourse from context which expects the index within the active semester's courses array
+    handleUpdateCourse(index, updatedCourse);
+  };
+
+  const handleDeleteCourseWrapper = (index) => {
+    handleDeleteCourse(index);
+  };
+
+  const handleToggleInclude = () => {
+    // We need to toggle the included flag for the active semester
+    // We'll use the handleToggleSemesterInclude from context
+    const { handleToggleSemesterInclude } = useSesame();
+    handleToggleSemesterInclude(activeSemester.id);
+  };
+
   return (
-    <Card className="shadow-sm border border-slate-100 p-5">
+    <div className="space-y-4">
       {/* Header */}
       <div className="flex flex-wrap items-center justify-between gap-3 mb-4 pb-3 border-b border-slate-100">
         <div className="flex items-center gap-2.5">
-          <div className="w-9 h-9 rounded-xl bg-[#E0E7FF] text-[#4F46E5] flex items-center justify-center shrink-0">
+          <div className="w-9 h-9 rounded-xl bg-primary-100 text-primary-600 flex items-center justify-center shrink-0">
             <BookOpen className="w-5 h-5" />
           </div>
           <div>
@@ -33,22 +59,20 @@ export default function SubjectTable({
           </div>
         </div>
 
-        {/* Toggle Semester Include / Exclude (Clean Transparent Background & Larger Text) */}
-        {onToggleInclude && (
-          <button
-            type="button"
-            onClick={onToggleInclude}
-            className="flex items-center gap-2.5 bg-transparent hover:opacity-85 transition-all duration-200 cursor-pointer select-none active:scale-95 py-1 px-1"
-            title={included ? "Click to exclude this semester from CGPA" : "Click to include this semester in CGPA"}
-          >
-            <div className={`w-11 h-6 rounded-full p-1 transition-colors duration-200 shrink-0 ${included ? 'bg-[#4F46E5]' : 'bg-slate-300'}`}>
-              <div className={`w-4 h-4 rounded-full bg-white shadow-xs transition-transform duration-200 ${included ? 'translate-x-5' : 'translate-x-0'}`} />
-            </div>
-            <span className="text-sm sm:text-base font-black text-slate-800">
-              {included ? 'Included in CGPA' : 'Excluded from CGPA'}
-            </span>
-          </button>
-        )}
+        {/* Toggle Semester Include / Exclude */}
+        <button
+          type="button"
+          onClick={handleToggleInclude}
+          className="flex items-center gap-2.5 bg-transparent hover:opacity-85 transition-all duration-200 cursor-pointer select-none active:scale-95 py-1 px-1"
+          title={included ? "Click to exclude this semester from CGPA" : "Click to include this semester in CGPA"}
+        >
+          <div className={`w-11 h-6 rounded-full p-1 transition-colors duration-200 shrink-0 ${included ? 'bg-primary-600' : 'bg-slate-300'}`}>
+            <div className={`w-4 h-4 rounded-full bg-white shadow-xs transition-transform duration-200 ${included ? 'translate-x-5' : 'translate-x-0'}`} />
+          </div>
+          <span className="text-sm sm:text-base font-black text-slate-800">
+            {included ? 'Included in CGPA' : 'Excluded from CGPA'}
+          </span>
+        </button>
       </div>
 
       {/* Excluded Semester Alert Banner if Excluded */}
@@ -80,18 +104,19 @@ export default function SubjectTable({
               </tr>
             ) : (
               courses.map((course, idx) => {
-                const circleColor = PASTEL_CIRCLES[idx % PASTEL_CIRCLES.length];
                 const key = course.code || course.id || idx;
                 const point = course.grade ? (gradePoints[course.grade] ?? 0) : '-';
 
                 return (
-                  <tr 
-                    key={key} 
+                  <tr
+                    key={key}
                     className="hover:bg-slate-50/80 transition-colors duration-150 group"
                   >
                     {/* Number Badge */}
                     <td className="py-3 px-3 text-center">
-                      <span className={`inline-flex items-center justify-center w-7 h-7 rounded-full text-xs font-black ${circleColor}`}>
+                      <span className={`inline-flex items-center justify-center w-7 h-7 rounded-full text-xs font-black ${
+                        PASTEL_CIRCLES[idx % PASTEL_CIRCLES.length]
+                      }`}>
                         {idx + 1}
                       </span>
                     </td>
@@ -123,14 +148,15 @@ export default function SubjectTable({
                         value={course.grade || ''}
                         onChange={(e) => {
                           const newGrade = e.target.value;
-                          if (onUpdateCourse) {
-                            onUpdateCourse(idx, { ...course, grade: newGrade });
+                          if (newGrade === '') {
+                            // Handle empty grade
                           }
+                          handleUpdateCourseWrapper(idx, { ...course, grade: newGrade });
                         }}
                         className={`
                           px-3.5 py-1.5 rounded-xl font-black text-xs sm:text-sm border transition-all cursor-pointer focus:outline-none
-                          ${course.grade 
-                            ? 'bg-[#4F46E5] text-white border-transparent shadow-xs shadow-indigo-500/20' 
+                          ${course.grade
+                            ? 'bg-primary-600 text-white border-transparent shadow-xs shadow-primary-500/20'
                             : 'bg-slate-100 text-slate-700 border-slate-200/80 hover:bg-slate-200/60 font-bold'
                           }
                         `}
@@ -148,11 +174,11 @@ export default function SubjectTable({
 
                     {/* Grade Point Badge */}
                     <td className="py-3 px-3 text-center">
-                      <Badge 
-                        variant={point !== '-' && point > 0 ? 'green' : point === 0 ? 'red' : 'slate'}
+                      <Badge
+                        variant={point !== '-' && parseFloat(point) > 0 ? 'green' : parseFloat(point) === 0 ? 'red' : 'slate'}
                         size="lg"
                       >
-                        {point !== '-' ? `${point}.0 Pts` : '--'}
+                        {point !== '-' ? `${parseFloat(point).toFixed(1)} Pts` : '--'}
                       </Badge>
                     </td>
                   </tr>
@@ -164,12 +190,12 @@ export default function SubjectTable({
       </div>
 
       {/* Information Alert Box */}
-      <div className="mt-4 p-3.5 rounded-xl bg-[#DBEAFE]/70 border border-blue-200/80 flex items-start gap-2.5">
+      <div className="mt-4 p-3.5 rounded-xl bg-blue-50/70 border border-blue-200/80 flex items-start gap-2.5">
         <Info className="w-4.5 h-4.5 text-blue-700 shrink-0 mt-0.5" />
         <div className="text-xs text-blue-950 leading-relaxed font-semibold">
           <span className="font-extrabold text-blue-900">Formula Tip:</span> SGPA is calculated as <code className="bg-blue-100 px-1.5 py-0.5 rounded text-[11px] font-mono font-bold text-blue-900">Σ(Credits × Grade Points) / Σ(Credits)</code>. Select grades for all subjects to calculate SGPA & CGPA dynamically.
         </div>
       </div>
-    </Card>
+    </div>
   );
 }

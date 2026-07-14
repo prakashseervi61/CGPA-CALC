@@ -1,12 +1,18 @@
 import React, { useMemo } from 'react';
-import { 
-  AreaChart, Area, BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid, Legend 
+import {
+  AreaChart, Area, BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid, Legend
 } from 'recharts';
 import { TrendingUp, Award, Zap, BookOpen, Layers, CheckCircle2, XCircle } from 'lucide-react';
 import Card from '../ui/Card';
 import Badge from '../ui/Badge';
+import { useSesame } from '../../hooks/useSesame';
+import { useUser } from '../../hooks/useUser';
 
-export default function CGPATrendsPage({ semesters = [], gradePointsMap = {} }) {
+export default function CGPATrendsPage() {
+  const { semesters, gradePointsMap, currentSemesterId } = useSesame();
+  const { user } = useUser();
+  const targetCgpa = user?.targetCgpa || 9.00;
+
   // Compute analytics and chart datasets across all semesters
   const analyticsData = useMemo(() => {
     let cumPoints = 0;
@@ -14,6 +20,7 @@ export default function CGPATrendsPage({ semesters = [], gradePointsMap = {} }) 
     let highestSgpa = 0;
     let highestSemName = 'None';
     let totalCompletedSemesters = 0;
+    let totalRemainingCredits = 0;
 
     const chartData = semesters.map((sem, idx) => {
       let semPoints = 0;
@@ -30,6 +37,12 @@ export default function CGPATrendsPage({ semesters = [], gradePointsMap = {} }) 
           if (sem.included !== false) {
             cumPoints += c.credits * pts;
             cumCredits += c.credits;
+          }
+        } else if (sem.included !== false) {
+          // Count credits for future semesters (no grade yet)
+          if (idx >= semesters.findIndex(s => s.id === currentSemesterId)) {
+            // This is a future semester or current but ungraded - count towards remaining
+            totalRemainingCredits += c.credits;
           }
         }
       });
@@ -58,6 +71,26 @@ export default function CGPATrendsPage({ semesters = [], gradePointsMap = {} }) 
 
     const overallCgpa = cumCredits > 0 ? (cumPoints / cumCredits) : 0;
 
+    // Calculate required future GPA to reach target
+    let requiredFutureGpa = 0;
+    const currentCompletedCredits = cumCredits;
+    const currentEarnedPoints = cumPoints;
+    const targetTotalPoints = targetCgpa * (currentCompletedCredits + totalRemainingCredits);
+    const requiredRemainingPoints = targetTotalPoints - currentEarnedPoints;
+
+    if (totalRemainingCredits > 0) {
+      requiredFutureGpa = requiredRemainingPoints / totalRemainingCredits;
+      // Cap at 10.0 (maximum possible GPA)
+      requiredFutureGpa = Math.min(requiredFutureGpa, 10.0);
+      // If already achieved or exceeded target, show 0 or negative as achieved
+      if (requiredFutureGpa <= 0) {
+        requiredFutureGpa = 0; // Already achieved target
+      }
+    } else {
+      // No remaining credits
+      requiredFutureGpa = overallCgpa >= targetCgpa ? 0 : 10.0; // 0 if achieved, 10 if not possible
+    }
+
     return {
       chartData,
       overallCgpa: Number(overallCgpa.toFixed(2)),
@@ -65,9 +98,12 @@ export default function CGPATrendsPage({ semesters = [], gradePointsMap = {} }) 
       totalCumPoints: cumPoints,
       highestSgpa: Number(highestSgpa.toFixed(2)),
       highestSemName,
-      totalCompletedSemesters
+      totalCompletedSemesters,
+      totalRemainingCredits,
+      requiredFutureGpa: Number(requiredFutureGpa.toFixed(2)),
+      targetCgpa: Number(targetCgpa.toFixed(2))
     };
-  }, [semesters, gradePointsMap]);
+  }, [semesters, gradePointsMap, user?.targetCgpa]);
 
   return (
     <div className="space-y-6 select-none animate-in fade-in duration-200">
@@ -75,7 +111,7 @@ export default function CGPATrendsPage({ semesters = [], gradePointsMap = {} }) 
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2 border-b border-slate-100">
         <div>
           <h2 className="text-2xl font-black text-slate-900 flex items-center gap-2.5">
-            <div className="w-9 h-9 rounded-xl bg-[#E0E7FF] text-[#4F46E5] flex items-center justify-center shrink-0">
+            <div className="w-9 h-9 rounded-xl bg-primary-100 text-primary-600 flex items-center justify-center shrink-0">
               <TrendingUp className="w-5 h-5" />
             </div>
             Academic Performance & Trends
@@ -86,19 +122,59 @@ export default function CGPATrendsPage({ semesters = [], gradePointsMap = {} }) 
         </div>
       </div>
 
-      {/* 4 KPI Summary Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      {/* 4 KPI Summary Cards + 1 Target KPI */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-4">
         {/* KPI 1: Overall CGPA */}
-        <Card className="p-4 bg-gradient-to-br from-[#4F46E5] to-[#3730A3] text-white shadow-md shadow-indigo-500/15 relative overflow-hidden border border-indigo-400/20">
+        <Card className="p-4 bg-gradient-to-br from-primary-600 to-primary-800 text-white shadow-md shadow-primary-500/15 relative overflow-hidden border border-primary-400/20">
           <div className="flex items-center justify-between mb-2">
-            <span className="text-xs font-black uppercase tracking-wider text-indigo-200">Overall CGPA</span>
+            <span className="text-xs font-black uppercase tracking-wider text-primary-200">Overall CGPA</span>
             <Award className="w-4 h-4 text-amber-300" />
           </div>
           <div className="text-3xl font-black">{analyticsData.overallCgpa.toFixed(2)}</div>
-          <p className="text-[11px] text-indigo-100 font-semibold mt-1">out of 10.0 Cumulative</p>
+          <p className="text-[11px] text-primary-100 font-semibold mt-1">out of 10.0 Cumulative</p>
         </Card>
 
-        {/* KPI 2: Highest SGPA */}
+        {/* KPI 2: Target CGPA */}
+        <Card className="p-4 bg-gradient-to-br from-primary-500 to-primary-600 text-white shadow-md shadow-primary-500/15 relative overflow-hidden border border-primary-400/20">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-xs font-black uppercase tracking-wider text-primary-200">Target CGPA</span>
+            <Target className="w-4 h-4 text-amber-300" />
+          </div>
+          <div className="text-3xl font-black">{analyticsData.targetCgpa.toFixed(2)}</div>
+          <p className="text-[11px] text-primary-100 font-semibold mt-1">Goal to Achieve</p>
+        </Card>
+
+        {/* KPI 3: Required Future GPA */}
+        <Card className={`
+          p-4
+          ${analyticsData.requiredFutureGpa === 0 ? 'bg-green-500/20 border-green-500/30' :
+            analyticsData.requiredFunrequiredFutureGpa >= 10 ? 'bg-red-500/20 border-red-500/30' :
+            'bg-blue-500/20 border-blue-500/30'}
+        `}
+        >
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-xs font-black uppercase tracking-wider text-primary-200">Required Future GPA</span>
+            {analyticsData.requiredFutureGpa === 0 ? (
+              <Check className="w-4 h-4 text-green-600" />
+            ) : analyticsData.requiredFutureGpa >= 10 ? (
+              <XCircle className="w-4 h-4 text-red-600" />
+            ) : (
+              <Zap className="w-4 h-4 text-amber-500" />
+            )}
+          </div>
+          <div className="text-3xl font-black">
+            {analyticsData.requiredFutureGpa === 0 ? 'ACHIEVED!' :
+             analyticsData.requiredFutureGpa >= 10 ? 'NOT POSSIBLE' :
+             analyticsData.requiredFutureGpa.toFixed(2)}
+          </div>
+          <p className="text-[11px] text-primary-100 font-semibold mt-1">
+            {analyticsData.requiredFutureGpa === 0 ? 'Target achieved!' :
+             analyticsData.requiredFutureGpa >= 10 ? 'Cannot reach target with remaining credits' :
+             `Need ${analyticsData.requiredFutureGpa.toFixed(2)} avg`}
+          </p>
+        </Card>
+
+        {/* KPI 4: Highest SGPA */}
         <Card className="p-4 bg-white border border-slate-100 shadow-sm">
           <div className="flex items-center justify-between mb-2">
             <span className="text-xs font-black uppercase tracking-wider text-slate-400">Peak Performance</span>
@@ -108,21 +184,21 @@ export default function CGPATrendsPage({ semesters = [], gradePointsMap = {} }) 
             {analyticsData.highestSgpa > 0 ? analyticsData.highestSgpa.toFixed(2) : '--'}
           </div>
           <p className="text-[11px] text-slate-500 font-semibold mt-1">
-            Highest SGPA ({analyticsData.highestSemName})
+            Highest SGPA ({analyticsData.highestSgpa})
           </p>
         </Card>
 
-        {/* KPI 3: Total Credits */}
+        {/* KPI 5: Total Credits */}
         <Card className="p-4 bg-white border border-slate-100 shadow-sm">
           <div className="flex items-center justify-between mb-2">
             <span className="text-xs font-black uppercase tracking-wider text-slate-400">Earned Credits</span>
-            <BookOpen className="w-4 h-4 text-[#4F46E5]" />
+            <BookOpen className="w-4 h-4 text-primary-600" />
           </div>
           <div className="text-3xl font-black text-slate-900">{analyticsData.totalCumCredits}</div>
           <p className="text-[11px] text-slate-500 font-semibold mt-1">Total Academic Credits</p>
         </Card>
 
-        {/* KPI 4: Completed Semesters */}
+        {/* KPI 6: Completed Semesters */}
         <Card className="p-4 bg-white border border-slate-100 shadow-sm">
           <div className="flex items-center justify-between mb-2">
             <span className="text-xs font-black uppercase tracking-wider text-slate-400">Semesters</span>
@@ -156,20 +232,20 @@ export default function CGPATrendsPage({ semesters = [], gradePointsMap = {} }) 
                 </linearGradient>
               </defs>
               <CartesianGrid stroke="#F1F5F9" strokeDasharray="3 3" vertical={false} />
-              <XAxis 
-                dataKey="name" 
-                tick={{ fontSize: 11, fill: '#64748B', fontWeight: '800' }} 
+              <XAxis
+                dataKey="name"
+                tick={{ fontSize: 11, fill: '#64748B', fontWeight: '800' }}
                 axisLine={false}
                 tickLine={false}
               />
-              <YAxis 
-                domain={[0, 10]} 
-                tick={{ fontSize: 11, fill: '#64748B', fontWeight: '800' }} 
+              <YAxis
+                domain={[0, 10]}
+                tick={{ fontSize: 11, fill: '#64748B', fontWeight: '800' }}
                 axisLine={false}
                 tickLine={false}
                 ticks={[0, 2, 4, 6, 8, 10]}
               />
-              <Tooltip 
+              <Tooltip
                 contentStyle={{
                   backgroundColor: '#1E293B',
                   borderRadius: '12px',
@@ -181,28 +257,28 @@ export default function CGPATrendsPage({ semesters = [], gradePointsMap = {} }) 
                 }}
                 formatter={(val, name) => [`${val} GPA`, name === 'cgpa' ? 'Cumulative CGPA' : 'Semester SGPA']}
               />
-              <Legend 
-                verticalAlign="top" 
+              <Legend
+                verticalAlign="top"
                 height={36}
                 formatter={(val) => val === 'cgpa' ? 'Cumulative CGPA' : 'Semester SGPA'}
               />
-              <Area 
-                type="monotone" 
-                dataKey="sgpa" 
-                stroke="#10B981" 
-                strokeWidth={2.5} 
-                fillOpacity={1} 
-                fill="url(#sgpaGlow)" 
+              <Area
+                type="monotone"
+                dataKey="sgpa"
+                stroke="#10B981"
+                strokeWidth={2.5}
+                fillOpacity={1}
+                fill="url(#sgpaGlow)"
                 dot={{ r: 4, fill: '#10B981', strokeWidth: 1.5, stroke: '#fff' }}
                 activeDot={{ r: 6 }}
               />
-              <Area 
-                type="monotone" 
-                dataKey="cgpa" 
-                stroke="#4F46E5" 
-                strokeWidth={2.5} 
-                fillOpacity={1} 
-                fill="url(#cgpaGlow)" 
+              <Area
+                type="monotone"
+                dataKey="cgpa"
+                stroke="#4F46E5"
+                strokeWidth={2.5}
+                fillOpacity={1}
+                fill="url(#cgpaGlow)"
                 dot={{ r: 4, fill: '#4F46E5', strokeWidth: 1.5, stroke: '#fff' }}
                 activeDot={{ r: 6 }}
               />
@@ -211,12 +287,37 @@ export default function CGPATrendsPage({ semesters = [], gradePointsMap = {} }) 
         </div>
       </Card>
 
+      {/* Target Progress Bar */}
+      <div className="mt-6">
+        <div className="space-y-3">
+          <div className="flex justify-between mb-1">
+            <span className="text-sm font-medium text-slate-700">Progress Toward Target CGPA</span>
+            <span className="text-sm font-medium text-slate-700">
+              {analyticsData.overallCgpa.toFixed(2)} / {analyticsData.targetCgpa.toFixed(2)}
+            </span>
+          </div>
+          <div className="w-full bg-slate-200 rounded-full h-2.5">
+            <div
+              className={`
+                h-2.5 rounded-full ${analyticsData.overallCgpa >= analyticsData.targetCgpa ?
+                  'bg-green-600' :
+                  analyticsData.overallCgpa >= analyticsData.targetCgpa * 0.8 ?
+                  'bg-yellow-600' :
+                  'bg-primary-600'
+                } transition-all duration-1000
+              `}
+              style={{ width: `${Math.min((analyticsData.overallCgpa / analyticsData.targetCgpa) * 100, 100)}%` }}
+            ></div>
+          </div>
+        </div>
+      </div>
+
       {/* Chart 2 & Detailed Table Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Bar Chart: Credits & Points Load */}
         <Card className="p-5 border border-slate-100 shadow-sm lg:col-span-1">
           <div className="mb-3 pb-2 border-b border-slate-100">
-            <h4 className="text-sm font-extrabold text-slate-900">Credits Load per Semester</h4>
+            <h4 className="text-sm font-extrabod text-slate-900">Credits Load per Semester</h4>
             <p className="text-xs text-slate-400 font-semibold">Total course credit weight</p>
           </div>
           <div className="w-full h-56">
@@ -225,7 +326,7 @@ export default function CGPATrendsPage({ semesters = [], gradePointsMap = {} }) 
                 <CartesianGrid stroke="#F1F5F9" strokeDasharray="3 3" vertical={false} />
                 <XAxis dataKey="name" tick={{ fontSize: 10, fill: '#64748B', fontWeight: '800' }} axisLine={false} tickLine={false} />
                 <YAxis tick={{ fontSize: 10, fill: '#64748B', fontWeight: '800' }} axisLine={false} tickLine={false} />
-                <Tooltip 
+                <Tooltip
                   contentStyle={{ backgroundColor: '#1E293B', borderRadius: '10px', color: '#fff', fontSize: '11px', fontWeight: 'bold', border: 'none' }}
                   formatter={(val) => [`${val} Credits`, 'Credit Load']}
                 />
@@ -254,6 +355,7 @@ export default function CGPATrendsPage({ semesters = [], gradePointsMap = {} }) 
                   <th className="py-2.5 px-3 text-center">SGPA</th>
                   <th className="py-2.5 px-3 text-center">CGPA</th>
                   <th className="py-2.5 px-3 text-right">Status</th>
+                  <th className="py-2.5 px-3 text-center">Target Progress</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100">
@@ -267,13 +369,29 @@ export default function CGPATrendsPage({ semesters = [], gradePointsMap = {} }) 
                     <td className="py-2.5 px-3 text-center font-black text-slate-900">
                       {sem.sgpa > 0 ? sem.sgpa.toFixed(2) : '--'}
                     </td>
-                    <td className="py-2.5 px-3 text-center font-black text-[#4F46E5]">
+                    <td className="py-2.5 px-3 text-center font-black text-primary-600">
                       {sem.cgpa > 0 ? sem.cgpa.toFixed(2) : '--'}
                     </td>
                     <td className="py-2.5 px-3 text-right">
                       <Badge variant={sem.included ? 'green' : 'slate'} size="sm">
                         {sem.included ? 'Included' : 'Excluded'}
                       </Badge>
+                    </td>
+                    <td className="py-2.5 px-3 text-center text-sm">
+                      {/* Show progress toward target for this semester */}
+                      {sem.cgpa > 0 ? (
+                        <>
+                          {sem.cgpa >= analyticsData.targetCgpa ? (
+                            <span className="text-xs font-medium text-green-600">✓ Target Met</span>
+                          ) : (
+                            <span className="text-xs font-medium text-yellow-600">
+                              {(sem.cgpa / analyticsData.targetCgpa * 100).toFixed(0)}% of target
+                            </span>
+                          )}
+                        </>
+                      ) : (
+                        <span className="text-xs font-medium text-slate-500">Not graded</span>
+                      )}
                     </td>
                   </tr>
                 ))}

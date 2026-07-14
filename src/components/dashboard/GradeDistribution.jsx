@@ -2,6 +2,7 @@ import React, { useMemo } from 'react';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
 import { PieChart as PieIcon, Award } from 'lucide-react';
 import Card from '../ui/Card';
+import { useSesame } from '../../hooks/useSesame';
 
 const GRADE_COLOR_MAP = {
   'O': '#10B981',   // Emerald / Green
@@ -13,7 +14,10 @@ const GRADE_COLOR_MAP = {
   'U': '#EF4444',   // Red
 };
 
-export default function GradeDistribution({ courses = [] }) {
+export default function GradeDistribution() {
+  const { activeSemester } = useSesame();
+  const courses = activeSemester?.courses || [];
+
   // Calculate grade counts & percentages
   const distributionData = useMemo(() => {
     const counts = { 'O': 0, 'A+': 0, 'A': 0, 'B+': 0, 'B': 0, 'C': 0, 'U': 0 };
@@ -48,9 +52,9 @@ export default function GradeDistribution({ courses = [] }) {
 
     return {
       chartData: data.length > 0 ? data : [
-        { name: 'O', gradeKey: 'O', value: 3, percentage: 38, color: '#10B981' },
-        { name: 'A+', gradeKey: 'A+', value: 3, percentage: 38, color: '#4F46E5' },
-        { name: 'A', gradeKey: 'A', value: 2, percentage: 24, color: '#3B82F6' },
+        { name: 'O', gradeKey: 'O', value: 3, percentage: 38, color: GRADE_COLOR_MAP['O'] },
+        { name: 'A+', gradeKey: 'A+', value: 3, percentage: 38, color: GRADE_COLOR_MAP['A+'] },
+        { name: 'A', gradeKey: 'A', value: 2, percentage: 24, color: GRADE_COLOR_MAP['A'] },
       ],
       totalGrades: totalGrades || 8,
       mostFrequent: totalGrades > 0 ? mostFrequent : 'A+'
@@ -62,7 +66,7 @@ export default function GradeDistribution({ courses = [] }) {
       {/* Header */}
       <div className="flex items-center justify-between mb-3 pb-2 border-b border-slate-100">
         <div className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-xl bg-[#E0E7FF] text-[#4F46E5] flex items-center justify-center shrink-0">
+          <div className="w-8 h-8 rounded-xl bg-primary-100 text-primary-600 flex items-center justify-center shrink-0">
             <PieIcon className="w-4 h-4" />
           </div>
           <div>
@@ -78,11 +82,11 @@ export default function GradeDistribution({ courses = [] }) {
         <div className="w-[45%] h-36 flex items-center justify-center relative">
           <ResponsiveContainer width="100%" height="100%">
             <PieChart>
-              <Tooltip 
-                contentStyle={{ 
-                  backgroundColor: '#1E293B', 
-                  borderRadius: '12px', 
-                  color: '#fff', 
+              <Tooltip
+                contentStyle={{
+                  backgroundColor: '#1E293B',
+                  borderRadius: '12px',
+                  color: '#fff',
                   fontSize: '11px',
                   fontWeight: 'bold',
                   border: 'none',
@@ -121,8 +125,8 @@ export default function GradeDistribution({ courses = [] }) {
             <div key={item.gradeKey} className="space-y-1">
               <div className="flex items-center justify-between text-xs font-extrabold text-slate-800">
                 <div className="flex items-center gap-1.5">
-                  <span 
-                    className="w-2.5 h-2.5 rounded-full shrink-0" 
+                  <span
+                    className="w-2.5 h-2.5 rounded-full shrink-0"
                     style={{ backgroundColor: item.color }}
                   />
                   <span>Grade {item.gradeKey}</span>
@@ -131,8 +135,8 @@ export default function GradeDistribution({ courses = [] }) {
               </div>
               {/* Compact Progress Bar */}
               <div className="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden">
-                <div 
-                  className="h-full rounded-full transition-all duration-500" 
+                <div
+                  className="h-full rounded-full transition-all duration-500"
                   style={{ width: `${item.percentage}%`, backgroundColor: item.color }}
                 />
               </div>
@@ -142,14 +146,14 @@ export default function GradeDistribution({ courses = [] }) {
       </div>
 
       {/* Bottom Highlight Badge */}
-      <div className="mt-3.5 pt-2.5 border-t border-slate-100 flex items-center justify-between bg-[#F5F3FF] px-3 py-2 rounded-xl">
+      <div className="mt-3.5 pt-2.5 border-t border-slate-100 flex items-center justify-between bg-primary-50 px-3 py-2 rounded-xl">
         <div className="flex items-center gap-2">
-          <Award className="w-4 h-4 text-[#4F46E5]" />
+          <Award className="w-4 h-4 text-primary-600" />
           <span className="text-xs font-extrabold text-slate-800">
             Most Frequent Grade:
           </span>
         </div>
-        <span className="text-xs font-black text-[#4F46E5] bg-[#E0E7FF] px-2.5 py-0.5 rounded-lg border border-indigo-200/50">
+        <span className="text-xs font-black text-primary-600 bg-primary-100 px-2.5 py-0.5 rounded-lg border border-primary-200/50">
           Grade {distributionData.mostFrequent}
         </span>
       </div>

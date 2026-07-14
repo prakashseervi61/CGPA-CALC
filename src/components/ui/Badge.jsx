@@ -5,20 +5,20 @@ import React from 'react';
  */
 export default function Badge({
   children,
-  variant = 'purple', // purple, green, yellow, red, blue, slate
+  variant = 'purple', // purple, green, yellow, red, blue, slate, primary
   circle = false,
   className = '',
   size = 'md',
   ...props
 }) {
   const variantStyles = {
-    purple: 'bg-[#E0E7FF] text-[#4F46E5]',
-    green: 'bg-[#D1FAE5] text-emerald-800',
-    yellow: 'bg-[#FEF3C7] text-amber-800',
-    red: 'bg-[#FEE2E2] text-rose-700',
-    blue: 'bg-[#DBEAFE] text-blue-800',
-    slate: 'bg-slate-100 text-slate-700',
-    primary: 'bg-[#4F46E5] text-white',
+    purple: 'bg-primary-100 text-primary-800',
+    green: 'bg-emerald-100 text-emerald-800',
+    yellow: 'bg-amber-100 text-amber-800',
+    red: 'bg-rose-100 text-rose-800',
+    blue: 'bg-blue-100 text-blue-800',
+    slate: 'bg-slate-100 text-slate-800',
+    primary: 'bg-primary-600 text-white',
   };
 
   const sizeStyles = {
@@ -31,7 +31,7 @@ export default function Badge({
     return (
       <span
         className={`
-          inline-flex items-center justify-center 
+          inline-flex items-center justify-center
           w-7 h-7 rounded-full text-xs font-black shrink-0
           ${variantStyles[variant]} ${className}
         `}

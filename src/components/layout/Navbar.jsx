@@ -1,18 +1,22 @@
 import React from 'react';
 import { Menu, ChevronDown } from 'lucide-react';
+import { useSesame } from '../../hooks/useSesame';
 
-export default function Navbar({ 
-  currentSemesterId, 
-  setCurrentSemesterId, 
-  semesters, 
-  setMobileOpen,
-  userName = 'Prakash'
-}) {
+export default function Navbar({ setMobileOpen }) {
+  const {
+    currentSemesterId,
+    setCurrentSemesterId,
+    semesters,
+    user
+  } = useSesame();
+
+  const userName = user?.name || 'Student';
+
   return (
     <header className="px-6 md:px-8 py-3.5 flex flex-wrap items-center justify-between gap-4 border-b border-slate-100 bg-white/80 backdrop-blur-md sticky top-0 z-30 shadow-2xs">
       {/* Left Greeting */}
       <div className="flex items-center gap-3">
-        <button 
+        <button
           onClick={() => setMobileOpen(true)}
           className="md:hidden p-2 rounded-xl border border-slate-200 text-slate-600 hover:bg-slate-100"
           aria-label="Open sidebar menu"
@@ -34,7 +38,7 @@ export default function Navbar({
       <div className="flex items-center gap-3 ml-auto">
         {/* Semester Select Dropdown */}
         <div className="relative">
-          <div className="flex items-center bg-[#F5F3FF] border border-slate-200/80 rounded-xl px-3 py-1.5 hover:border-[#4F46E5]/50 transition-colors">
+          <div className="flex items-center bg-primary-50 border border-slate-200/80 rounded-xl px-3 py-1.5 hover:border-[#4F46E5]/50 transition-colors">
             <span className="text-xs font-bold text-slate-400 mr-2 uppercase tracking-wider hidden sm:inline">Active:</span>
             <select
               value={currentSemesterId}

@@ -2,20 +2,22 @@ import React, { useState } from 'react';
 import { Award, Edit3, Check } from 'lucide-react';
 import Card from '../ui/Card';
 import Button from '../ui/Button';
+import { useSesame } from '../../hooks/useSesame';
 
 const DEFAULT_GRADE_SCALES = [
-  { grade: 'O', point: 10, range: '91–100%', bg: 'bg-[#D1FAE5] text-emerald-800 border-emerald-200' },
-  { grade: 'A+', point: 9, range: '81–90%', bg: 'bg-[#E0E7FF] text-[#4F46E5] border-indigo-200' },
-  { grade: 'A', point: 8, range: '71–80%', bg: 'bg-[#DBEAFE] text-blue-800 border-blue-200' },
-  { grade: 'B+', point: 7, range: '61–70%', bg: 'bg-[#FEF3C7] text-amber-800 border-amber-200' },
+  { grade: 'O', point: 10, range: '91–100%', bg: 'bg-emerald-100 text-emerald-800 border-emerald-200' },
+  { grade: 'A+', point: 9, range: '81–90%', bg: 'bg-primary-100 text-primary-800 border-primary-200' },
+  { grade: 'A', point: 8, range: '71–80%', bg: 'bg-blue-100 text-blue-800 border-blue-200' },
+  { grade: 'B+', point: 7, range: '61–70%', bg: 'bg-amber-100 text-amber-800 border-amber-200' },
   { grade: 'B', point: 6, range: '56–60%', bg: 'bg-orange-100 text-orange-800 border-orange-200' },
   { grade: 'C', point: 5, range: '50–55%', bg: 'bg-slate-100 text-slate-800 border-slate-200' },
-  { grade: 'U', point: 0, range: '< 50% (Reappear)', bg: 'bg-[#FEE2E2] text-rose-800 border-rose-200' },
+  { grade: 'U', point: 0, range: '< 50% (Reappear)', bg: 'bg-rose-100 text-rose-800 border-rose-200' },
 ];
 
-export default function GradeScale({ gradeScale = DEFAULT_GRADE_SCALES, onSaveGradeScale }) {
+export default function GradeScale() {
+  const { gradeScaleRules, setGradeScaleRules } = useSesame();
   const [isEditing, setIsEditing] = useState(false);
-  const [scales, setScales] = useState(gradeScale);
+  const [scales, setScales] = useState(gradeScaleRules ?? DEFAULT_GRADE_SCALES);
 
   const handlePointChange = (idx, newPoint) => {
     const updated = [...scales];
@@ -24,9 +26,7 @@ export default function GradeScale({ gradeScale = DEFAULT_GRADE_SCALES, onSaveGr
   };
 
   const saveScales = () => {
-    if (onSaveGradeScale) {
-      onSaveGradeScale(scales);
-    }
+    setGradeScaleRules(scales);
     setIsEditing(false);
   };
 
@@ -35,7 +35,7 @@ export default function GradeScale({ gradeScale = DEFAULT_GRADE_SCALES, onSaveGr
       {/* Header */}
       <div className="flex items-center justify-between mb-5 pb-4 border-b border-slate-100">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-2xl bg-[#D1FAE5] text-emerald-700 flex items-center justify-center shrink-0">
+          <div className="w-10 h-10 rounded-2xl bg-emerald-100 text-emerald-800 flex items-center justify-center shrink-0">
             <Award className="w-5 h-5" />
           </div>
           <div>
@@ -83,7 +83,7 @@ export default function GradeScale({ gradeScale = DEFAULT_GRADE_SCALES, onSaveGr
                     type="number"
                     value={item.point}
                     onChange={(e) => handlePointChange(idx, e.target.value)}
-                    className="w-12 px-1.5 py-0.5 rounded border border-slate-300 text-xs font-bold text-center bg-white text-slate-900 focus:outline-none focus:border-[#4F46E5]"
+                    className="w-12 px-1.5 py-0.5 rounded border border-slate-300 text-xs font-bold text-center bg-white text-slate-900 focus:outline-none focus:border-primary-600"
                     min="0"
                     max="10"
                   />

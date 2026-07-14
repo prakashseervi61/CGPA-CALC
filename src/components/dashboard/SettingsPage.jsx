@@ -1,25 +1,24 @@
 import React, { useState } from 'react';
-import { 
-  Settings, User, KeyRound, Shield, Database, Download, RotateCcw, Trash2, 
+import {
+  Settings, User, KeyRound, Shield, Database, Download, RotateCcw, Trash2,
   Check, Target, GraduationCap, Award, Info, Edit2, X
 } from 'lucide-react';
 import Card from '../ui/Card';
 import Button from '../ui/Button';
 import Badge from '../ui/Badge';
+import { useUser } from '../../hooks/useUser';
+import { useSesame } from '../../hooks/useSesame';
 
-export default function SettingsPage({ 
-  user = { name: 'Prakash', studentId: '7377241IT001', pin: '1234' },
-  onUpdateUser,
-  onResetGrades,
-  onExportData,
-  onDeleteProfile
-}) {
+export default function SettingsPage() {
+  const { user, onUpdateUser } = useUser();
+  const { onResetGrades, onExportData } = useSesame();
+
   const [isEditingProfile, setIsEditingProfile] = useState(false);
   const [isEditingPin, setIsEditingPin] = useState(false);
 
-  const [name, setName] = useState(user?.name || 'Prakash');
-  const [studentId, setStudentId] = useState(user?.studentId || '7377241IT001');
-  const [targetCgpa, setTargetCgpa] = useState('9.00');
+  const [name, setName] = useState(user?.name || '');
+  const [studentId, setStudentId] = useState(user?.studentId || '');
+  const [targetCgpa, setTargetCgpa] = useState(user?.targetCgpa || '9.00');
   const [savedNotice, setSavedNotice] = useState(false);
 
   // PIN change state
@@ -33,7 +32,8 @@ export default function SettingsPage({
       onUpdateUser({
         ...user,
         name,
-        studentId
+        studentId,
+        targetCgpa: parseFloat(targetCgpa) || 0
       });
     }
     setIsEditingProfile(false);
@@ -71,7 +71,7 @@ export default function SettingsPage({
       <div className="flex items-center justify-between pb-2 border-b border-slate-100">
         <div>
           <h2 className="text-2xl font-black text-slate-900 flex items-center gap-2.5">
-            <div className="w-9 h-9 rounded-xl bg-[#E0E7FF] text-[#4F46E5] flex items-center justify-center shrink-0">
+            <div className="w-9 h-9 rounded-xl bg-primary-100 text-primary-600 flex items-center justify-center shrink-0">
               <Settings className="w-5 h-5" />
             </div>
             Settings & Preferences
@@ -92,7 +92,7 @@ export default function SettingsPage({
       <Card className="p-6 border border-slate-100 shadow-sm space-y-4">
         <div className="flex items-center justify-between pb-3 border-b border-slate-100">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-xl bg-indigo-50 text-[#4F46E5] flex items-center justify-center shrink-0">
+            <div className="w-8 h-8 rounded-xl bg-primary-50 text-primary-600 flex items-center justify-center shrink-0">
               <User className="w-4 h-4" />
             </div>
             <div>
@@ -116,8 +116,9 @@ export default function SettingsPage({
               type="button"
               onClick={() => {
                 setIsEditingProfile(false);
-                setName(user?.name || 'Prakash');
-                setStudentId(user?.studentId || '7377241IT001');
+                setName(user?.name || '');
+                setStudentId(user?.studentId || '');
+                setTargetCgpa(user?.targetCgpa?.toString() || '9.00');
               }}
               className="text-xs font-bold text-slate-400 hover:text-slate-600 flex items-center gap-1 transition-colors px-2 py-1 rounded-lg hover:bg-slate-100"
             >
@@ -138,7 +139,7 @@ export default function SettingsPage({
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="Enter your name"
-              className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-sm font-bold text-slate-800 bg-slate-50/50 focus:bg-white focus:border-[#4F46E5] focus:outline-none transition-all disabled:bg-slate-100/70 disabled:text-slate-600 disabled:border-slate-200 disabled:cursor-not-allowed"
+              className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-sm font-bold text-slate-800 bg-slate-50/50 focus:bg-white focus:border-primary-600 focus:outline-none transition-all disabled:bg-slate-100/70 disabled:text-slate-600 disabled:border-slate-200 disabled:cursor-not-allowed"
             />
           </div>
 
@@ -153,8 +154,23 @@ export default function SettingsPage({
               value={studentId}
               onChange={(e) => setStudentId(e.target.value)}
               placeholder="Enter your reg no"
-              className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-sm font-bold text-slate-800 bg-slate-50/50 focus:bg-white focus:border-[#4F46E5] focus:outline-none transition-all disabled:bg-slate-100/70 disabled:text-slate-600 disabled:border-slate-200 disabled:cursor-not-allowed"
+              className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-sm font-bold text-slate-800 bg-slate-50/50 focus:bg-white focus:border-primary-600 focus:outline-none transition-all disabled:bg-slate-100/70 disabled:text-slate-600 disabled:border-slate-200 disabled:cursor-not-allowed"
             />
+          </div>
+
+          <div>
+            <label className="block text-xs font-black uppercase text-slate-400 mb-1.5 tracking-wider">
+              Target CGPA Goal
+            </label>
+            <div className="flex items-center gap-2">
+              <input
+                type="text"
+                value={targetCgpa}
+                onChange={(e) => setTargetCgpa(e.target.value)}
+                className="w-24 px-3 py-1.5 rounded-lg border border-slate-200 text-sm font-black text-slate-900 focus:outline-none focus:border-primary-600"
+              />
+              <span className="text-xs text-slate-500 font-bold">out of 10.0</span>
+            </div>
           </div>
 
           {isEditingProfile && (
@@ -221,7 +237,7 @@ export default function SettingsPage({
               value={currentPin}
               onChange={(e) => setCurrentPin(e.target.value)}
               placeholder="••••"
-              className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-sm font-black text-[#4F46E5] bg-slate-50/50 focus:bg-white focus:border-[#4F46E5] focus:outline-none transition-all disabled:bg-slate-100/70 disabled:text-slate-400 disabled:border-slate-200 disabled:cursor-not-allowed"
+              className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-sm font-black text-primary-600 bg-slate-50/50 focus:bg-white focus:border-primary-600 focus:outline-none transition-all disabled:bg-slate-100/70 disabled:text-slate-400 disabled:border-slate-200 disabled:cursor-not-allowed"
             />
           </div>
 
@@ -239,7 +255,7 @@ export default function SettingsPage({
               value={newPin}
               onChange={(e) => setNewPin(e.target.value)}
               placeholder="••••"
-              className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-sm font-black text-[#4F46E5] bg-slate-50/50 focus:bg-white focus:border-[#4F46E5] focus:outline-none transition-all disabled:bg-slate-100/70 disabled:text-slate-400 disabled:border-slate-200 disabled:cursor-not-allowed"
+              className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-sm font-black text-primary-600 bg-slate-50/50 focus:bg-white focus:border-primary-600 focus:outline-none transition-all disabled:bg-slate-100/70 disabled:text-slate-400 disabled:border-slate-200 disabled:cursor-not-allowed"
             />
           </div>
 
@@ -287,7 +303,7 @@ export default function SettingsPage({
                 type="text"
                 value={targetCgpa}
                 onChange={(e) => setTargetCgpa(e.target.value)}
-                className="w-24 px-3 py-1.5 rounded-lg border border-slate-200 text-sm font-black text-slate-900 focus:outline-none focus:border-[#4F46E5]"
+                className="w-24 px-3 py-1.5 rounded-lg border border-slate-200 text-sm font-black text-slate-900 focus:outline-none focus:border-primary-600"
               />
               <span className="text-xs text-slate-500 font-bold">out of 10.0</span>
             </div>

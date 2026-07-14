@@ -1,18 +1,20 @@
-@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300..900;1,300..900&family=Patrick+Hand&family=Outfit:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 @import "tailwindcss";
 
 :root {
-  --font-heading: 'Patrick Hand', cursive;
-  --font-body: 'Nunito', -apple-system, BlinkMacSystemFont, sans-serif;
-  
-  --bg-app: #EEEEFF;
-  --bg-sidebar: #F5F3FF;
-  --bg-card: #FFFFFF;
-  --text-main: #1E1B4B;
-  --color-primary: #4F46E5;
-  --color-primary-hover: #4338CA;
-  
-  /* Soft Pastel Accent Colors */
+  /* Fonts */
+  --font-sans: 'Inter', sans-serif;
+  --font-heading: 'Inter', sans-serif; /* Using same for consistency, can change to Georgia if desired */
+
+  /* Colors from tailwind config */
+  --bg-app: rgb(252, 251, 255); /* background from theme */
+  --bg-sidebar: rgb(245, 243, 255); /* slate-50 */
+  --bg-card: rgb(255, 255, 255);
+  --text-main: rgb(15, 23, 42); /* slate-900 */
+  --color-primary: rgb(94, 118, 255); /* brand-500 */
+  --color-primary-hover: rgb(79, 70, 229); /* brand-600 */
+
+  /* Soft Pastel Accent Colors (from original, we can keep for variety) */
   --pastel-indigo: #E0E7FF;
   --pastel-green: #D1FAE5;
   --pastel-yellow: #FEF3C7;
@@ -21,7 +23,7 @@
 }
 
 body {
-  font-family: var(--font-body);
+  font-family: var(--font-sans);
   background-color: var(--bg-app);
   color: var(--text-main);
   margin: 0;
@@ -35,7 +37,7 @@ body {
 }
 
 .font-body {
-  font-family: var(--font-body);
+  font-family: var(--font-sans);
 }
 
 /* Custom Scrollbars */

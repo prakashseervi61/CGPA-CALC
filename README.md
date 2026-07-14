@@ -1,55 +1,75 @@
-# Apex GPA — Minimalist SGPA & CGPA Calculator
+# Apex GPA — Modern Educational SGPA & CGPA Calculator
 
-Apex GPA is a clean, modern, and minimalist engineering GPA/CGPA calculator designed with a light-theme first aesthetic, supporting glassmorphism design patterns, responsive layouts, and auto-saving. It features pre-loaded curriculum datasets specifically tailored for students.
-
+Apex GPA is a modern, educational, and accessible GPA/CGPA calculator designed to support students throughout their academic journey. Built with React 19, Vite, and Tailwind CSS, it features an intuitive interface, persistent data storage, goal-setting tools, learning resource integration, and comprehensive analytics to foster academic success.
 
 ## ✨ Features
 
-- **Preset Curriculum**: Pre-populated courses, codes, and credit hours for the **SKCET B.Tech Information Technology (2024-2028 Batch) Regulation 2022**.
-- **Real-time Live Calculation**: Dynamic computation of SGPA for each semester and overall CGPA as you input your grades.
-- **Glassmorphic UI**: Beautiful modern design using Tailwind CSS with clean backdrop blur panels and transitions.
-- **Dark Mode Support**: Seamless toggle between elegant light and dark modes.
-- **Persistence (Auto-Save)**: Your entered grades and selections are instantly cached in `localStorage` so they persist even after page refreshes.
-- **Modular Exclusions**: Toggle individual semesters in or out of the CGPA calculation with a simple switch.
-- **Responsive Mobile Dashboard**: Fully customized mobile interface using a modern bottom tab navigation bar.
+### Core Functionality
+- **Preset Curriculum**: Pre-loaded courses, codes, and credit hours for the SKCET B.Tech Information Technology (2024-2028 Batch) Regulation 2022.
+- **Real-time Calculation**: Instant SGPA and CGPA computation as grades are entered.
+- **Multi-user Support**: Separate profiles for different students or semesters with 4-digit PIN protection.
+- **Data Persistence**: Automatic saving to browser localStorage — data survives page refreshes and browser restarts.
+- **Semester Inclusion Toggle**: Include or exclude specific semesters from CGPA calculation.
+- **Data Export/Import**: Export grades as CSV for backup or sharing; reset data when needed.
 
----
+### Educational Enhancements
+- **Goal Setting**: Set target CGPA and visualize progress with required future GPA calculations.
+- **Learning Resources**: Get personalized video/article recommendations based on course performance.
+- **Study Planner**: Schedule study sessions with calendar integration (coming soon).
+- **Strengths & Weaknesses Analysis**: Identify subjects where you excel or need improvement.
+- **Grade Trend Analysis**: Interactive charts showing SGPA/CGPA progression and credit distribution.
+
+### User Experience
+- **Clean, Minimalist Interface**: Soft color palette with ample whitespace for reduced cognitive load.
+- **Responsive Design**: Optimized for mobile, tablet, and desktop with adaptive layouts.
+- **Accessibility First**: Full keyboard navigation, screen reader support, and WCAG AA compliance.
+- **Dark/Light Mode**: Seamless toggle between light and dark themes.
+- **Micro-interactions**: Subtle animations and feedback for engaging user experience.
+- **PWA Support**: Install as a progressive web app for offline use and home screen access.
+
+### Data Visualization
+- **SGPA vs CGPA Progression Chart**: Area chart comparing semester performance to cumulative average.
+- **Credit Load Bar Chart**: Visualizing course credit distribution per semester.
+- **Grade Distribution Donut Chart**: Breakdown of achieved grades with interactive legend.
+- **Semester Performance Table**: Detailed table view of all academic metrics.
 
 ## 🛠️ Tech Stack
 
-- **Markup**: Semantic HTML5
-- **Styling**: Tailwind CSS & Vanilla CSS (with responsive utility classes)
-- **Icons**: FontAwesome 6 (CDN)
-- **Fonts**: Outfit (via Google Fonts)
-- **Logic**: Vanilla ES6 JavaScript (No frameworks, pure and lightweight)
+- **Frontend**: React 19, Vite 6, Tailwind CSS 4
+- **State Management**: React Context API withuseState/useReducer
+- **Data Persistence**: browser localStorage (with custom hooks)
+- **Charts**: Recharts 3.9
+- **Icons**: Lucide React
+- **Animations**: Framer Motion (for micro-interactions)
+- **Build Tool**: Vite with React plugin and Tailwind integration
+- **Code Quality**: ESLint, Prettier (configured via project settings)
 
----
+## 📱 Platforms
+- Web App (responsive design)
+- Progressive Web App (installable on mobile/desktop)
+- (Future) Android/iOS via Capacitor
 
-## 📂 Project Structure
+## 🚀 Getting Started
 
-```text
-CGPA-CALC/
-│
-├── index.html            # Main markup file & skeleton
-├── README.md             # Project documentation
-│
-└── assets/
-    ├── css/
-    │   └── style.css     # Custom minimalist animations and utility styles
-    │
-    └── js/
-        ├── curriculum.js # Curriculum definitions and presets
-        └── app.js        # Core state manager, calculator logic & DOM events
+```bash
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
+
+# Build for production
+npm run build
+
+# Preview production build
+npm run preview
 ```
 
----
+## 📄 License
 
-## ⚡ How to Run Locally
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-Since this is a client-side static application, you don't need any local server setup to run it:
+## 🙏 Acknowledgements
 
-1. Clone this repository:
-   ```bash
-   git clone https://github.com/prakashseervi61/CGPA-CALC.git
-   ```
-2. Open `index.html` directly in any modern web browser.
+- Sri Krishna College of Engineering & Technology for curriculum data
+- Open-source community for React, Vite, Tailwind, and Recharts

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { GraduationCap, ArrowLeft, ArrowRight, User, KeyRound, Plus } from 'lucide-react';
 import Button from '../ui/Button';
 import Card from '../ui/Card';
+import Badge from '../ui/Badge';
 import { useSesame } from '../../hooks/useSesame';
 
 const CHROME_AVATAR_GRADIENTS = [

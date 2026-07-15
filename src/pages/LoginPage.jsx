@@ -8,10 +8,7 @@ import {
   Badge,
   Key,
   Lock,
-  Menu,
-  Github,
-  Gitlab,
-  Linkedin
+  Menu
 } from 'lucide-react';
 import Button from '../ui/Button';
 import Input from '../ui/Input';
@@ -181,28 +178,6 @@ const LoginPage = () => {
             <div className="auth-divider-line"></div>
             <span className="auth-divider-text">OR</span>
             <div className="auth-divider-line"></div>
-          </div>
-
-          {/* Other Login Methods */}
-          <div className="auth-social-buttons">
-            <button className="auth-social-button">
-              <span className="auth-social-button-icon">
-                <Gitlab className="w-5 h-5 text-gray-600" />
-              </span>
-              <span className="auth-social-button-text">Continue with GitLab</span>
-            </button>
-            <button className="auth-social-button">
-              <span className="auth-social-button-icon">
-                <Github className="w-5 h-5 text-gray-600" />
-              </span>
-              <span className="auth-social-button-text">Continue with GitHub</span>
-            </button>
-            <button className="auth-social-button">
-              <span className="auth-social-button-icon">
-                <Linkedin className="w-5 h-5 text-gray-600" />
-              </span>
-              <span className="auth-social-button-text">Continue with LinkedIn</span>
-            </button>
           </div>
 
           {/* Bottom Text */}

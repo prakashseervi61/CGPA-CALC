@@ -6,10 +6,7 @@ import {
   Key,
   Mail,
   Check,
-  Globe,
-  Github,
-  Gitlab,
-  Linkedin
+  Globe
 } from 'lucide-react';
 import Button from '../ui/Button';
 import Input from '../ui/Input';
@@ -78,24 +75,24 @@ const RegisterPage = () => {
                 <p className="text-white/70">Detailed breakdown of each semester's performance</p>
               </div>
             </div>
-<div className="auth-feature-item">
-  <div className="auth-feature-icon">
-    <Check className="w-4 h-4 text-[#22C55E]" />
-  </div>
-  <div className="auth-feature-content">
-    <h3 className="text-white">Progress Tracking</h3>
-    <p className="text-white/70">Monitor your academic growth over time</p>
-  </div>
-</div>
-<div className="auth-feature-item">
-  <div className="auth-feature-icon">
-    <Check className="w-4 h-4 text-[#22C55E]" />
-  </div>
-  <div className="auth-feature-content">
-    <h3 className="text-white">Secure Cloud Sync</h3>
-    <p className="text-white/70">Your data is safely backed up and accessible anywhere</p>
-  </div>
-</div>
+            <div className="auth-feature-item">
+              <div className="auth-feature-icon">
+                <Check className="w-4 h-4 text-[#22C55E]" />
+              </div>
+              <div className="auth-feature-content">
+                <h3 className="text-white">Progress Tracking</h3>
+                <p className="text-white/70">Monitor your academic growth over time</p>
+              </div>
+            </div>
+            <div className="auth-feature-item">
+              <div className="auth-feature-icon">
+                <Check className="w-4 h-4 text-[#22C55E]" />
+              </div>
+              <div className="auth-feature-content">
+                <h3 className="text-white">Secure Cloud Sync</h3>
+                <p className="text-white/70">Your data is safely backed up and accessible anywhere</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -230,28 +227,6 @@ const RegisterPage = () => {
             <div className="auth-divider-line"></div>
             <span className="auth-divider-text">OR</span>
             <div className="auth-divider-line"></div>
-          </div>
-
-          {/* Other Signup Methods */}
-          <div className="auth-social-buttons">
-            <button className="auth-social-button">
-              <span className="auth-social-button-icon">
-                <Gitlab className="w-5 h-5 text-gray-600" />
-              </span
-  <span className="auth-social-button-text">Continue with GitLab</span>
-</button>
-<button className="auth-social-button">
-  <span className="auth-social-button-icon">
-    <Github className="w-5 h-5 text-gray-600" />
-  </span>
-  <span className="auth-social-button-text">Continue with GitHub</span>
-</button>
-<button className="auth-social-button">
-  <span className="auth-social-button-icon">
-    <Linkedin className="w-5 h-5 text-gray-600" />
-  </span>
-  <span className="auth-social-button-text">Continue with LinkedIn</span>
-</button>
           </div>
 
           {/* Bottom Text */}

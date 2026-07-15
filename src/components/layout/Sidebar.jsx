@@ -59,13 +59,9 @@ export default function Sidebar({ mobileOpen, setMobileOpen }) {
               onClick={() => {
                 if (setMobileOpen) setMobileOpen(false);
               }}
-              className={({ isActive }) => `
-                w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-sm font-semibold transition-all duration-200
-                ${isActive
-                  ? 'bg-primary-200 text-primary-800 font-extrabold'
-                  : 'text-slate-600 hover:bg-slate-200/50 hover:text-slate-900'
-                }
-              `}
+              className={({ isActive }) =>
+                `w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-sm font-semibold transition-all duration-200 ${isActive ? 'bg-primary-200 text-primary-800 font-extrabold' : 'text-slate-600 hover:bg-slate-200/50 hover:text-slate-900'}`
+              }
             >
               <div className="p-2 rounded-xl transition-colors duration-200 shrink-0">
                 <Icon className="w-4 h-4 text-current" />

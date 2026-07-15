@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useUser } from '../hooks/useUser';
 import {
   GraduationCap,
   Calculator,
@@ -6,95 +8,82 @@ import {
   Shield,
   User,
   Badge,
-  Key,
-  Lock,
-  Menu
+  Check,
+  Globe,
+  ArrowRight,
+  Eye,
+  EyeOff
 } from 'lucide-react';
-import Button from '../ui/Button';
-import Input from '../ui/Input';
-import Checkbox from '../ui/Checkbox';
+import PinInput from '../components/ui/PinInput';
 
 const LoginPage = () => {
+  const [pin, setPin] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
+  const { handleLogin } = useUser();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const fd = new FormData(e.target);
+    handleLogin({ username: fd.get('username'), registerNumber: fd.get('registerNumber'), studentId: fd.get('registerNumber') });
+    navigate('/dashboard');
+  };
+
   return (
     <div className="auth-container">
       {/* Left Panel - Branding */}
       <div className="auth-left-panel">
-        {/* Decorative shapes */}
-        <div className="absolute inset-0 -z-10" style={{ pointerEvents: 'none' }}>
-          <div className="absolute top-0 left-0 w-20 h-20 bg-[rgba(20,184,166,0.1)] rounded-full -translate-x-5 -translate-y-5"></div>
-          <div className="absolute bottom-0 right-0 w-32 h-32 bg-[rgba(20,184,166,0.05)] rounded-full -translate-x-5 -translate-y-5"></div>
-          <div className="absolute top-1/2 right-1/4 w-16 h-16 bg-[rgba(34,197,94,0.1)] rounded-full -translate-x-5 -translate-y-5 rotate-45"></div>
-        </div>
-
-        <div className="relative z-10 space-y-8">
+        <div className="relative z-10 space-y-8 w-full">
           {/* Logo */}
-          <div className="auth-logo">
+          <div className="auth-logo flex items-center gap-3 w-full">
             <div className="auth-logo-icon">
-              <GraduationCap className="w-5 h-5 text-[#14B8A6]" />
+              <GraduationCap className="w-8 h-8 text-[#14B8A6]" />
             </div>
-            <h1 className="auth-logo-text">Semora</h1>
+            <div className="text-left">
+              <h1 className="auth-logo-text font-bold text-2xl text-white">Semora</h1>
+              <p className="text-white/80 text-sm">CGPA Calculator</p>
+            </div>
           </div>
 
           {/* Title and Subtitle */}
-          <div className="text-center">
-            <h2 className="auth-title">Welcome Back</h2>
-            <p className="auth-subtitle">Your Smart CGPA Calculator</p>
+          <div className="text-left w-full">
+            <h2 className="auth-title text-3xl font-bold text-white">Welcome Back</h2>
+            <p className="text-white/70 text-sm">
+              Continue your academic journey with Semora. Track semesters, calculate CGPA, and monitor your progress.
+            </p>
           </div>
 
           {/* Illustration - using icons */}
-          <div className="auth-illustration">
+          <div className="auth-illustration flex justify-center items-center gap-8">
             <div className="auth-illustration-item">
-              <GraduationCap className="w-5 h-5 text-[#14B8A6]" />
+              <GraduationCap className="w-10 h-10 text-[#14B8A6]/80" />
             </div>
             <div className="auth-illustration-item">
-              <Calculator className="w-5 h-5 text-[#14B8A6]" />
+              <Calculator className="w-10 h-10 text-[#14B8A6]/80" />
             </div>
             <div className="auth-illustration-item">
-              <BarChart2 className="w-5 h-5 text-[#14B8A6]" />
-            </div>
-            <div className="auth-illustration-item">
-              <Shield className="w-5 h-5 text-[#14B8A6]" />
+              <BarChart2 className="w-10 h-10 text-[#14B8A6]/80" />
             </div>
           </div>
 
-          {/* Feature Cards */}
-          <div className="auth-features w-full">
-            <div className="auth-feature-item">
-              <div className="auth-feature-icon">
-                <Check className="w-4 h-4 text-[#22C55E]" />
+          {/* Feature Highlights */}
+          <div className="auth-features w-full space-y-4">
+            {[
+              { icon: Check, title: 'Smart CGPA Calculator', desc: 'Instantly calculate SGPA and CGPA with our intelligent algorithm' },
+              { icon: BarChart2, title: 'Semester Tracking', desc: 'Monitor your performance across all semesters with detailed analytics' },
+              { icon: Shield, title: 'Secure Data', desc: 'Your academic records are encrypted and private' },
+              { icon: Globe, title: 'Sync Across Devices', desc: 'Access your data anywhere with secure cloud synchronization' }
+            ].map((item, idx) => (
+              <div key={idx} className="auth-feature-item flex items-center gap-4 bg-white/10 rounded-xl px-4 py-3 backdrop-blur-sm">
+                <div className="auth-feature-icon bg-primary/20 rounded-lg p-3">
+                  <item.icon className="w-5 h-5 text-[#22C55E]" />
+                </div>
+                <div className="auth-feature-content">
+                  <h3 className="text-white font-medium">{item.title}</h3>
+                  <p className="text-white/80 text-sm">{item.desc}</p>
+                </div>
               </div>
-              <div className="auth-feature-content">
-                <h3 className="text-white">Fast CGPA Calculation</h3>
-                <p className="text-white/70">Instantly calculate your semester and cumulative GPA</p>
-              </div>
-            </div>
-            <div className="auth-feature-item">
-              <div className="auth-feature-icon">
-                <Check className="w-4 h-4 text-[#22C55E]" />
-              </div>
-              <div className="auth-feature-content">
-                <h3 className="text-white">Semester Tracking</h3>
-                <p className="text-white/70">Monitor your performance across all semesters</p>
-              </div>
-            </div>
-            <div className="auth-feature-item">
-              <div className="auth-feature-icon">
-                <Check className="w-4 h-4 text-[#22C55E]" />
-              </div>
-              <div className="auth-feature-content">
-                <h3 className="text-white">Academic Analytics</h3>
-                <p className="text-white/70">Visualize your progress with detailed charts</p>
-              </div>
-            </div>
-            <div className="auth-feature-item">
-              <div className="auth-feature-icon">
-                <Check className="w-4 h-4 text-[#22C55E]" />
-              </div>
-              <div className="auth-feature-content">
-                <h3 className="text-white">Secure Student Data</h3>
-                <p className="text-white/70">Your academic records are encrypted and private</p>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </div>
@@ -106,24 +95,23 @@ const LoginPage = () => {
           <div className="w-40 h-40 bg-[rgba(20,184,166,0.05)] rounded-full -translate-x-5 -translate-y-5"></div>
         </div>
 
-        <div className="w-full space-y-8">
+        <div className="w-full max-w-[480px] space-y-8">
           {/* Form Header */}
-          <div className="auth-form-header">
+          <div className="auth-form-header text-center">
             <h2 className="text-2xl font-bold text-gray-900">Login</h2>
             <p className="text-gray-500">Access your academic dashboard</p>
           </div>
 
           {/* Form */}
-          <form className="auth-form w-full space-y-6">
+          <form className="w-full space-y-6" onSubmit={handleSubmit}>
             {/* Username */}
             <div className="auth-form-group">
-              <label className="auth-form-label">Username</label>
-              <div className="auth-form-input-wrapper">
-                <span className="auth-form-input-icon">
-                  <User className="w-4 h-4 text-gray-400" />
-                </span>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Username</label>
+              <div className="relative">
+                <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
                 <input
                   type="text"
+                  name="username"
                   placeholder="Enter your username"
                   className="auth-form-input w-full"
                 />
@@ -132,13 +120,12 @@ const LoginPage = () => {
 
             {/* Register Number */}
             <div className="auth-form-group">
-              <label className="auth-form-label">Register Number</label>
-              <div className="auth-form-input-wrapper">
-                <span className="auth-form-input-icon">
-                  <Badge className="w-4 h-4 text-gray-400" />
-                </span>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Register Number</label>
+              <div className="relative">
+                <Badge className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
                 <input
                   type="text"
+                  name="registerNumber"
                   placeholder="Enter your register number"
                   className="auth-form-input w-full"
                 />
@@ -147,44 +134,41 @@ const LoginPage = () => {
 
             {/* 4-Digit PIN */}
             <div className="auth-form-group">
-              <label className="auth-form-label">4-Digit PIN</label>
-              <div className="auth-form-input-wrapper">
-                <span className="auth-form-input-icon">
-                  <Key className="w-4 h-4 text-gray-400" />
-                </span>
-                <input
-                  type="password"
-                  placeholder="••••"
-                  className="auth-form-input w-full pin-input letter-spacing-wide"
-                />
+              <label className="block text-sm font-medium text-gray-700 mb-2">4-Digit PIN</label>
+              <div className="relative">
+                <div className="pr-10">
+                  <PinInput pin={pin} setPin={setPin} type={showPassword ? 'text' : 'password'} />
+                </div>
+                <button
+                  type="button"
+                  className="absolute right-3 top-1/2 -translate-y-2 h-4 w-4 text-gray-400 hover:text-gray-600"
+                  onClick={() => setShowPassword(!showPassword)}
+                >
+                  {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                </button>
               </div>
-              <div className="flex items-center justify-between text-xs">
-                <label className="flex items-center space-x-2">
-                  <input type="checkbox" className="h-4 w-4 text-[#14B8A6] border-gray-300 rounded" />
-                  <span className="text-gray-600">Remember me</span>
-                </label>
-                <a href="#" className="text-primary hover:text-[oklch(0.45_0.2_162)]">Forgot PIN?</a>
-              </div>
+
             </div>
 
             {/* Submit Button */}
-            <button className="auth-button w-full">
+            <button className="w-full py-3 rounded-lg bg-gradient-to-r from-[#14B8A6] to-[#14B8A6]/90 text-white font-medium hover:from-[#14B8A6]/90 hover:to-[#14B8A6] transition-all duration-200 flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-[#14B8A6]/20">
               Login
+              <ArrowRight className="w-4 h-4" />
             </button>
           </form>
 
           {/* Divider */}
-          <div className="auth-divider">
-            <div className="auth-divider-line"></div>
-            <span className="auth-divider-text">OR</span>
-            <div className="auth-divider-line"></div>
+          <div className="auth-divider flex items-center mt-4">
+            <div className="flex-1 h-px bg-gray-200"></div>
+            <span className="px-4 text-sm text-gray-400">OR</span>
+            <div className="flex-1 h-px bg-gray-200"></div>
           </div>
 
           {/* Bottom Text */}
-          <div className="auth-footer">
-            <p className="text-gray-500">
+          <div className="auth-footer text-center mt-6">
+            <p className="text-sm text-gray-500">
               Don't have an account?
-              <a href="/register" className="text-primary hover:text-[oklch(0.45_0.2_162)] underline">
+              <a href="/register" className="text-primary hover:text-primary/80 font-medium underline">
                 Create Account
               </a>
             </p>

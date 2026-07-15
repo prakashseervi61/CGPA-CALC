@@ -1,5 +1,3 @@
-import React from 'react';
-
 /**
  * Reusable Button component with academic pastel & purple styling variants.
  */
@@ -23,8 +21,8 @@ export default function Button({
   };
 
   const variantStyles = {
-    primary: 'bg-primary-600 hover:bg-primary-700 text-white shadow-md shadow-primary-500/20 hover:shadow-primary-500/35',
-    secondary: 'bg-primary-50 hover:bg-primary-100 text-primary-600 font-extrabold',
+    primary: 'bg-indigo-600 hover:bg-indigo-700 text-white shadow-md shadow-indigo-500/20 hover:shadow-indigo-500/35',
+    secondary: 'bg-indigo-50 hover:bg-indigo-100 text-indigo-600 font-extrabold',
     pastelGreen: 'bg-emerald-100 hover:bg-emerald-200 text-emerald-800 font-extrabold',
     outline: 'border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 font-bold',
   };

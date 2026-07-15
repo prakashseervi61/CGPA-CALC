@@ -75,7 +75,7 @@ export default function SettingsPage() {
       <div className="flex items-center justify-between pb-2 border-b border-slate-100">
         <div>
           <h2 className="text-2xl font-black text-slate-900 flex items-center gap-2.5">
-            <div className="w-9 h-9 rounded-xl bg-primary-100 text-primary-600 flex items-center justify-center shrink-0">
+            <div className="w-9 h-9 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center shrink-0">
               <Settings className="w-5 h-5" />
             </div>
             Settings & Preferences
@@ -116,7 +116,7 @@ export default function SettingsPage() {
       <Card className="p-6 border border-slate-100 shadow-sm space-y-4">
         <div className="flex items-center justify-between pb-3 border-b border-slate-100">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-xl bg-primary-50 text-primary-600 flex items-center justify-center shrink-0">
+            <div className="w-8 h-8 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center shrink-0">
               <User className="w-4 h-4" />
             </div>
             <div>
@@ -163,7 +163,7 @@ export default function SettingsPage() {
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="Enter your name"
-              className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-sm font-bold text-slate-800 bg-slate-50/50 focus:bg-white focus:border-primary-600 focus:outline-none transition-all disabled:bg-slate-100/70 disabled:text-slate-600 disabled:border-slate-200 disabled:cursor-not-allowed"
+              className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-sm font-bold text-slate-800 bg-slate-50/50 focus:bg-white focus:border-indigo-600 focus:outline-none transition-all disabled:bg-slate-100/70 disabled:text-slate-600 disabled:border-slate-200 disabled:cursor-not-allowed"
             />
           </div>
 
@@ -178,7 +178,7 @@ export default function SettingsPage() {
               value={studentId}
               onChange={(e) => setStudentId(e.target.value)}
               placeholder="Enter your reg no"
-              className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-sm font-bold text-slate-800 bg-slate-50/50 focus:bg-white focus:border-primary-600 focus:outline-none transition-all disabled:bg-slate-100/70 disabled:text-slate-600 disabled:border-slate-200 disabled:cursor-not-allowed"
+              className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-sm font-bold text-slate-800 bg-slate-50/50 focus:bg-white focus:border-indigo-600 focus:outline-none transition-all disabled:bg-slate-100/70 disabled:text-slate-600 disabled:border-slate-200 disabled:cursor-not-allowed"
             />
           </div>
 
@@ -191,7 +191,7 @@ export default function SettingsPage() {
                 type="text"
                 value={targetCgpa}
                 onChange={(e) => setTargetCgpa(e.target.value)}
-                className="w-24 px-3 py-1.5 rounded-lg border border-slate-200 text-sm font-black text-slate-900 focus:outline-none focus:border-primary-600"
+                className="w-24 px-3 py-1.5 rounded-lg border border-slate-200 text-sm font-black text-slate-900 focus:outline-none focus:border-indigo-600"
               />
               <span className="text-xs text-slate-500 font-bold">out of 10.0</span>
             </div>
@@ -261,7 +261,7 @@ export default function SettingsPage() {
               value={currentPin}
               onChange={(e) => setCurrentPin(e.target.value)}
               placeholder="••••"
-              className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-sm font-black text-primary-600 bg-slate-50/50 focus:bg-white focus:border-primary-600 focus:outline-none transition-all disabled:bg-slate-100/70 disabled:text-slate-400 disabled:border-slate-200 disabled:cursor-not-allowed"
+              className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-sm font-black text-indigo-600 bg-slate-50/50 focus:bg-white focus:border-indigo-600 focus:outline-none transition-all disabled:bg-slate-100/70 disabled:text-slate-400 disabled:border-slate-200 disabled:cursor-not-allowed"
             />
           </div>
 
@@ -279,7 +279,7 @@ export default function SettingsPage() {
               value={newPin}
               onChange={(e) => setNewPin(e.target.value)}
               placeholder="••••"
-              className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-sm font-black text-primary-600 bg-slate-50/50 focus:bg-white focus:border-primary-600 focus:outline-none transition-all disabled:bg-slate-100/70 disabled:text-slate-400 disabled:border-slate-200 disabled:cursor-not-allowed"
+              className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-sm font-black text-indigo-600 bg-slate-50/50 focus:bg-white focus:border-indigo-600 focus:outline-none transition-all disabled:bg-slate-100/70 disabled:text-slate-400 disabled:border-slate-200 disabled:cursor-not-allowed"
             />
           </div>
 
@@ -327,7 +327,7 @@ export default function SettingsPage() {
                 type="text"
                 value={targetCgpa}
                 onChange={(e) => setTargetCgpa(e.target.value)}
-                className="w-24 px-3 py-1.5 rounded-lg border border-slate-200 text-sm font-black text-slate-900 focus:outline-none focus:border-primary-600"
+                className="w-24 px-3 py-1.5 rounded-lg border border-slate-200 text-sm font-black text-slate-900 focus:outline-none focus:border-indigo-600"
               />
               <span className="text-xs text-slate-500 font-bold">out of 10.0</span>
             </div>

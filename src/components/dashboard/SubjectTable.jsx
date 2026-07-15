@@ -1,15 +1,14 @@
-import React from 'react';
 import { BookOpen, Info, XCircle } from 'lucide-react';
 import Card from '../ui/Card';
 import Badge from '../ui/Badge';
 import { useSesame } from '../../hooks/useSesame';
 
-const PASTEL_CIRCLES = [
-  'bg-primary-100 text-primary-800', // Indigo (our primary)
-  'bg-emerald-100 text-emerald-800', // Green
-  'bg-amber-100 text-amber-800', // Yellow
-  'bg-blue-100 text-blue-800', // Blue
-  'bg-rose-100 text-rose-800', // Red
+const RING_COLORS = [
+  'bg-indigo-100 text-indigo-800',
+  'bg-emerald-100 text-emerald-800',
+  'bg-amber-100 text-amber-800',
+  'bg-blue-100 text-blue-800',
+  'bg-rose-100 text-rose-800',
 ];
 
 export default function SubjectTable() {
@@ -21,7 +20,6 @@ export default function SubjectTable() {
 
   const courses = activeSemester?.courses || [];
   const gradeOptions = Object.keys(gradePointsMap);
-  const gradePoints = gradePointsMap; // alias for clarity
   const included = activeSemester?.included !== false;
 
   return (
@@ -39,11 +37,11 @@ export default function SubjectTable() {
         <table className="w-full text-left border-collapse min-w-[500px]">
           <thead>
             <tr className="text-xs sm:text-sm font-black uppercase tracking-wider text-slate-400 border-b border-slate-100 pb-2">
-              <th className="py-3 px-3 w-8 text-center">#</th>
-              <th className="py-3 px-3">Subject Name</th>
-              <th className="py-3 px-3 w-10 text-center">Credits</th>
-              <th className="py-3 px-3 w-12 text-center">Grade</th>
-              <th className="py-3 px-3 w-12 text-center">Grade Point</th>
+              <th className="py-3 px-2 text-center whitespace-nowrap">#</th>
+              <th className="py-3 px-2">Subject Name</th>
+              <th className="py-3 px-2 text-center whitespace-nowrap">Credits</th>
+              <th className="py-3 px-2 text-center whitespace-nowrap">Grade</th>
+              <th className="py-3 px-2 text-center whitespace-nowrap">Grade Point</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-100 font-semibold">
@@ -56,7 +54,7 @@ export default function SubjectTable() {
             ) : (
               courses.map((course, idx) => {
                 const key = course.code || course.id || idx;
-                const point = course.grade ? (gradePoints[course.grade] ?? 0) : '-';
+                const point = course.grade ? (gradePointsMap[course.grade] ?? 0) : '-';
 
                 return (
                   <tr
@@ -64,59 +62,53 @@ export default function SubjectTable() {
                     className="hover:bg-slate-50/80 transition-colors duration-150 group"
                   >
                     {/* Number Badge */}
-                    <td className="py-3 px-3 w-8 text-center">
+                    <td className="py-3 px-2 text-center whitespace-nowrap">
                       <span className={`inline-flex items-center justify-center w-7 h-7 rounded-full text-xs font-black ${
-                        PASTEL_CIRCLES[idx % PASTEL_CIRCLES.length]
+                        RING_COLORS[idx % RING_COLORS.length]
                       }`}>
                         {idx + 1}
                       </span>
                     </td>
 
                     {/* Subject Name */}
-                    <td className="py-3 px-3 text-slate-800">
-                      <div>
+                    <td className="py-3 px-2 text-slate-800">
+                      <div className="flex flex-col">
                         <span className="font-black text-slate-900 text-sm sm:text-base tracking-tight leading-snug">
                           {course.name}
                         </span>
                         {course.code && (
-                          <span className="ml-2.5 text-xs font-bold text-slate-400">
-                            ({course.code})
+                          <span className="text-[11px] font-bold text-slate-400 leading-tight mt-0.5">
+                            {course.code}
                           </span>
                         )}
                       </div>
                     </td>
 
                     {/* Credits */}
-                    <td className="py-3 px-3 w-10 text-center">
+                    <td className="py-3 px-2 text-center whitespace-nowrap">
                       <Badge variant="purple" size="md">
                         {course.credits} {course.credits === 1 ? 'Credit' : 'Credits'}
                       </Badge>
                     </td>
 
                     {/* Grade Selector */}
-                    <td className="py-3 px-3 w-12 text-center">
+                    <td className="py-3 px-2 text-center whitespace-nowrap">
                       <select
                         value={course.grade || ''}
-                        onChange={(e) => {
-                          const newGrade = e.target.value;
-                          if (newGrade === '') {
-                            // Handle empty grade
-                          }
-                          handleUpdateCourse(idx, { ...course, grade: newGrade });
-                        }}
+                        onChange={(e) => handleUpdateCourse(idx, { ...course, grade: e.target.value })}
                         className={`
                           px-3.5 py-1.5 rounded-xl font-black text-xs sm:text-sm border transition-all cursor-pointer focus:outline-none
                           ${course.grade
-                            ? 'bg-primary-600 text-white border-transparent shadow-xs shadow-primary-500/20 dark:bg-primary-500 dark:text-white'
-                            : 'bg-slate-100 text-slate-700 border-slate-200/80 hover:bg-slate-200/60 dark:bg-slate-800 dark:text-slate-300 dark:border-slate-600/60'
+                            ? 'bg-indigo-100 text-indigo-700 border-indigo-200 shadow-xs'
+                            : 'bg-slate-100 text-slate-700 border-slate-200/80 hover:bg-slate-200/60'
                           }
                         `}
                       >
-                        <option value="" className="bg-white text-slate-400 dark:bg-slate-800 dark:text-slate-400">
+                        <option value="" className="bg-white text-slate-400">
                           Select
                         </option>
                         {gradeOptions.map((g) => (
-                          <option key={g} value={g} className="bg-white text-slate-800 font-extrabold dark:bg-slate-800 dark:text-slate-200">
+                          <option key={g} value={g} className="bg-white text-slate-800 font-extrabold">
                             Grade {g}
                           </option>
                         ))}
@@ -124,7 +116,7 @@ export default function SubjectTable() {
                     </td>
 
                     {/* Grade Point Badge */}
-                    <td className="py-3 px-3 w-12 text-center">
+                    <td className="py-3 px-2 text-center whitespace-nowrap">
                       <Badge
                         variant={point !== '-' && parseFloat(point) > 0 ? 'green' : parseFloat(point) === 0 ? 'red' : 'slate'}
                         size="lg"

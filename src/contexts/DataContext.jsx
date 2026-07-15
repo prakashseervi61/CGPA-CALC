@@ -1,6 +1,8 @@
-import React, { createContext, useContext, useState, useMemo, useEffect } from 'react';
+import { createContext, useContext, useState, useMemo, useEffect } from 'react';
 import { CURRICULUM_PRESETS } from '../data/curriculum';
 import AuthContext from './AuthContext';
+
+const skipCourse = c => c.code !== '23MC102' && !c.name.includes('Environmental Sciences');
 
 const DataContext = createContext();
 
@@ -17,7 +19,7 @@ export const DataProvider = ({ children }) => {
     }
     return raw.map(sem => ({
       ...sem,
-      courses: (sem.courses || []).filter(c => c.code !== '23MC102' && !c.name.includes('Environmental Sciences'))
+      courses: (sem.courses || []).filter(skipCourse)
     }));
   });
 
@@ -25,7 +27,7 @@ export const DataProvider = ({ children }) => {
 
   const [gradeScaleRules, setGradeScaleRules] = useState([
     { grade: 'O', point: 10, range: '91–100%', bg: 'bg-emerald-100 text-emerald-800 border-emerald-200' },
-    { grade: 'A+', point: 9, range: '81–90%', bg: 'bg-primary-100 text-primary-800 border-primary-200' },
+    { grade: 'A+', point: 9, range: '81–90%', bg: 'bg-indigo-100 text-indigo-800 border-indigo-200' },
     { grade: 'A', point: 8, range: '71–80%', bg: 'bg-blue-100 text-blue-800 border-blue-200' },
     { grade: 'B+', point: 7, range: '61–70%', bg: 'bg-amber-100 text-amber-800 border-amber-200' },
     { grade: 'B', point: 6, range: '56–60%', bg: 'bg-orange-100 text-orange-800 border-orange-200' },
@@ -39,7 +41,7 @@ export const DataProvider = ({ children }) => {
     gradeScaleRules.forEach(rule => {
       map[rule.grade] = Number(rule.point);
     });
-    return { ...{ 'O': 10, 'A+': 9, 'A': 8, 'B+': 7, 'B': 6, 'C': 5, 'U': 0 }, ...map };
+    return map;
   }, [gradeScaleRules]);
 
   // Active semester
@@ -178,29 +180,26 @@ export const DataProvider = ({ children }) => {
           setSemesters(
             parsed.map(sem => ({
               ...sem,
-              courses: (sem.courses || []).filter(c => c.code !== '23MC102' && !c.name.includes('Environmental Sciences'))
+              courses: (sem.courses || []).filter(skipCourse)
             }))
           );
         } catch (e) {
-          // fallback to default
           setSemesters(CURRICULUM_PRESETS.skcet_it_24_28.semesters.map(sem => ({
             ...sem,
-            courses: (sem.courses || []).filter(c => c.code !== '23MC102' && !c.name.includes('Environmental Sciences'))
+            courses: (sem.courses || []).filter(skipCourse)
           })));
         }
       } else {
-        // No saved data for this user, use default
         setSemesters(CURRICULUM_PRESETS.skcet_it_24_28.semesters.map(sem => ({
           ...sem,
-          courses: (sem.courses || []).filter(c => c.code !== '23MC102' && !c.name.includes('Environmental Sciences'))
+          courses: (sem.courses || []).filter(skipCourse)
         })));
       }
     } else {
-      // No user, reset to guest state
       setCurrentSemesterId(1);
       setSemesters(CURRICULUM_PRESETS.skcet_it_24_28.semesters.map(sem => ({
         ...sem,
-        courses: (sem.courses || []).filter(c => c.code !== '23MC102' && !c.name.includes('Environmental Sciences'))
+        courses: (sem.courses || []).filter(skipCourse)
       })));
     }
   }, [user]);

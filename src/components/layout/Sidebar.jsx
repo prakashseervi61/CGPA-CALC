@@ -1,4 +1,3 @@
-import React from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import {
   LayoutDashboard,
@@ -27,7 +26,7 @@ export default function Sidebar({ mobileOpen, setMobileOpen }) {
   };
 
   const sidebarContent = (
-    <div className="flex flex-col h-full bg-primary-50 border-r border-slate-200/60 p-6 w-[260px] shrink-0 select-none">
+    <div className="flex flex-col h-full bg-slate-50 border-r border-slate-200/60 p-6 w-[260px] shrink-0 select-none">
       {/* Top Logo */}
       <div className="flex items-center justify-between mb-8">
         <div>
@@ -56,12 +55,13 @@ export default function Sidebar({ mobileOpen, setMobileOpen }) {
             <NavLink
               key={item.id}
               to={item.path}
+              end
               onClick={() => {
                 if (setMobileOpen) setMobileOpen(false);
               }}
-              className={({ isActive }) =>
-                `w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-sm font-semibold transition-all duration-200 ${isActive ? 'bg-primary-200 text-primary-800 font-extrabold' : 'text-slate-600 hover:bg-slate-200/50 hover:text-slate-900'}`
-              }
+               className={({ isActive }) =>
+                 `w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-sm font-semibold transition-all duration-200 ${isActive ? 'bg-indigo-100 text-indigo-800 font-extrabold shadow-sm' : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'}`
+               }
             >
               <div className="p-2 rounded-xl transition-colors duration-200 shrink-0">
                 <Icon className="w-4 h-4 text-current" />

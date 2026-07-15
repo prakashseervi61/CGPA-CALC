@@ -111,7 +111,7 @@ export default function CGPATrendsPage() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2 border-b border-slate-100">
         <div>
           <h2 className="text-2xl font-black text-slate-900 flex items-center gap-2.5">
-            <div className="w-9 h-9 rounded-xl bg-primary-100 text-primary-600 flex items-center justify-center shrink-0">
+            <div className="w-9 h-9 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center shrink-0">
               <TrendingUp className="w-5 h-5" />
             </div>
             Academic Performance & Trends
@@ -122,90 +122,36 @@ export default function CGPATrendsPage() {
         </div>
       </div>
 
-      {/* 4 KPI Summary Cards + 1 Target KPI */}
+      {/* 6 KPI Summary Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-4">
-        {/* KPI 1: Overall CGPA */}
-        <Card className="p-4 bg-gradient-to-br from-primary-600 to-primary-800 text-white shadow-md shadow-primary-500/15 relative overflow-hidden border border-primary-400/20">
+        {[
+          { label: 'Overall CGPA', value: analyticsData.overallCgpa.toFixed(2), sub: 'out of 10.0 Cumulative', icon: Award, gradient: true },
+          { label: 'Target CGPA', value: analyticsData.targetCgpa.toFixed(2), sub: 'Goal to Achieve', icon: Target, gradient: true },
+          { label: 'Peak Performance', value: analyticsData.highestSgpa > 0 ? analyticsData.highestSgpa.toFixed(2) : '--', sub: `Highest SGPA (${analyticsData.highestSgpa})`, icon: Zap },
+          { label: 'Earned Credits', value: analyticsData.totalCumCredits, sub: 'Total Academic Credits', icon: BookOpen },
+          { label: 'Semesters', value: `${analyticsData.totalCompletedSemesters} / ${semesters.length}`, sub: 'Completed Semesters', icon: Layers }
+        ].map((kpi, idx) => (
+          <Card key={idx} className={`p-4 ${kpi.gradient ? 'bg-gradient-to-br from-indigo-600 to-indigo-800 text-white shadow-md shadow-indigo-500/15 border-indigo-400/20' : 'bg-white border-slate-100 shadow-sm'} relative overflow-hidden border`}>
+            <div className="flex items-center justify-between mb-2">
+              <span className={`text-xs font-black uppercase tracking-wider ${kpi.gradient ? 'text-indigo-200' : 'text-slate-400'}`}>{kpi.label}</span>
+              <kpi.icon className={`w-4 h-4 ${kpi.gradient ? 'text-amber-300' : 'text-amber-500'}`} />
+            </div>
+            <div className={`text-3xl font-black ${kpi.gradient ? 'text-white' : 'text-slate-900'}`}>{kpi.value}</div>
+            <p className={`text-[11px] font-semibold mt-1 ${kpi.gradient ? 'text-indigo-100' : 'text-slate-500'}`}>{kpi.sub}</p>
+          </Card>
+        ))}
+        {/* KPI 3: Required Future GPA (conditional structure) */}
+        <Card className={`p-4 ${analyticsData.requiredFutureGpa === 0 ? 'bg-green-500/20 border-green-500/30' : analyticsData.requiredFutureGpa >= 10 ? 'bg-red-500/20 border-red-500/30' : 'bg-blue-500/20 border-blue-500/30'} border`}>
           <div className="flex items-center justify-between mb-2">
-            <span className="text-xs font-black uppercase tracking-wider text-primary-200">Overall CGPA</span>
-            <Award className="w-4 h-4 text-amber-300" />
-          </div>
-          <div className="text-3xl font-black">{analyticsData.overallCgpa.toFixed(2)}</div>
-          <p className="text-[11px] text-primary-100 font-semibold mt-1">out of 10.0 Cumulative</p>
-        </Card>
-
-        {/* KPI 2: Target CGPA */}
-        <Card className="p-4 bg-gradient-to-br from-primary-500 to-primary-600 text-white shadow-md shadow-primary-500/15 relative overflow-hidden border border-primary-400/20">
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-xs font-black uppercase tracking-wider text-primary-200">Target CGPA</span>
-            <Target className="w-4 h-4 text-amber-300" />
-          </div>
-          <div className="text-3xl font-black">{analyticsData.targetCgpa.toFixed(2)}</div>
-          <p className="text-[11px] text-primary-100 font-semibold mt-1">Goal to Achieve</p>
-        </Card>
-
-        {/* KPI 3: Required Future GPA */}
-        <Card className={`
-          p-4
-          ${analyticsData.requiredFutureGpa === 0 ? 'bg-green-500/20 border-green-500/30' :
-            analyticsData.requiredFunrequiredFutureGpa >= 10 ? 'bg-red-500/20 border-red-500/30' :
-            'bg-blue-500/20 border-blue-500/30'}
-        `}
-        >
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-xs font-black uppercase tracking-wider text-primary-200">Required Future GPA</span>
-            {analyticsData.requiredFutureGpa === 0 ? (
-              <Check className="w-4 h-4 text-green-600" />
-            ) : analyticsData.requiredFutureGpa >= 10 ? (
-              <XCircle className="w-4 h-4 text-red-600" />
-            ) : (
-              <Zap className="w-4 h-4 text-amber-500" />
-            )}
-          </div>
-          <div className="text-3xl font-black">
-            {analyticsData.requiredFutureGpa === 0 ? 'ACHIEVED!' :
-             analyticsData.requiredFutureGpa >= 10 ? 'NOT POSSIBLE' :
-             analyticsData.requiredFutureGpa.toFixed(2)}
-          </div>
-          <p className="text-[11px] text-primary-100 font-semibold mt-1">
-            {analyticsData.requiredFutureGpa === 0 ? 'Target achieved!' :
-             analyticsData.requiredFutureGpa >= 10 ? 'Cannot reach target with remaining credits' :
-             `Need ${analyticsData.requiredFutureGpa.toFixed(2)} avg`}
-          </p>
-        </Card>
-
-        {/* KPI 4: Highest SGPA */}
-        <Card className="p-4 bg-white border border-slate-100 shadow-sm">
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-xs font-black uppercase tracking-wider text-slate-400">Peak Performance</span>
-            <Zap className="w-4 h-4 text-amber-500" />
+            <span className="text-xs font-black uppercase tracking-wider text-slate-500">Required Future GPA</span>
+            {analyticsData.requiredFutureGpa === 0 ? <Check className="w-4 h-4 text-green-600" /> : analyticsData.requiredFutureGpa >= 10 ? <XCircle className="w-4 h-4 text-red-600" /> : <Zap className="w-4 h-4 text-amber-500" />}
           </div>
           <div className="text-3xl font-black text-slate-900">
-            {analyticsData.highestSgpa > 0 ? analyticsData.highestSgpa.toFixed(2) : '--'}
+            {analyticsData.requiredFutureGpa === 0 ? 'ACHIEVED!' : analyticsData.requiredFutureGpa >= 10 ? 'NOT POSSIBLE' : analyticsData.requiredFutureGpa.toFixed(2)}
           </div>
           <p className="text-[11px] text-slate-500 font-semibold mt-1">
-            Highest SGPA ({analyticsData.highestSgpa})
+            {analyticsData.requiredFutureGpa === 0 ? 'Target achieved!' : analyticsData.requiredFutureGpa >= 10 ? 'Cannot reach target with remaining credits' : `Need ${analyticsData.requiredFutureGpa.toFixed(2)} avg`}
           </p>
-        </Card>
-
-        {/* KPI 5: Total Credits */}
-        <Card className="p-4 bg-white border border-slate-100 shadow-sm">
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-xs font-black uppercase tracking-wider text-slate-400">Earned Credits</span>
-            <BookOpen className="w-4 h-4 text-primary-600" />
-          </div>
-          <div className="text-3xl font-black text-slate-900">{analyticsData.totalCumCredits}</div>
-          <p className="text-[11px] text-slate-500 font-semibold mt-1">Total Academic Credits</p>
-        </Card>
-
-        {/* KPI 6: Completed Semesters */}
-        <Card className="p-4 bg-white border border-slate-100 shadow-sm">
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-xs font-black uppercase tracking-wider text-slate-400">Semesters</span>
-            <Layers className="w-4 h-4 text-emerald-600" />
-          </div>
-          <div className="text-3xl font-black text-slate-900">{analyticsData.totalCompletedSemesters} / {semesters.length}</div>
-          <p className="text-[11px] text-slate-500 font-semibold mt-1">Completed Semesters</p>
         </Card>
       </div>
 
@@ -303,7 +249,7 @@ export default function CGPATrendsPage() {
                   'bg-green-600' :
                   analyticsData.overallCgpa >= analyticsData.targetCgpa * 0.8 ?
                   'bg-yellow-600' :
-                  'bg-primary-600'
+                  'bg-indigo-600'
                 } transition-all duration-1000
               `}
               style={{ width: `${Math.min((analyticsData.overallCgpa / analyticsData.targetCgpa) * 100, 100)}%` }}
@@ -317,7 +263,7 @@ export default function CGPATrendsPage() {
         {/* Bar Chart: Credits & Points Load */}
         <Card className="p-5 border border-slate-100 shadow-sm lg:col-span-1">
           <div className="mb-3 pb-2 border-b border-slate-100">
-            <h4 className="text-sm font-extrabod text-slate-900">Credits Load per Semester</h4>
+            <h4 className="text-sm font-extrabold text-slate-900">Credits Load per Semester</h4>
             <p className="text-xs text-slate-400 font-semibold">Total course credit weight</p>
           </div>
           <div className="w-full h-56">
@@ -369,7 +315,7 @@ export default function CGPATrendsPage() {
                     <td className="py-2.5 px-3 text-center font-black text-slate-900">
                       {sem.sgpa > 0 ? sem.sgpa.toFixed(2) : '--'}
                     </td>
-                    <td className="py-2.5 px-3 text-center font-black text-primary-600">
+                    <td className="py-2.5 px-3 text-center font-black text-indigo-600">
                       {sem.cgpa > 0 ? sem.cgpa.toFixed(2) : '--'}
                     </td>
                     <td className="py-2.5 px-3 text-right">

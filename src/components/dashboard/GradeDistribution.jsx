@@ -66,7 +66,7 @@ export default function GradeDistribution() {
       {/* Header */}
       <div className="flex items-center justify-between mb-3 pb-2 border-b border-slate-100">
         <div className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-xl bg-primary-100 text-primary-600 flex items-center justify-center shrink-0">
+          <div className="w-8 h-8 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center shrink-0">
             <PieIcon className="w-4 h-4" />
           </div>
           <div>
@@ -146,14 +146,14 @@ export default function GradeDistribution() {
       </div>
 
       {/* Bottom Highlight Badge */}
-      <div className="mt-3.5 pt-2.5 border-t border-slate-100 flex items-center justify-between bg-primary-50 px-3 py-2 rounded-xl">
+      <div className="mt-3.5 pt-2.5 border-t border-slate-100 flex items-center justify-between bg-indigo-50 px-3 py-2 rounded-xl">
         <div className="flex items-center gap-2">
-          <Award className="w-4 h-4 text-primary-600" />
+          <Award className="w-4 h-4 text-indigo-600" />
           <span className="text-xs font-extrabold text-slate-800">
             Most Frequent Grade:
           </span>
         </div>
-        <span className="text-xs font-black text-primary-600 bg-primary-100 px-2.5 py-0.5 rounded-lg border border-primary-200/50">
+        <span className="text-xs font-black text-indigo-600 bg-indigo-100 px-2.5 py-0.5 rounded-lg border border-indigo-200/50">
           Grade {distributionData.mostFrequent}
         </span>
       </div>

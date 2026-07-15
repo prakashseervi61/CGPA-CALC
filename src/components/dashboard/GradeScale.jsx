@@ -4,20 +4,10 @@ import Card from '../ui/Card';
 import Button from '../ui/Button';
 import { useSesame } from '../../hooks/useSesame';
 
-const DEFAULT_GRADE_SCALES = [
-  { grade: 'O', point: 10, range: '91–100%', bg: 'bg-emerald-100 text-emerald-800 border-emerald-200' },
-  { grade: 'A+', point: 9, range: '81–90%', bg: 'bg-primary-100 text-primary-800 border-primary-200' },
-  { grade: 'A', point: 8, range: '71–80%', bg: 'bg-blue-100 text-blue-800 border-blue-200' },
-  { grade: 'B+', point: 7, range: '61–70%', bg: 'bg-amber-100 text-amber-800 border-amber-200' },
-  { grade: 'B', point: 6, range: '56–60%', bg: 'bg-orange-100 text-orange-800 border-orange-200' },
-  { grade: 'C', point: 5, range: '50–55%', bg: 'bg-slate-100 text-slate-800 border-slate-200' },
-  { grade: 'U', point: 0, range: '< 50% (Reappear)', bg: 'bg-rose-100 text-rose-800 border-rose-200' },
-];
-
 export default function GradeScale() {
   const { gradeScaleRules, setGradeScaleRules } = useSesame();
   const [isEditing, setIsEditing] = useState(false);
-  const [scales, setScales] = useState(gradeScaleRules ?? DEFAULT_GRADE_SCALES);
+  const [scales, setScales] = useState(gradeScaleRules);
 
   const handlePointChange = (idx, newPoint) => {
     const updated = [...scales];
@@ -83,7 +73,7 @@ export default function GradeScale() {
                     type="number"
                     value={item.point}
                     onChange={(e) => handlePointChange(idx, e.target.value)}
-                    className="w-12 px-1.5 py-0.5 rounded border border-slate-300 text-xs font-bold text-center bg-white text-slate-900 focus:outline-none focus:border-primary-600"
+                    className="w-12 px-1.5 py-0.5 rounded border border-slate-300 text-xs font-bold text-center bg-white text-slate-900 focus:outline-none focus:border-indigo-600"
                     min="0"
                     max="10"
                   />

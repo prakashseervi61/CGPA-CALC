@@ -1,5 +1,3 @@
-import React from 'react';
-
 /**
  * Reusable Badge component for academic status, grade letters, and grade points.
  */
@@ -11,7 +9,7 @@ export default function Badge({
   ...props
 }) {
   const variantStyles = {
-    purple: 'bg-primary-100 text-primary-800',
+    purple: 'bg-indigo-100 text-indigo-800',
     green: 'bg-emerald-100 text-emerald-800',
     red: 'bg-rose-100 text-rose-800',
     slate: 'bg-slate-100 text-slate-800',

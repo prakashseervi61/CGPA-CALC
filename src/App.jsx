@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Routes, Route, Navigate, useNavigate } from 'react-router-dom';
 import { useUser } from './hooks/useUser';
-import { useSesame } from './hooks/useSesame';
 import Sidebar from './components/layout/Sidebar';
 import Navbar from './components/layout/Navbar';
-import RightPanel from './components/layout/RightPanel';
 import SubjectTable from './components/dashboard/SubjectTable';
 import GradeScale from './components/dashboard/GradeScale';
+import CGPASummary from './components/dashboard/CGPASummary';
+import GradeDistribution from './components/dashboard/GradeDistribution';
 import CGPATrendsPage from './components/dashboard/CGPATrendsPage';
 import SettingsPage from './components/dashboard/SettingsPage';
 import HelpPage from './components/dashboard/HelpPage';
@@ -17,22 +17,6 @@ function App() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const navigate = useNavigate();
   const { isLoggedIn, user, handleLogout, handleLogin } = useUser();
-  const {
-    currentSemesterId,
-    setCurrentSemesterId,
-    semesters,
-    activeSemester,
-    semesterCalculations,
-    overallCgpaCalculations,
-    gradePointsMap,
-    handleUpdateCourse,
-    handleDeleteCourse,
-    handleToggleSemesterInclude,
-    handleResetGrades,
-    handleExportData,
-    gradeScaleRules,
-    setGradeScaleRules
-  } = useSesame();
 
   // Protected route wrapper
   const ProtectedRoute = ({ children }) => {
@@ -46,11 +30,16 @@ function App() {
   const DashboardContent = () => {
     return (
       <>
-        <main className="flex-1 overflow-y-auto p-4 sm:p-6 md:p-8 space-y-6">
-          <SubjectTable />
-          <GradeScale />
+        <main className="flex-1 overflow-y-auto p-4 sm:p-6 md:p-8">
+          <div className="max-w-4xl mx-auto space-y-6">
+            <SubjectTable />
+            <GradeScale />
+          </div>
         </main>
-        <RightPanel />
+        <aside className="w-full xl:w-[350px] shrink-0 p-4 sm:p-6 space-y-3.5 overflow-hidden select-none bg-white border-l border-slate-100/80">
+          <CGPASummary />
+          <GradeDistribution />
+        </aside>
       </>
     );
   };

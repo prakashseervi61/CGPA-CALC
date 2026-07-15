@@ -1,4 +1,3 @@
-import React from 'react';
 import { Zap, BookOpen, Star, Check } from 'lucide-react';
 import { useSesame } from '../../hooks/useSesame';
 import { useUser } from '../../hooks/useUser';
@@ -36,7 +35,7 @@ export default function CGPASummary() {
   const isTargetAchieved = currentCgpa >= targetCgpa;
 
   return (
-    <div className="bg-gradient-to-br from-primary-600 via-primary-700 to-primary-800 text-white rounded-[24px] p-5 shadow-lg shadow-primary-500/20 relative overflow-hidden select-none border border-primary-400/20">
+    <div className="bg-gradient-to-br from-indigo-600 via-indigo-700 to-indigo-800 text-white rounded-[24px] p-5 shadow-lg shadow-indigo-500/20 relative overflow-hidden select-none border border-indigo-400/20">
       {/* Decorative Glow Elements */}
       <div className="absolute -top-10 -right-10 w-36 h-36 bg-white/10 rounded-full blur-xl pointer-events-none"></div>
 
@@ -46,7 +45,7 @@ export default function CGPASummary() {
           <div className="w-7 h-7 rounded-xl bg-white/15 backdrop-blur-md flex items-center justify-center text-amber-300">
             <Star className="w-4 h-4 fill-amber-300" />
           </div>
-          <span className="text-xs font-black tracking-wider uppercase text-primary-100">
+          <span className="text-xs font-black tracking-wider uppercase text-indigo-200">
             Overall CGPA
           </span>
         </div>
@@ -66,10 +65,10 @@ export default function CGPASummary() {
           {formattedCgpa}
         </span>
         <div className="flex flex-col">
-          <span className="text-[10px] font-black uppercase text-primary-200 tracking-wider">
+          <span className="text-[10px] font-black uppercase text-indigo-200 tracking-wider">
             out of 10.0
           </span>
-          <span className="text-xs text-primary-200/90 font-semibold">
+          <span className="text-xs text-indigo-200/90 font-semibold">
             SGPA: <span className="font-bold text-white">{formattedSgpa}</span> ({activeSemesterName})
           </span>
         </div>
@@ -78,55 +77,40 @@ export default function CGPASummary() {
       {/* Target Progress Bar */}
       <div className="my-4">
         <div className="flex items-center justify-between mb-1">
-          <span className="text-xs font-black text-primary-200">Target Progress</span>
-          <span className="text-xs font-bold text-primary-600">
+          <span className="text-xs font-black text-indigo-200">Target Progress</span>
+          <span className="text-xs font-bold text-indigo-200">
             {progressToTarget.toFixed(0)}% {isTargetAchieved ? '(Achieved!)' : ''}
           </span>
         </div>
-        <div className="w-full bg-primary-50 rounded-full h-2.5 overflow-hidden">
+        <div className="w-full bg-white/20 rounded-full h-2.5 overflow-hidden">
           <div
-            className={`h-full bg-gradient-to-r from-primary-600 to-primary-800 transition-all duration-1000 ease-out`}
+            className={`h-full bg-gradient-to-r from-indigo-400 to-indigo-200 transition-all duration-1000 ease-out`}
             style={{ width: `${progressToTarget}%` }}
           ></div>
         </div>
       </div>
 
       {/* Motivational Text */}
-      <p className="text-xs text-primary-100 font-bold mb-4 relative z-10 bg-white/10 backdrop-blur-sm px-3 py-2 rounded-xl border border-white/10 truncate">
+      <p className="text-xs text-indigo-200 font-bold mb-4 relative z-10 bg-white/10 backdrop-blur-sm px-3 py-2 rounded-xl border border-white/10 truncate">
         {getMotivation(formattedCgpa)}
       </p>
 
       {/* Two Small Stat Cards */}
       <div className="grid grid-cols-2 gap-3 relative z-10">
-        {/* Total Credits */}
-        <div className="bg-white/10 backdrop-blur-md rounded-2xl p-3 border border-white/15 flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-xl bg-white/20 flex items-center justify-center shrink-0">
-            <BookOpen className="w-4 h-4 text-white" />
+        {[
+          { icon: BookOpen, label: 'Total Credits', value: totalCredits },
+          { icon: Zap, label: 'Grade Points', value: totalGradePoints }
+        ].map((item, idx) => (
+          <div key={idx} className="bg-white/10 backdrop-blur-md rounded-2xl p-3 border border-white/15 flex items-center gap-2.5">
+            <div className="w-8 h-8 rounded-xl bg-white/20 flex items-center justify-center shrink-0">
+              <item.icon className="w-4 h-4 text-white" />
+            </div>
+            <div>
+              <span className="text-[9px] uppercase font-bold text-indigo-200 tracking-wider block leading-none mb-1">{item.label}</span>
+              <span className="text-sm font-black text-white leading-none">{item.value}</span>
+            </div>
           </div>
-          <div>
-            <span className="text-[9px] uppercase font-bold text-primary-200 tracking-wider block leading-none mb-1">
-              Total Credits
-            </span>
-            <span className="text-sm font-black text-white leading-none">
-              {totalCredits}
-            </span>
-          </div>
-        </div>
-
-        {/* Total Grade Points */}
-        <div className="bg-white/10 backdrop-blur-md rounded-2xl p-3 border border-white/15 flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-xl bg-white/20 flex items-center justify-center shrink-0">
-            <Zap className="w-4 h-4 text-white" />
-          </div>
-          <div>
-            <span className="text-[9px] uppercase font-bold text-primary-200 tracking-wider block leading-none mb-1">
-              Grade Points
-            </span>
-            <span className="text-sm font-black text-white leading-none">
-              {totalGradePoints}
-            </span>
-          </div>
-        </div>
+        ))}
       </div>
     </div>
   );

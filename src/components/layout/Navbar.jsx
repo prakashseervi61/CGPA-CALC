@@ -1,4 +1,3 @@
-import React from 'react';
 import { Menu, ChevronDown } from 'lucide-react';
 import { useSesame } from '../../hooks/useSesame';
 
@@ -37,22 +36,20 @@ export default function Navbar({ setMobileOpen }) {
       {/* Right Controls */}
       <div className="flex items-center gap-3 ml-auto">
         {/* Semester Select Dropdown */}
-        <div className="relative">
-          <div className="flex items-center bg-primary-50 border border-slate-200/80 rounded-xl px-3 py-1.5 hover:border-[#4F46E5]/50 transition-colors">
-            <span className="text-xs font-bold text-slate-400 mr-2 uppercase tracking-wider hidden sm:inline">Active:</span>
-            <select
-              value={currentSemesterId}
-              onChange={(e) => setCurrentSemesterId(Number(e.target.value))}
-              className="bg-transparent text-slate-800 font-extrabold text-xs focus:outline-none cursor-pointer pr-4 appearance-none"
-            >
-              {semesters.map((sem) => (
-                <option key={sem.id} value={sem.id} className="bg-white text-slate-800">
-                  {sem.name} {sem.courses?.length ? `(${sem.courses.length} subjects)` : ''}
-                </option>
-              ))}
-            </select>
-            <ChevronDown className="w-3.5 h-3.5 text-slate-400 pointer-events-none -ml-3" />
-          </div>
+        <div className="flex items-center gap-2 bg-slate-100/70 border border-slate-200/80 rounded-xl px-3 py-1.5 hover:border-indigo-400/50 hover:bg-indigo-50/40 transition-all duration-200 cursor-pointer">
+          <span className="text-[10px] font-black uppercase text-slate-400 tracking-wider hidden sm:inline leading-none">Sem</span>
+          <select
+            value={currentSemesterId}
+            onChange={(e) => setCurrentSemesterId(Number(e.target.value))}
+            className="bg-transparent text-slate-800 font-extrabold text-xs focus:outline-none cursor-pointer pr-3 appearance-none"
+          >
+            {semesters.map((sem) => (
+              <option key={sem.id} value={sem.id} className="bg-white text-slate-800">
+                {sem.name} {sem.courses?.length ? `(${sem.courses.length})` : ''}
+              </option>
+            ))}
+          </select>
+          <ChevronDown className="w-3 h-3 text-slate-400 pointer-events-none shrink-0" />
         </div>
       </div>
     </header>

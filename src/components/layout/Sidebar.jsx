@@ -1,7 +1,6 @@
 import React from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import {
-  GraduationCap,
   LayoutDashboard,
   TrendingUp,
   Settings,
@@ -31,16 +30,11 @@ export default function Sidebar({ mobileOpen, setMobileOpen }) {
     <div className="flex flex-col h-full bg-primary-50 border-r border-slate-200/60 p-6 w-[260px] shrink-0 select-none">
       {/* Top Logo */}
       <div className="flex items-center justify-between mb-8">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-2xl bg-primary-600 flex items-center justify-center text-white shadow-md shadow-primary-500/30">
-            <GraduationCap className="w-6 h-6" />
-          </div>
-          <div>
-            <h1 className="font-heading text-2xl font-bold text-slate-800 leading-tight">
-              Semora
-            </h1>
-            <p className="text-[11px] text-slate-400 font-medium -mt-1">Academic Portal</p>
-          </div>
+        <div>
+          <h1 className="font-heading text-2xl font-bold text-slate-800 leading-tight">
+            Semora
+          </h1>
+          <p className="text-[11px] text-slate-400 font-medium -mt-1">Academic Portal</p>
         </div>
 
         {/* Mobile close button */}
@@ -68,13 +62,13 @@ export default function Sidebar({ mobileOpen, setMobileOpen }) {
               className={({ isActive }) => `
                 w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-sm font-semibold transition-all duration-200
                 ${isActive
-                  ? 'bg-primary-100 text-primary-600 shadow-sm shadow-primary-500/5 font-extrabold'
+                  ? 'bg-primary-200 text-primary-800 font-extrabold'
                   : 'text-slate-600 hover:bg-slate-200/50 hover:text-slate-900'
                 }
               `}
             >
               <div className="p-2 rounded-xl transition-colors duration-200 shrink-0">
-                <Icon className="w-4 h-4" />
+                <Icon className="w-4 h-4 text-current" />
               </div>
               <span className="truncate">{item.label}</span>
             </NavLink>

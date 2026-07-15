@@ -26,10 +26,10 @@ export default function Navbar({ setMobileOpen }) {
 
         <div>
           <h2 className="text-lg md:text-xl font-black text-slate-900 flex items-center gap-2 leading-tight">
-            Hello, {userName}! <span className="inline-block animate-bounce">👋</span>
+            Hello, {userName}! <span className="inline-block ml-1">👋</span>
           </h2>
           <p className="text-xs text-slate-500 font-semibold">
-            Let's calculate your SGPA & CGPA
+            Track your academic progress with Semora
           </p>
         </div>
       </div>

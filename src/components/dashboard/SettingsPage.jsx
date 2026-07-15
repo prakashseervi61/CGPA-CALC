@@ -1,16 +1,20 @@
 import React, { useState } from 'react';
 import {
-  Settings, User, KeyRound, Database, Download, RotateCcw, Check, Target, Edit2, X
+  Settings, User, KeyRound, Database, Download, RotateCcw, Check, Target, Edit2, X,
+  Moon, Sun
 } from 'lucide-react';
 import Card from '../ui/Card';
 import Button from '../ui/Button';
 import Badge from '../ui/Badge';
+import ThemeToggle from '../ui/ThemeToggle';
 import { useUser } from '../../hooks/useUser';
 import { useSesame } from '../../hooks/useSesame';
+import { useTheme } from '../../contexts/ThemeContext';
 
 export default function SettingsPage() {
   const { user, onUpdateUser } = useUser();
   const { onResetGrades, onExportData } = useSesame();
+  const { theme, toggleTheme } = useTheme();
 
   const [isEditingProfile, setIsEditingProfile] = useState(false);
   const [isEditingPin, setIsEditingPin] = useState(false);
@@ -25,6 +29,7 @@ export default function SettingsPage() {
   const [newPin, setNewPin] = useState('');
   const [pinMessage, setPinMessage] = useState(null);
 
+  
   const handleProfileSave = (e) => {
     e.preventDefault();
     if (onUpdateUser) {
@@ -86,6 +91,26 @@ export default function SettingsPage() {
           </Badge>
         )}
       </div>
+
+      {/* SECTION 0: Appearance & Theme */}
+      <Card className="p-6 border border-slate-100 shadow-sm space-y-4">
+        <div className="flex items-center justify-between pb-3 border-b border-slate-100">
+          <div className="flex items-center gap-2.5">
+            <div className="w-8 h-8 rounded-xl bg-slate-50 text-slate-600 flex items-center justify-center shrink-0">
+              <Sun className="w-4 h-4" />
+            </div>
+            <div>
+              <h3 className="text-base font-extrabold text-slate-900">Appearance</h3>
+              <p className="text-xs text-slate-400 font-semibold">Light & Dark mode preference</p>
+            </div>
+          </div>
+
+          {/* Theme Toggle Switch */}
+          <div className="flex items-center">
+            <ThemeToggle className="ml-4" />
+          </div>
+        </div>
+      </Card>
 
       {/* SECTION 1: Student Profile Information with Edit / Save Toggle */}
       <Card className="p-6 border border-slate-100 shadow-sm space-y-4">

@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import {
   AreaChart, Area, BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid, Legend
 } from 'recharts';
-import { TrendingUp, Award, Zap, BookOpen, Layers, XCircle, Target } from 'lucide-react';
+import { TrendingUp, Award, Zap, BookOpen, Layers, XCircle, Target, Check } from 'lucide-react';
 import Card from '../ui/Card';
 import Badge from '../ui/Badge';
 import { useSesame } from '../../contexts/DataContext';
@@ -103,7 +103,7 @@ export default function CGPATrendsPage() {
       requiredFutureGpa: Number(requiredFutureGpa.toFixed(2)),
       targetCgpa: Number(targetCgpa.toFixed(2))
     };
-  }, [semesters, gradePointsMap, user?.targetCgpa]);
+  }, [semesters, gradePointsMap, user?.targetCgpa, currentSemesterId]);
 
   return (
     <div className="space-y-6 select-none animate-in fade-in duration-200">

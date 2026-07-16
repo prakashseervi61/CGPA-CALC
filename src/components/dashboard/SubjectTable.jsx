@@ -4,10 +4,10 @@ import Badge from '../ui/Badge';
 import { useSesame } from '../../contexts/DataContext';
 
 const RING_COLORS = [
-  'bg-indigo-100 text-indigo-800',
-  'bg-emerald-100 text-emerald-800',
+  'bg-[#F5E6D3] text-[#8B4F32]',
+  'bg-[#D4E8D6] text-[#4A6E4D]',
   'bg-amber-100 text-amber-800',
-  'bg-blue-100 text-blue-800',
+  'bg-[#F5E6D3] text-[#C27856]',
   'bg-rose-100 text-rose-800',
 ];
 
@@ -31,7 +31,7 @@ export default function SubjectTable() {
     <div className="space-y-4">
       {/* Semester Selector + Reset */}
       <div className="flex items-center justify-between">
-        <div className="flex items-center gap-2 bg-slate-100/70 dark:bg-slate-700/50 border border-slate-200/80 dark:border-slate-600/80 rounded-xl px-3 py-1.5 hover:border-indigo-400/50 hover:bg-indigo-50/40 dark:hover:bg-indigo-900/20 transition-all duration-200">
+        <div className="flex items-center gap-2 bg-stone-100/70 dark:bg-stone-700/50 border border-stone-200/80 dark:border-stone-600/80 rounded-xl px-3 py-1.5 hover:border-[#C27856]/50 hover:bg-[#F5E6D3]/40 dark:hover:bg-[#C27856]/20 transition-all duration-200">
           <span className="text-[10px] font-black uppercase text-slate-400 tracking-wider leading-none">Sem</span>
           <select
             value={currentSemesterId}
@@ -163,7 +163,7 @@ export default function SubjectTable() {
                           className={`
                             px-3.5 py-2 sm:py-1.5 pr-7 rounded-xl font-black text-xs sm:text-sm border transition-all cursor-pointer focus:outline-none appearance-none
                             ${course.grade
-                              ? 'bg-indigo-100 text-indigo-700 border-indigo-200 shadow-xs'
+                              ? 'bg-[#F5E6D3] text-[#8B4F32] border-[#EBD5BE] shadow-xs'
                               : 'bg-slate-100 text-slate-700 border-slate-200/80 hover:bg-slate-200/60'
                             }
                           `}

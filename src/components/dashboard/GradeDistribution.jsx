@@ -51,15 +51,13 @@ export default function GradeDistribution() {
     });
 
     return {
-      chartData: data.length > 0 ? data : [
-        { name: 'O', gradeKey: 'O', value: 3, percentage: 38, color: GRADE_COLOR_MAP['O'] },
-        { name: 'A+', gradeKey: 'A+', value: 3, percentage: 38, color: GRADE_COLOR_MAP['A+'] },
-        { name: 'A', gradeKey: 'A', value: 2, percentage: 24, color: GRADE_COLOR_MAP['A'] },
-      ],
-      totalGrades: totalGrades || 8,
-      mostFrequent: totalGrades > 0 ? mostFrequent : 'A+'
+      chartData: data,
+      totalGrades,
+      mostFrequent: totalGrades > 0 ? mostFrequent : 'None'
     };
   }, [courses]);
+
+  const hasGrades = distributionData.totalGrades > 0;
 
   return (
     <Card className="shadow-sm border border-stone-200 dark:border-stone-800 p-5">
@@ -76,87 +74,95 @@ export default function GradeDistribution() {
         </div>
       </div>
 
-      {/* 2-Column Tight Layout: Left (45%) Donut Chart, Right (55%) Legend */}
-      <div className="flex items-center justify-between gap-2 my-2">
-        {/* Left Column: Donut Chart (45% width) */}
-        <div className="w-[45%] h-36 flex items-center justify-center relative">
-          <ResponsiveContainer width="100%" height="100%">
-            <PieChart>
-              <Tooltip
-                contentStyle={{
-                  backgroundColor: '#292524',
-                  borderRadius: '12px',
-                  color: '#F5F5F4',
-                  fontSize: '11px',
-                  fontWeight: 'bold',
-                  border: 'none',
-                  padding: '6px 10px'
-                }}
-              />
-              <Pie
-                data={distributionData.chartData}
-                cx="50%"
-                cy="50%"
-                innerRadius={32}
-                outerRadius={50}
-                paddingAngle={4}
-                dataKey="value"
-                stroke="none"
-              >
-                {distributionData.chartData.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={entry.color} />
-                ))}
-              </Pie>
-            </PieChart>
-          </ResponsiveContainer>
-          <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-            <span className="text-base font-black text-stone-900 dark:text-stone-100 leading-tight">
-              {distributionData.totalGrades}
-            </span>
-            <span className="text-[9px] uppercase font-extrabold text-stone-400">
-              Grades
-            </span>
-          </div>
+      {!hasGrades ? (
+        <div className="py-8 text-center">
+          <p className="text-xs text-stone-400 font-semibold">No grades entered yet</p>
         </div>
-
-        {/* Right Column: Tightly Aligned Grade List (55% width) */}
-        <div className="w-[55%] space-y-2 pl-1">
-          {distributionData.chartData.map((item) => (
-            <div key={item.gradeKey} className="space-y-1">
-              <div className="flex items-center justify-between text-xs font-extrabold text-stone-800 dark:text-stone-200">
-                <div className="flex items-center gap-1.5">
-                  <span
-                    className="w-2.5 h-2.5 rounded-full shrink-0"
-                    style={{ backgroundColor: item.color }}
+      ) : (
+        <>
+          {/* 2-Column Tight Layout: Left (45%) Donut Chart, Right (55%) Legend */}
+          <div className="flex items-center justify-between gap-2 my-2">
+            {/* Left Column: Donut Chart (45% width) */}
+            <div className="w-[45%] h-36 flex items-center justify-center relative">
+              <ResponsiveContainer width="100%" height="100%">
+                <PieChart>
+                  <Tooltip
+                    contentStyle={{
+                      backgroundColor: '#292524',
+                      borderRadius: '12px',
+                      color: '#F5F5F4',
+                      fontSize: '11px',
+                      fontWeight: 'bold',
+                      border: 'none',
+                      padding: '6px 10px'
+                    }}
                   />
-                  <span>Grade {item.gradeKey}</span>
-                </div>
-                <span className="text-[11px] text-stone-500 dark:text-stone-400 font-extrabold">{item.percentage}%</span>
-              </div>
-              {/* Compact Progress Bar */}
-              <div className="w-full bg-stone-100 dark:bg-stone-800 h-1.5 rounded-full overflow-hidden">
-                <div
-                  className="h-full rounded-full transition-all duration-500"
-                  style={{ width: `${item.percentage}%`, backgroundColor: item.color }}
-                />
+                  <Pie
+                    data={distributionData.chartData}
+                    cx="50%"
+                    cy="50%"
+                    innerRadius={32}
+                    outerRadius={50}
+                    paddingAngle={4}
+                    dataKey="value"
+                    stroke="none"
+                  >
+                    {distributionData.chartData.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={entry.color} />
+                    ))}
+                  </Pie>
+                </PieChart>
+              </ResponsiveContainer>
+              <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+                <span className="text-base font-black text-stone-900 dark:text-stone-100 leading-tight">
+                  {distributionData.totalGrades}
+                </span>
+                <span className="text-[9px] uppercase font-extrabold text-stone-400">
+                  Grades
+                </span>
               </div>
             </div>
-          ))}
-        </div>
-      </div>
 
-      {/* Bottom Highlight Badge */}
-      <div className="mt-3.5 pt-2.5 border-t border-stone-200 dark:border-stone-800 flex items-center justify-between bg-primary-light/50 px-3 py-2 rounded-xl">
-        <div className="flex items-center gap-2">
-          <Award className="w-4 h-4 text-primary" />
-          <span className="text-xs font-extrabold text-stone-800 dark:text-stone-200">
-            Most Frequent Grade:
-          </span>
-        </div>
-        <span className="text-xs font-black text-primary bg-primary-light px-2.5 py-0.5 rounded-lg border border-primary/20">
-          Grade {distributionData.mostFrequent}
-        </span>
-      </div>
+            {/* Right Column: Tightly Aligned Grade List (55% width) */}
+            <div className="w-[55%] space-y-2 pl-1">
+              {distributionData.chartData.map((item) => (
+                <div key={item.gradeKey} className="space-y-1">
+                  <div className="flex items-center justify-between text-xs font-extrabold text-stone-800 dark:text-stone-200">
+                    <div className="flex items-center gap-1.5">
+                      <span
+                        className="w-2.5 h-2.5 rounded-full shrink-0"
+                        style={{ backgroundColor: item.color }}
+                      />
+                      <span>Grade {item.gradeKey}</span>
+                    </div>
+                    <span className="text-[11px] text-stone-500 dark:text-stone-400 font-extrabold">{item.percentage}%</span>
+                  </div>
+                  {/* Compact Progress Bar */}
+                  <div className="w-full bg-stone-100 dark:bg-stone-800 h-1.5 rounded-full overflow-hidden">
+                    <div
+                      className="h-full rounded-full transition-all duration-500"
+                      style={{ width: `${item.percentage}%`, backgroundColor: item.color }}
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Bottom Highlight Badge */}
+          <div className="mt-3.5 pt-2.5 border-t border-stone-200 dark:border-stone-800 flex items-center justify-between bg-primary-light/50 px-3 py-2 rounded-xl">
+            <div className="flex items-center gap-2">
+              <Award className="w-4 h-4 text-primary" />
+              <span className="text-xs font-extrabold text-stone-800 dark:text-stone-200">
+                Most Frequent Grade:
+              </span>
+            </div>
+            <span className="text-xs font-black text-primary bg-primary-light px-2.5 py-0.5 rounded-lg border border-primary/20">
+              Grade {distributionData.mostFrequent}
+            </span>
+          </div>
+        </>
+      )}
     </Card>
   );
 }

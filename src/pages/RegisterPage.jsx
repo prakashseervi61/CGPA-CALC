@@ -28,8 +28,22 @@ const RegisterPage = () => {
 
   return (
     <div className="auth-container">
+      {/* Desktop branding panel */}
+      <div className="auth-brand-panel">
+        <div className="auth-brand-content">
+          <div className="auth-brand-icon">
+            <GraduationCap />
+          </div>
+          <h1 className="auth-brand-title">Semora</h1>
+          <p className="auth-brand-desc">
+            Track your academic performance, analyze grades, and achieve your GPA goals — all in one place.
+          </p>
+        </div>
+      </div>
+
+      {/* Auth card */}
       <div className="auth-card">
-        {/* Logo */}
+        {/* Mobile logo (hidden on desktop via CSS) */}
         <div className="auth-logo">
           <div className="auth-logo-mark">
             <GraduationCap />
@@ -38,14 +52,12 @@ const RegisterPage = () => {
           <span className="auth-logo-tagline">Academic Performance Tracker</span>
         </div>
 
-        {/* Header */}
         <div className="auth-form-header">
           <h2>Create account</h2>
           <p>Start tracking your academic progress</p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
-          {/* Username */}
           <div className="auth-form-group">
             <label className="auth-form-label">Username</label>
             <div className="auth-form-input-wrapper">
@@ -61,7 +73,6 @@ const RegisterPage = () => {
             </div>
           </div>
 
-          {/* Register Number */}
           <div className="auth-form-group">
             <label className="auth-form-label">Register Number</label>
             <div className="auth-form-input-wrapper">
@@ -77,7 +88,6 @@ const RegisterPage = () => {
             </div>
           </div>
 
-          {/* Create PIN */}
           <div className="auth-form-group">
             <label className="auth-form-label">Create 4-Digit PIN</label>
             <div className="auth-form-input-wrapper">
@@ -85,7 +95,6 @@ const RegisterPage = () => {
             </div>
           </div>
 
-          {/* Confirm PIN */}
           <div className="auth-form-group">
             <label className="auth-form-label">Confirm PIN</label>
             <div className="auth-form-input-wrapper">
@@ -99,7 +108,6 @@ const RegisterPage = () => {
             )}
           </div>
 
-          {/* Submit */}
           <button
             className="auth-button"
             type="submit"
@@ -122,7 +130,6 @@ const RegisterPage = () => {
           </button>
         </form>
 
-        {/* Footer */}
         <div className="auth-divider">
           <div className="auth-divider-line" />
           <span className="auth-divider-text">Already have an account?</span>

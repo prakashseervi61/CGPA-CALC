@@ -1,49 +1,30 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useState, useMemo } from 'react';
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  // Currently logged-in active user profile
   const [user, setUser] = useState(() => {
-    const savedUser = localStorage.getItem('cgpa_app_current_user');
-    if (savedUser) {
-      try { return JSON.parse(savedUser); } catch (e) { }
+    try {
+      return JSON.parse(localStorage.getItem('cgpa_app_current_user')) || null;
+    } catch {
+      return null;
     }
-    return null;
   });
 
-  const [isLoggedIn, setIsLoggedIn] = useState(() => {
-    const savedUser = localStorage.getItem('cgpa_app_current_user');
-    return !!savedUser;
-  });
+  const isLoggedIn = useMemo(() => !!user, [user]);
 
   const handleLogin = (profile) => {
     setUser(profile);
-    setIsLoggedIn(true);
     localStorage.setItem('cgpa_app_current_user', JSON.stringify(profile));
   };
 
   const handleLogout = () => {
-    setIsLoggedIn(false);
     setUser(null);
     localStorage.removeItem('cgpa_app_current_user');
   };
 
-  const handleUpdateUser = (updatedProfile) => {
-    setUser(updatedProfile);
-    localStorage.setItem('cgpa_app_current_user', JSON.stringify(updatedProfile));
-  };
-
-  const value = {
-    user,
-    isLoggedIn,
-    handleLogin,
-    handleLogout,
-    handleUpdateUser
-  };
-
   return (
-    <AuthContext.Provider value={value}>
+    <AuthContext.Provider value={{ user, isLoggedIn, handleLogin, handleLogout }}>
       {children}
     </AuthContext.Provider>
   );
@@ -51,9 +32,7 @@ export const AuthProvider = ({ children }) => {
 
 export const useUser = () => {
   const context = useContext(AuthContext);
-  if (!context) {
-    throw new Error('useUser must be used within an AuthProvider');
-  }
+  if (!context) throw new Error('useUser must be used within an AuthProvider');
   return context;
 };
 

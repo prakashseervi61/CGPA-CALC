@@ -24,7 +24,7 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="auth-container">
+    <div className="auth-container auth-page-enter">
       {/* Desktop branding panel */}
       <div className="auth-brand-panel">
         <div className="auth-brand-content">

@@ -72,7 +72,7 @@ body {
   to { transform: translate(-40px, 30px) scale(1.1); }
 }
 
-/* ---- Left branding panel (hidden on mobile) ---- */
+/* ---- Branding panel (hidden on mobile) ---- */
 .auth-brand-panel {
   display: none;
 }
@@ -89,18 +89,22 @@ body {
     0 20px 50px -12px rgba(0, 0, 0, 0.25);
   position: relative;
   z-index: 1;
-  animation: card-enter 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
   overflow-y: auto;
 }
 
-@keyframes card-enter {
+/* Page enter animation */
+.auth-page-enter {
+  animation: auth-slide-in 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes auth-slide-in {
   from {
     opacity: 0;
-    transform: translateY(20px) scale(0.98);
+    transform: translateY(12px);
   }
   to {
     opacity: 1;
-    transform: translateY(0) scale(1);
+    transform: translateY(0);
   }
 }
 
@@ -437,6 +441,11 @@ html.dark .auth-footer p {
     line-height: 1.6;
   }
 
+  /* Login: card on LEFT → reverse order (card first, brand second) */
+  .auth-container:not(.auth-register) {
+    flex-direction: row-reverse;
+  }
+
   .auth-card {
     width: 55%;
     max-width: none;
@@ -444,6 +453,15 @@ html.dark .auth-footer p {
     flex-direction: column;
     justify-content: center;
     padding: 3rem 4rem;
+  }
+
+  /* Login: card on left → rounded right side */
+  .auth-container:not(.auth-register) .auth-card {
+    border-radius: 0 1.5rem 1.5rem 0;
+  }
+
+  /* Register: card on right → rounded left side */
+  .auth-register .auth-card {
     border-radius: 1.5rem 0 0 1.5rem;
   }
 

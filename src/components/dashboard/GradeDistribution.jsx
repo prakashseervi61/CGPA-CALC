@@ -5,13 +5,13 @@ import Card from '../ui/Card';
 import { useSesame } from '../../contexts/DataContext';
 
 const GRADE_COLOR_MAP = {
-  'O': '#10B981',   // Emerald / Green
-  'A+': '#4F46E5',  // Indigo
-  'A': '#3B82F6',   // Blue
-  'B+': '#F59E0B',  // Amber
-  'B': '#F97316',   // Orange
-  'C': '#64748B',   // Slate
-  'U': '#EF4444',   // Red
+  'O': '#7A9E7E',   // Muted green
+  'A+': '#C27856',  // Terracotta (primary)
+  'A': '#D4A843',   // Warm amber
+  'B+': '#E0976E',  // Light terracotta
+  'B': '#A8A29E',   // Stone
+  'C': '#78716C',   // Stone dark
+  'U': '#C75B5B',   // Muted danger
 };
 
 export default function GradeDistribution() {
@@ -37,7 +37,7 @@ export default function GradeDistribution() {
         gradeKey: g,
         value: counts[g],
         percentage: totalGrades > 0 ? Math.round((counts[g] / totalGrades) * 100) : 0,
-        color: GRADE_COLOR_MAP[g] || '#4F46E5'
+        color: GRADE_COLOR_MAP[g] || '#7C3AED'
       }));
 
     // Find most frequent grade
@@ -62,16 +62,16 @@ export default function GradeDistribution() {
   }, [courses]);
 
   return (
-    <Card className="shadow-sm border border-slate-100 p-5">
+    <Card className="shadow-sm border border-stone-200 dark:border-stone-800 p-5">
       {/* Header */}
-      <div className="flex items-center justify-between mb-3 pb-2 border-b border-slate-100">
+      <div className="flex items-center justify-between mb-3 pb-2 border-b border-stone-200 dark:border-stone-800">
         <div className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center shrink-0">
+          <div className="w-8 h-8 rounded-xl bg-primary-light text-primary flex items-center justify-center shrink-0">
             <PieIcon className="w-4 h-4" />
           </div>
           <div>
-            <h4 className="text-sm font-extrabold text-slate-900">Grade Distribution</h4>
-            <p className="text-xs text-slate-400 font-semibold">Breakdown of achieved grades</p>
+            <h4 className="text-sm font-extrabold text-stone-900 dark:text-stone-100">Grade Distribution</h4>
+            <p className="text-xs text-stone-400 font-semibold">Breakdown of achieved grades</p>
           </div>
         </div>
       </div>
@@ -84,9 +84,9 @@ export default function GradeDistribution() {
             <PieChart>
               <Tooltip
                 contentStyle={{
-                  backgroundColor: '#1E293B',
+                  backgroundColor: '#292524',
                   borderRadius: '12px',
-                  color: '#fff',
+                  color: '#F5F5F4',
                   fontSize: '11px',
                   fontWeight: 'bold',
                   border: 'none',
@@ -110,10 +110,10 @@ export default function GradeDistribution() {
             </PieChart>
           </ResponsiveContainer>
           <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-            <span className="text-base font-black text-slate-900 leading-tight">
+            <span className="text-base font-black text-stone-900 dark:text-stone-100 leading-tight">
               {distributionData.totalGrades}
             </span>
-            <span className="text-[9px] uppercase font-extrabold text-slate-400">
+            <span className="text-[9px] uppercase font-extrabold text-stone-400">
               Grades
             </span>
           </div>
@@ -123,7 +123,7 @@ export default function GradeDistribution() {
         <div className="w-[55%] space-y-2 pl-1">
           {distributionData.chartData.map((item) => (
             <div key={item.gradeKey} className="space-y-1">
-              <div className="flex items-center justify-between text-xs font-extrabold text-slate-800">
+              <div className="flex items-center justify-between text-xs font-extrabold text-stone-800 dark:text-stone-200">
                 <div className="flex items-center gap-1.5">
                   <span
                     className="w-2.5 h-2.5 rounded-full shrink-0"
@@ -131,10 +131,10 @@ export default function GradeDistribution() {
                   />
                   <span>Grade {item.gradeKey}</span>
                 </div>
-                <span className="text-[11px] text-slate-500 font-extrabold">{item.percentage}%</span>
+                <span className="text-[11px] text-stone-500 dark:text-stone-400 font-extrabold">{item.percentage}%</span>
               </div>
               {/* Compact Progress Bar */}
-              <div className="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden">
+              <div className="w-full bg-stone-100 dark:bg-stone-800 h-1.5 rounded-full overflow-hidden">
                 <div
                   className="h-full rounded-full transition-all duration-500"
                   style={{ width: `${item.percentage}%`, backgroundColor: item.color }}
@@ -146,14 +146,14 @@ export default function GradeDistribution() {
       </div>
 
       {/* Bottom Highlight Badge */}
-      <div className="mt-3.5 pt-2.5 border-t border-slate-100 flex items-center justify-between bg-indigo-50 px-3 py-2 rounded-xl">
+      <div className="mt-3.5 pt-2.5 border-t border-stone-200 dark:border-stone-800 flex items-center justify-between bg-primary-light/50 px-3 py-2 rounded-xl">
         <div className="flex items-center gap-2">
-          <Award className="w-4 h-4 text-indigo-600" />
-          <span className="text-xs font-extrabold text-slate-800">
+          <Award className="w-4 h-4 text-primary" />
+          <span className="text-xs font-extrabold text-stone-800 dark:text-stone-200">
             Most Frequent Grade:
           </span>
         </div>
-        <span className="text-xs font-black text-indigo-600 bg-indigo-100 px-2.5 py-0.5 rounded-lg border border-indigo-200/50">
+        <span className="text-xs font-black text-primary bg-primary-light px-2.5 py-0.5 rounded-lg border border-primary/20">
           Grade {distributionData.mostFrequent}
         </span>
       </div>

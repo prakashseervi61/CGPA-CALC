@@ -35,7 +35,7 @@ export default function CGPASummary() {
   const isTargetAchieved = currentCgpa >= targetCgpa;
 
   return (
-    <div className="bg-gradient-to-br from-indigo-600 via-indigo-700 to-indigo-800 text-white rounded-[24px] p-5 shadow-lg shadow-indigo-500/20 relative overflow-hidden select-none border border-indigo-400/20">
+    <div className="bg-gradient-to-br from-[#C27856] via-[#A8623E] to-[#8B4F32] text-white rounded-[24px] p-5 shadow-lg shadow-[#C27856]/20 relative overflow-hidden select-none border border-[#D4956F]/20">
       {/* Decorative Glow Elements */}
       <div className="absolute -top-10 -right-10 w-36 h-36 bg-white/10 rounded-full blur-xl pointer-events-none"></div>
 
@@ -45,7 +45,7 @@ export default function CGPASummary() {
           <div className="w-7 h-7 rounded-xl bg-white/15 backdrop-blur-md flex items-center justify-center text-amber-300">
             <Star className="w-4 h-4 fill-amber-300" />
           </div>
-          <span className="text-xs font-black tracking-wider uppercase text-indigo-200">
+          <span className="text-xs font-black tracking-wider uppercase text-white/70">
             Overall CGPA
           </span>
         </div>
@@ -54,7 +54,7 @@ export default function CGPASummary() {
             Target: {formattedTargetCgpa}
           </span>
           {isTargetAchieved && (
-            <Check className="w-4 h-4 text-green-400" />
+            <Check className="w-4 h-4 text-emerald-300" />
           )}
         </div>
       </div>
@@ -65,10 +65,10 @@ export default function CGPASummary() {
           {formattedCgpa}
         </span>
         <div className="flex flex-col">
-          <span className="text-[10px] font-black uppercase text-indigo-200 tracking-wider">
+          <span className="text-[10px] font-black uppercase text-white/70 tracking-wider">
             out of 10.0
           </span>
-          <span className="text-xs text-indigo-200/90 font-semibold truncate max-w-[180px]">
+          <span className="text-xs text-white/80 font-semibold truncate max-w-[180px]">
             SGPA: <span className="font-bold text-white">{formattedSgpa}</span> ({activeSemesterName})
           </span>
         </div>
@@ -77,21 +77,21 @@ export default function CGPASummary() {
       {/* Target Progress Bar */}
       <div className="my-4">
         <div className="flex items-center justify-between mb-1">
-          <span className="text-xs font-black text-indigo-200">Target Progress</span>
-          <span className="text-xs font-bold text-indigo-200">
+          <span className="text-xs font-black text-white/70">Target Progress</span>
+          <span className="text-xs font-bold text-white/70">
             {progressToTarget.toFixed(0)}% {isTargetAchieved ? '(Achieved!)' : ''}
           </span>
         </div>
         <div className="w-full bg-white/20 rounded-full h-2.5 overflow-hidden">
           <div
-            className={`h-full bg-gradient-to-r from-indigo-400 to-indigo-200 transition-all duration-1000 ease-out`}
+            className={`h-full bg-gradient-to-r from-white/80 to-white/50 transition-all duration-1000 ease-out`}
             style={{ width: `${progressToTarget}%` }}
           ></div>
         </div>
       </div>
 
       {/* Motivational Text */}
-      <p className="text-xs text-indigo-200 font-bold mb-4 relative z-10 bg-white/10 backdrop-blur-sm px-3 py-2 rounded-xl border border-white/10 truncate">
+      <p className="text-xs text-white/80 font-bold mb-4 relative z-10 bg-white/10 backdrop-blur-sm px-3 py-2 rounded-xl border border-white/10 truncate">
         {getMotivation(formattedCgpa)}
       </p>
 
@@ -106,7 +106,7 @@ export default function CGPASummary() {
               <item.icon className="w-4 h-4 text-white" />
             </div>
             <div>
-              <span className="text-[9px] uppercase font-bold text-indigo-200 tracking-wider block leading-none mb-1">{item.label}</span>
+              <span className="text-[9px] uppercase font-bold text-white/70 tracking-wider block leading-none mb-1">{item.label}</span>
               <span className="text-sm font-black text-white leading-none">{item.value}</span>
             </div>
           </div>

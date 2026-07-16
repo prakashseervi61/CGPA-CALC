@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useMemo } from 'react';
+import { createContext, useContext, useState } from 'react';
 
 const AuthContext = createContext();
 
@@ -11,11 +11,19 @@ export const AuthProvider = ({ children }) => {
     }
   });
 
-  const isLoggedIn = useMemo(() => !!user, [user]);
+  const isLoggedIn = !!user;
 
   const handleLogin = (profile) => {
     setUser(profile);
     localStorage.setItem('cgpa_app_current_user', JSON.stringify(profile));
+  };
+
+  const handleUpdateUser = (updates) => {
+    setUser(prev => {
+      const next = typeof updates === 'function' ? updates(prev) : { ...prev, ...updates };
+      localStorage.setItem('cgpa_app_current_user', JSON.stringify(next));
+      return next;
+    });
   };
 
   const handleLogout = () => {
@@ -24,7 +32,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, isLoggedIn, handleLogin, handleLogout }}>
+    <AuthContext.Provider value={{ user, isLoggedIn, handleLogin, handleUpdateUser, handleLogout }}>
       {children}
     </AuthContext.Provider>
   );

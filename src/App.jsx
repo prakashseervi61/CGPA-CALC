@@ -27,15 +27,15 @@ function App() {
 
   // App shell layout
   const AppShell = ({ children }) => (
-    <>
+    <div className="flex h-screen overflow-hidden">
       <Sidebar mobileOpen={mobileOpen} setMobileOpen={setMobileOpen} />
-      <div className="flex-1 flex flex-col min-w-0 h-screen overflow-hidden dark:bg-slate-900 dark:text-slate-100">
+      <div className="flex-1 flex flex-col min-w-0 h-screen overflow-hidden bg-stone-50 dark:bg-stone-950 text-stone-900 dark:text-stone-100">
         <Navbar setMobileOpen={setMobileOpen} />
         <div className="flex-1 flex flex-col lg:flex-row min-h-0 overflow-hidden">
           {children}
         </div>
       </div>
-    </>
+    </div>
   );
 
   return (
@@ -56,13 +56,13 @@ function App() {
         element={
           <ProtectedRoute>
             <AppShell>
-              <main className="flex-1 overflow-y-auto p-4 sm:p-6 md:p-8 bg-slate-50/50 dark:bg-slate-900">
+              <main className="flex-1 overflow-y-auto p-4 sm:p-6 md:p-8 bg-stone-50 dark:bg-stone-950">
                 <div className="space-y-6">
                   <SubjectTable />
                   <GradeScale />
                 </div>
               </main>
-              <aside className="w-full lg:w-[320px] xl:w-[350px] shrink-0 p-4 sm:p-6 space-y-3.5 overflow-y-auto select-none bg-white dark:bg-slate-800 border-t lg:border-t-0 lg:border-l border-slate-100/80 dark:border-slate-700/80">
+              <aside className="w-full lg:w-[320px] xl:w-[350px] shrink-0 p-4 sm:p-6 space-y-3.5 overflow-y-auto select-none bg-white dark:bg-stone-900 border-t lg:border-t-0 lg:border-l border-stone-200/80 dark:border-stone-800/80">
                 <CGPASummary />
                 <GradeDistribution />
               </aside>
@@ -76,7 +76,7 @@ function App() {
         element={
           <ProtectedRoute>
             <AppShell>
-              <main className="flex-1 overflow-y-auto p-4 sm:p-6 md:p-8 dark:bg-slate-900">
+              <main className="flex-1 overflow-y-auto p-4 sm:p-6 md:p-8 bg-stone-50 dark:bg-stone-950">
                 <CGPATrendsPage />
               </main>
             </AppShell>
@@ -89,7 +89,7 @@ function App() {
         element={
           <ProtectedRoute>
             <AppShell>
-              <main className="flex-1 overflow-y-auto p-4 sm:p-6 md:p-8 dark:bg-slate-900">
+              <main className="flex-1 overflow-y-auto p-4 sm:p-6 md:p-8 bg-stone-50 dark:bg-stone-950">
                 <SettingsPage />
               </main>
             </AppShell>
@@ -102,7 +102,7 @@ function App() {
         element={
           <ProtectedRoute>
             <AppShell>
-              <main className="flex-1 overflow-y-auto p-4 sm:p-6 md:p-8 dark:bg-slate-900">
+              <main className="flex-1 overflow-y-auto p-4 sm:p-6 md:p-8 bg-stone-50 dark:bg-stone-950">
                 <HelpPage />
               </main>
             </AppShell>

@@ -44,7 +44,7 @@ export default function HelpPage() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-2 border-b border-slate-100">
         <div>
           <h2 className="text-2xl font-black text-slate-900 flex items-center gap-2.5">
-            <div className="w-9 h-9 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center shrink-0">
+            <div className="w-9 h-9 rounded-xl bg-[#F5E6D3] text-[#C27856] flex items-center justify-center shrink-0">
               <HelpCircle className="w-5 h-5" />
             </div>
             Help & Support Guide
@@ -63,7 +63,7 @@ export default function HelpPage() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {/* Step 1 */}
         <Card className="p-4 border border-slate-100 bg-white shadow-sm space-y-2">
-          <div className="w-8 h-8 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-black text-sm">
+          <div className="w-8 h-8 rounded-xl bg-[#F5E6D3] text-[#C27856] flex items-center justify-center font-black text-sm">
             1
           </div>
           <h3 className="font-extrabold text-sm text-slate-900">Select Active Semester</h3>
@@ -74,7 +74,7 @@ export default function HelpPage() {
 
         {/* Step 2 */}
         <Card className="p-4 border border-slate-100 bg-white shadow-sm space-y-2">
-          <div className="w-8 h-8 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center font-black text-sm">
+          <div className="w-8 h-8 rounded-xl bg-[#D4E8D6] text-[#4A6E4D] flex items-center justify-center font-black text-sm">
             2
           </div>
           <h3 className="font-extrabold text-sm text-slate-900">Select Letter Grades</h3>
@@ -98,7 +98,7 @@ export default function HelpPage() {
       {/* FAQ SECTION */}
       <Card className="p-6 border border-slate-100 shadow-sm space-y-4">
         <div className="flex items-center gap-2.5 pb-3 border-b border-slate-100">
-          <div className="w-8 h-8 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center shrink-0">
+          <div className="w-8 h-8 rounded-xl bg-[#F5E6D3] text-[#C27856] flex items-center justify-center shrink-0">
             <Lightbulb className="w-4 h-4" />
           </div>
           <div>
@@ -118,11 +118,11 @@ export default function HelpPage() {
                 <button
                   type="button"
                   onClick={() => setOpenFaq(isOpen ? -1 : idx)}
-                  className="w-full flex items-center justify-between p-4 text-left font-black text-sm text-slate-800 hover:text-indigo-600 transition-colors"
+                  className="w-full flex items-center justify-between p-4 text-left font-black text-sm text-slate-800 hover:text-[#C27856] transition-colors"
                 >
                   <span>{faq.q}</span>
                   {isOpen ? (
-                    <ChevronUp className="w-4 h-4 text-indigo-600 shrink-0" />
+                    <ChevronUp className="w-4 h-4 text-[#C27856] shrink-0" />
                   ) : (
                     <ChevronDown className="w-4 h-4 text-slate-400 shrink-0" />
                   )}
@@ -143,7 +143,7 @@ export default function HelpPage() {
       <Card className="p-6 border border-slate-100 shadow-sm space-y-4">
         <div className="flex items-center justify-between pb-3 border-b border-slate-100">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center shrink-0">
+            <div className="w-8 h-8 rounded-xl bg-[#D4E8D6] text-[#4A6E4D] flex items-center justify-center shrink-0">
               <Award className="w-4 h-4" />
             </div>
             <div>
@@ -166,19 +166,19 @@ export default function HelpPage() {
             </thead>
             <tbody className="divide-y divide-slate-100">
               <tr className="hover:bg-slate-50">
-                <td className="py-2.5 px-3 font-black text-emerald-700">O</td>
+                <td className="py-2.5 px-3 font-black text-[#4A6E4D]">O</td>
                 <td className="py-2.5 px-3 text-center font-black text-slate-900">10.0</td>
                 <td className="py-2.5 px-3 text-center text-slate-600">91 – 100%</td>
                 <td className="py-2.5 px-3 text-right font-bold text-slate-700">Outstanding</td>
               </tr>
               <tr className="hover:bg-slate-50">
-                <td className="py-2.5 px-3 font-black text-indigo-600">A+</td>
+                <td className="py-2.5 px-3 font-black text-[#C27856]">A+</td>
                 <td className="py-2.5 px-3 text-center font-black text-slate-900">9.0</td>
                 <td className="py-2.5 px-3 text-center text-slate-600">81 – 90%</td>
                 <td className="py-2.5 px-3 text-right font-bold text-slate-700">Excellent</td>
               </tr>
               <tr className="hover:bg-slate-50">
-                <td className="py-2.5 px-3 font-black text-blue-600">A</td>
+                <td className="py-2.5 px-3 font-black text-amber-600">A</td>
                 <td className="py-2.5 px-3 text-center font-black text-slate-900">8.0</td>
                 <td className="py-2.5 px-3 text-center text-slate-600">71 – 80%</td>
                 <td className="py-2.5 px-3 text-right font-bold text-slate-700">Very Good</td>

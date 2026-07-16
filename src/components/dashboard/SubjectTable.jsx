@@ -13,6 +13,9 @@ const RING_COLORS = [
 
 export default function SubjectTable() {
   const [showResetConfirm, setShowResetConfirm] = useState(false);
+  const [tipDismissed, setTipDismissed] = useState(() => {
+    try { return localStorage.getItem('cgpa_tip_dismissed') === '1'; } catch { return false; }
+  });
   const {
     activeSemester,
     currentSemesterId,
@@ -199,12 +202,17 @@ export default function SubjectTable() {
       </div>
 
       {/* Information Alert Box */}
-      <div className="mt-4 p-3.5 rounded-xl bg-blue-50/70 border border-blue-200/80 flex items-start gap-2.5">
-        <Info className="w-4.5 h-4.5 text-blue-700 shrink-0 mt-0.5" />
-        <div className="text-xs text-blue-950 leading-relaxed font-semibold">
-          <span className="font-extrabold text-blue-900">Formula Tip:</span> SGPA is calculated as <code className="bg-blue-100 px-1.5 py-0.5 rounded text-[11px] font-mono font-bold text-blue-900">Σ(Credits × Grade Points) / Σ(Credits)</code>. Select grades for all subjects to calculate SGPA & CGPA dynamically.
+      {!tipDismissed && (
+        <div className="mt-4 p-3.5 rounded-xl bg-blue-50/70 border border-blue-200/80 flex items-start gap-2.5">
+          <Info className="w-4.5 h-4.5 text-blue-700 shrink-0 mt-0.5" />
+          <div className="text-xs text-blue-950 leading-relaxed font-semibold flex-1">
+            <span className="font-extrabold text-blue-900">Formula Tip:</span> SGPA is calculated as <code className="bg-blue-100 px-1.5 py-0.5 rounded text-[11px] font-mono font-bold text-blue-900">Σ(Credits × Grade Points) / Σ(Credits)</code>. Select grades for all subjects to calculate SGPA & CGPA dynamically.
+          </div>
+          <button onClick={() => { setTipDismissed(true); try { localStorage.setItem('cgpa_tip_dismissed', '1'); } catch {} }} className="text-blue-400 hover:text-blue-600 shrink-0">
+            <XCircle className="w-4 h-4" />
+          </button>
         </div>
-      </div>
+      )}
     </div>
   );
 }

@@ -13,20 +13,14 @@ import HelpPage from './components/dashboard/HelpPage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 
-function App() {
-  const [mobileOpen, setMobileOpen] = useState(false);
+function ProtectedRoute({ children }) {
   const { isLoggedIn } = useUser();
+  return isLoggedIn ? children : <Navigate to="/login" replace />;
+}
 
-  // Protected route wrapper
-  const ProtectedRoute = ({ children }) => {
-    if (!isLoggedIn) {
-      return <Navigate to="/login" replace />;
-    }
-    return children;
-  };
-
-  // App shell layout
-  const AppShell = ({ children }) => (
+function DashboardLayout({ children }) {
+  const [mobileOpen, setMobileOpen] = useState(false);
+  return (
     <div className="flex h-screen overflow-hidden">
       <Sidebar mobileOpen={mobileOpen} setMobileOpen={setMobileOpen} />
       <div className="flex-1 flex flex-col min-w-0 h-screen overflow-hidden bg-stone-50 dark:bg-stone-950 text-stone-900 dark:text-stone-100">
@@ -37,88 +31,42 @@ function App() {
       </div>
     </div>
   );
+}
+
+function App() {
+  const { isLoggedIn } = useUser();
 
   return (
     <Routes>
-      {/* Login Route */}
-      <Route
-        path="/login"
-        element={!isLoggedIn ? <LoginPage /> : <Navigate to="/dashboard" replace />}
-      />
-      {/* Register Route */}
-      <Route
-        path="/register"
-        element={!isLoggedIn ? <RegisterPage /> : <Navigate to="/dashboard" replace />}
-      />
-      {/* Dashboard Route */}
-      <Route
-        path="/dashboard"
-        element={
-          <ProtectedRoute>
-            <AppShell>
-              <main className="flex-1 overflow-y-auto p-4 sm:p-6 md:p-8 bg-stone-50 dark:bg-stone-950">
-                <div className="space-y-6">
-                  <SubjectTable />
-                  <GradeScale />
-                </div>
-              </main>
-              <aside className="w-full lg:w-[320px] xl:w-[350px] shrink-0 p-4 sm:p-6 space-y-3.5 overflow-y-auto select-none bg-white dark:bg-stone-900 border-t lg:border-t-0 lg:border-l border-stone-200/80 dark:border-stone-800/80">
-                <CGPASummary />
-                <GradeDistribution />
-              </aside>
-            </AppShell>
-          </ProtectedRoute>
-        }
-      />
-      {/* CGPA Trends Route */}
-      <Route
-        path="/trends"
-        element={
-          <ProtectedRoute>
-            <AppShell>
-              <main className="flex-1 overflow-y-auto p-4 sm:p-6 md:p-8 bg-stone-50 dark:bg-stone-950">
-                <CGPATrendsPage />
-              </main>
-            </AppShell>
-          </ProtectedRoute>
-        }
-      />
-      {/* Settings Route */}
-      <Route
-        path="/settings"
-        element={
-          <ProtectedRoute>
-            <AppShell>
-              <main className="flex-1 overflow-y-auto p-4 sm:p-6 md:p-8 bg-stone-50 dark:bg-stone-950">
-                <SettingsPage />
-              </main>
-            </AppShell>
-          </ProtectedRoute>
-        }
-      />
-      {/* Help Route */}
-      <Route
-        path="/help"
-        element={
-          <ProtectedRoute>
-            <AppShell>
-              <main className="flex-1 overflow-y-auto p-4 sm:p-6 md:p-8 bg-stone-50 dark:bg-stone-950">
-                <HelpPage />
-              </main>
-            </AppShell>
-          </ProtectedRoute>
-        }
-      />
-      {/* Redirect root to login or dashboard */}
-      <Route
-        path="/"
-        element={isLoggedIn ? <Navigate to="/dashboard" replace /> : <Navigate to="/login" replace />}
-      />
-      {/* Catch-all */}
-      <Route
-        path="*"
-        element={<Navigate to={isLoggedIn ? '/dashboard' : '/login'} replace />}
-      />
+      <Route path="/login" element={!isLoggedIn ? <LoginPage /> : <Navigate to="/dashboard" replace />} />
+      <Route path="/register" element={!isLoggedIn ? <RegisterPage /> : <Navigate to="/dashboard" replace />} />
+      <Route path="/dashboard" element={
+        <ProtectedRoute><DashboardLayout>
+          <main className="flex-1 overflow-y-auto p-4 sm:p-6 md:p-8 bg-stone-50 dark:bg-stone-950">
+            <div className="space-y-6"><SubjectTable /><GradeScale /></div>
+          </main>
+          <aside className="w-full lg:w-[320px] xl:w-[350px] shrink-0 p-4 sm:p-6 space-y-3.5 overflow-y-auto select-none bg-white dark:bg-stone-900 border-t lg:border-t-0 lg:border-l border-stone-200/80 dark:border-stone-800/80">
+            <CGPASummary /><GradeDistribution />
+          </aside>
+        </DashboardLayout></ProtectedRoute>
+      } />
+      <Route path="/trends" element={
+        <ProtectedRoute><DashboardLayout>
+          <main className="flex-1 overflow-y-auto p-4 sm:p-6 md:p-8 bg-stone-50 dark:bg-stone-950"><CGPATrendsPage /></main>
+        </DashboardLayout></ProtectedRoute>
+      } />
+      <Route path="/settings" element={
+        <ProtectedRoute><DashboardLayout>
+          <main className="flex-1 overflow-y-auto p-4 sm:p-6 md:p-8 bg-stone-50 dark:bg-stone-950"><SettingsPage /></main>
+        </DashboardLayout></ProtectedRoute>
+      } />
+      <Route path="/help" element={
+        <ProtectedRoute><DashboardLayout>
+          <main className="flex-1 overflow-y-auto p-4 sm:p-6 md:p-8 bg-stone-50 dark:bg-stone-950"><HelpPage /></main>
+        </DashboardLayout></ProtectedRoute>
+      } />
+      <Route path="/" element={isLoggedIn ? <Navigate to="/dashboard" replace /> : <Navigate to="/login" replace />} />
+      <Route path="*" element={<Navigate to={isLoggedIn ? '/dashboard' : '/login'} replace />} />
     </Routes>
   );
 }

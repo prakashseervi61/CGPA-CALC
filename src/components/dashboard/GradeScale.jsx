@@ -25,7 +25,7 @@ export default function GradeScale() {
       {/* Header */}
       <div className="flex items-center justify-between mb-5 pb-4 border-b border-slate-100">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-2xl bg-emerald-100 text-emerald-800 flex items-center justify-center shrink-0">
+          <div className="w-10 h-10 rounded-2xl bg-[#D4E8D6] text-[#4A6E4D] flex items-center justify-center shrink-0">
             <Award className="w-5 h-5" />
           </div>
           <div>
@@ -73,7 +73,7 @@ export default function GradeScale() {
                     type="number"
                     value={item.point}
                     onChange={(e) => handlePointChange(idx, e.target.value)}
-                    className="w-12 px-1.5 py-0.5 rounded border border-slate-300 text-xs font-bold text-center bg-white text-slate-900 focus:outline-none focus:border-indigo-600"
+                    className="w-12 px-1.5 py-0.5 rounded border border-stone-300 text-xs font-bold text-center bg-white text-slate-900 focus:outline-none focus:border-[#C27856]"
                     min="0"
                     max="10"
                   />

@@ -30,7 +30,7 @@ export default function Sidebar({ mobileOpen, setMobileOpen }) {
       {/* Top Logo */}
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="font-heading text-2xl font-bold text-stone-800 dark:text-stone-100 leading-tight">
+          <h1 className="text-2xl font-bold text-stone-800 dark:text-stone-100 leading-tight">
             Semora
           </h1>
           <p className="text-[11px] text-stone-400 font-medium -mt-1">Academic Portal</p>

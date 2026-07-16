@@ -8,6 +8,8 @@ const AuthForm = ({ mode }) => {
   const isLogin = mode === 'login';
   const [pin, setPin] = useState('');
   const [confirmPin, setConfirmPin] = useState('');
+  const [username, setUsername] = useState('');
+  const [registerNumber, setRegisterNumber] = useState('');
   const [errors, setErrors] = useState({});
   const [submitted, setSubmitted] = useState(false);
   const navigate = useNavigate();
@@ -15,9 +17,6 @@ const AuthForm = ({ mode }) => {
 
   const validate = () => {
     const newErrors = {};
-    const username = document.querySelector('input[name="username"]')?.value || '';
-    const registerNumber = document.querySelector('input[name="registerNumber"]')?.value || '';
-
     if (!username.trim()) newErrors.username = 'Username is required';
     if (!registerNumber.trim()) newErrors.registerNumber = 'Register number is required';
     if (pin.length !== 4) newErrors.pin = 'PIN must be 4 digits';
@@ -32,12 +31,7 @@ const AuthForm = ({ mode }) => {
     e.preventDefault();
     setSubmitted(true);
     if (!validate()) return;
-    const fd = new FormData(e.target);
-    handleLogin({
-      username: fd.get('username'),
-      registerNumber: fd.get('registerNumber'),
-      studentId: fd.get('registerNumber'),
-    });
+    handleLogin({ username, registerNumber, studentId: registerNumber });
     navigate('/dashboard');
   };
 
@@ -65,7 +59,7 @@ const AuthForm = ({ mode }) => {
             <label className="auth-form-label">Username</label>
             <div className="auth-form-input-wrapper">
               <User className="auth-form-input-icon" />
-              <input type="text" name="username" placeholder={isLogin ? 'Enter your username' : 'Choose a username'} className={`auth-form-input ${showError('username') ? 'border-[var(--color-danger)]' : ''}`} autoComplete="username" />
+              <input type="text" name="username" value={username} onChange={e => setUsername(e.target.value)} placeholder={isLogin ? 'Enter your username' : 'Choose a username'} className={`auth-form-input ${showError('username') ? 'border-[var(--color-danger)]' : ''}`} autoComplete="username" />
             </div>
             {showError('username') && (
               <p className="text-xs mt-1.5 flex items-center gap-1 text-[var(--color-danger)]">
@@ -78,7 +72,7 @@ const AuthForm = ({ mode }) => {
             <label className="auth-form-label">Register Number</label>
             <div className="auth-form-input-wrapper">
               <Hash className="auth-form-input-icon" />
-              <input type="text" name="registerNumber" placeholder="Enter your register number" className={`auth-form-input ${showError('registerNumber') ? 'border-[var(--color-danger)]' : ''}`} autoComplete="off" />
+              <input type="text" name="registerNumber" value={registerNumber} onChange={e => setRegisterNumber(e.target.value)} placeholder="Enter your register number" className={`auth-form-input ${showError('registerNumber') ? 'border-[var(--color-danger)]' : ''}`} autoComplete="off" />
             </div>
             {showError('registerNumber') && (
               <p className="text-xs mt-1.5 flex items-center gap-1 text-[var(--color-danger)]">

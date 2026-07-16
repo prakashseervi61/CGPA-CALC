@@ -61,7 +61,7 @@ export default function CGPASummary() {
 
       {/* Big CGPA Display */}
       <div className="my-2.5 relative z-10 flex items-baseline gap-3">
-        <span className="font-heading text-5xl font-black tracking-tight text-white drop-shadow-sm leading-none">
+        <span className="text-5xl font-black tracking-tight text-white drop-shadow-sm leading-none">
           {formattedCgpa}
         </span>
         <div className="flex flex-col">

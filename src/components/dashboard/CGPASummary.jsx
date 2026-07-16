@@ -1,6 +1,6 @@
 import { Zap, BookOpen, Star, Check } from 'lucide-react';
-import { useSesame } from '../../hooks/useSesame';
-import { useUser } from '../../hooks/useUser';
+import { useSesame } from '../../contexts/DataContext';
+import { useUser } from '../../contexts/AuthContext';
 
 export default function CGPASummary() {
   const {
@@ -68,7 +68,7 @@ export default function CGPASummary() {
           <span className="text-[10px] font-black uppercase text-indigo-200 tracking-wider">
             out of 10.0
           </span>
-          <span className="text-xs text-indigo-200/90 font-semibold">
+          <span className="text-xs text-indigo-200/90 font-semibold truncate max-w-[180px]">
             SGPA: <span className="font-bold text-white">{formattedSgpa}</span> ({activeSemesterName})
           </span>
         </div>

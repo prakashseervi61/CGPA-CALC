@@ -1,20 +1,18 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import {
-  Settings, User, KeyRound, Database, Download, RotateCcw, Check, Target, Edit2, X,
-  Moon, Sun
+  Settings, User, KeyRound, Database, RotateCcw, Check, Edit2, X,
+  Sun
 } from 'lucide-react';
 import Card from '../ui/Card';
 import Button from '../ui/Button';
 import Badge from '../ui/Badge';
 import ThemeToggle from '../ui/ThemeToggle';
-import { useUser } from '../../hooks/useUser';
-import { useSesame } from '../../hooks/useSesame';
-import { useTheme } from '../../contexts/ThemeContext';
+import { useUser } from '../../contexts/AuthContext';
+import { useSesame } from '../../contexts/DataContext';
 
 export default function SettingsPage() {
-  const { user, onUpdateUser } = useUser();
-  const { onResetGrades, onExportData } = useSesame();
-  const { theme, toggleTheme } = useTheme();
+  const { user, handleUpdateUser } = useUser();
+  const { handleResetGrades } = useSesame();
 
   const [isEditingProfile, setIsEditingProfile] = useState(false);
   const [isEditingPin, setIsEditingPin] = useState(false);
@@ -32,8 +30,8 @@ export default function SettingsPage() {
   
   const handleProfileSave = (e) => {
     e.preventDefault();
-    if (onUpdateUser) {
-      onUpdateUser({
+    if (handleUpdateUser) {
+      handleUpdateUser({
         ...user,
         name,
         studentId,
@@ -56,8 +54,8 @@ export default function SettingsPage() {
       return;
     }
 
-    if (onUpdateUser) {
-      onUpdateUser({
+    if (handleUpdateUser) {
+      handleUpdateUser({
         ...user,
         pin: newPin
       });
@@ -92,6 +90,7 @@ export default function SettingsPage() {
         )}
       </div>
 
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
       {/* SECTION 0: Appearance & Theme */}
       <Card className="p-6 border border-slate-100 shadow-sm space-y-4">
         <div className="flex items-center justify-between pb-3 border-b border-slate-100">
@@ -301,40 +300,7 @@ export default function SettingsPage() {
         </form>
       </Card>
 
-      {/* SECTION 3: Academic Target & Curriculum */}
-      <Card className="p-6 border border-slate-100 shadow-sm space-y-4">
-        <div className="flex items-center gap-2.5 pb-3 border-b border-slate-100">
-          <div className="w-8 h-8 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">
-            <Target className="w-4 h-4" />
-          </div>
-          <div>
-            <h3 className="text-base font-extrabold text-slate-900">Academic Goals & Regulation</h3>
-            <p className="text-xs text-slate-400 font-semibold">SKCET B.Tech IT Regulation 2022 presets</p>
-          </div>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs font-semibold">
-          <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-100 space-y-1">
-            <span className="text-[10px] uppercase font-black text-slate-400">Institution & Regulation</span>
-            <p className="text-sm font-extrabold text-slate-900">Sri Krishna College of Engineering & Technology</p>
-            <p className="text-slate-500 font-bold">B.Tech Information Technology (2024-2028)</p>
-          </div>
-
-          <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-100 space-y-1">
-            <label className="text-[10px] uppercase font-black text-slate-400 block">Target CGPA Goal</label>
-            <div className="flex items-center gap-2">
-              <input
-                type="text"
-                value={targetCgpa}
-                onChange={(e) => setTargetCgpa(e.target.value)}
-                className="w-24 px-3 py-1.5 rounded-lg border border-slate-200 text-sm font-black text-slate-900 focus:outline-none focus:border-indigo-600"
-              />
-              <span className="text-xs text-slate-500 font-bold">out of 10.0</span>
-            </div>
-          </div>
-        </div>
-      </Card>
-
+      </div>
       {/* SECTION 4: Data Management & Export */}
       <Card className="p-6 border border-slate-100 shadow-sm space-y-4">
         <div className="flex items-center gap-2.5 pb-3 border-b border-slate-100">
@@ -348,19 +314,6 @@ export default function SettingsPage() {
         </div>
 
         <div className="flex flex-wrap items-center gap-3">
-          {/* Export Grades CSV */}
-          <Button
-            type="button"
-            variant="primary"
-            size="md"
-            icon={Download}
-            onClick={() => {
-              if (onExportData) onExportData();
-            }}
-          >
-            Export Grades (.csv)
-          </Button>
-
           {/* Reset All Grades */}
           <Button
             type="button"
@@ -369,7 +322,7 @@ export default function SettingsPage() {
             icon={RotateCcw}
             onClick={() => {
               if (window.confirm('Are you sure you want to reset all selected grades back to unselected?')) {
-                if (onResetGrades) onResetGrades();
+                if (handleResetGrades) handleResetGrades();
               }
             }}
           >

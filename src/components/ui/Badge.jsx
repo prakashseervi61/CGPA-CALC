@@ -3,7 +3,7 @@
  */
 export default function Badge({
   children,
-  variant = 'purple', // purple, green, red, slate, pastelGreen
+  variant = 'purple', // purple, green, red, slate
   className = '',
   size = 'md',
   ...props
@@ -13,7 +13,6 @@ export default function Badge({
     green: 'bg-emerald-100 text-emerald-800',
     red: 'bg-rose-100 text-rose-800',
     slate: 'bg-slate-100 text-slate-800',
-    pastelGreen: 'bg-green-100 text-green-800',
   };
 
   const sizeStyles = {

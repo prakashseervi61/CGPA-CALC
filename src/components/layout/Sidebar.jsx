@@ -7,7 +7,7 @@ import {
   LogOut,
   X
 } from 'lucide-react';
-import { useUser } from '../../hooks/useUser';
+import { useUser } from '../../contexts/AuthContext';
 
 export default function Sidebar({ mobileOpen, setMobileOpen }) {
   const navigate = useNavigate();
@@ -26,11 +26,11 @@ export default function Sidebar({ mobileOpen, setMobileOpen }) {
   };
 
   const sidebarContent = (
-    <div className="flex flex-col h-full bg-slate-50 border-r border-slate-200/60 p-6 w-[260px] shrink-0 select-none">
+    <div className="flex flex-col h-full bg-slate-50 dark:bg-slate-800 border-r border-slate-200/60 dark:border-slate-700/60 p-6 w-[260px] shrink-0 select-none">
       {/* Top Logo */}
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="font-heading text-2xl font-bold text-slate-800 leading-tight">
+          <h1 className="font-heading text-2xl font-bold text-slate-800 dark:text-slate-100 leading-tight">
             Semora
           </h1>
           <p className="text-[11px] text-slate-400 font-medium -mt-1">Academic Portal</p>

@@ -111,25 +111,6 @@ export const DataProvider = ({ children }) => {
     }));
   };
 
-  const handleDeleteCourse = (courseIndex) => {
-    setSemesters(prev => prev.map(s => {
-      if (s.id === currentSemesterId) {
-        const newCourses = (s.courses || []).filter((_, idx) => idx !== courseIndex);
-        return { ...s, courses: newCourses };
-      }
-      return s;
-    }));
-  };
-
-  const handleToggleSemesterInclude = (semId) => {
-    setSemesters(prev => prev.map(s => {
-      if (s.id === semId) {
-        return { ...s, included: s.included === false ? true : false };
-      }
-      return s;
-    }));
-  };
-
   const handleResetGrades = () => {
     setSemesters(prev => prev.map(s => ({
       ...s,
@@ -137,26 +118,12 @@ export const DataProvider = ({ children }) => {
     })));
   };
 
-  const handleExportData = () => {
-    const headers = ['Semester', 'Subject Code', 'Subject Name', 'Credits', 'Grade', 'Grade Point'];
-    const rows = [];
-
-    semesters.forEach(sem => {
-      (sem.courses || []).forEach(course => {
-        const point = course.grade ? (gradePointsMap[course.grade] ?? 0) : '';
-        rows.push([
-          `"${sem.name}"`,
-          `"${course.code || ''}"`,
-          `"${(course.name || '').replace(/"/g, '""')}"`,
-          course.credits,
-          `"${course.grade || ''}"`,
-          point !== '' ? point : ''
-        ]);
-      });
-    });
-
-    const csvContent = [headers.join(','), ...rows.map(e => e.join(','))].join('\n');
-    return csvContent;
+  const handleResetCurrentSemesterGrades = () => {
+    setSemesters(prev => prev.map(s =>
+      s.id === currentSemesterId
+        ? { ...s, courses: (s.courses || []).map(c => ({ ...c, grade: '' })) }
+        : s
+    ));
   };
 
   // Persist semesters to localStorage whenever they change (per user)
@@ -216,10 +183,8 @@ export const DataProvider = ({ children }) => {
     semesterCalculations,
     overallCgpaCalculations,
     handleUpdateCourse,
-    handleDeleteCourse,
-    handleToggleSemesterInclude,
     handleResetGrades,
-    handleExportData
+    handleResetCurrentSemesterGrades
   };
 
   return (
@@ -229,4 +194,10 @@ export const DataProvider = ({ children }) => {
   );
 };
 
-export default DataContext;
+export const useSesame = () => {
+  const context = useContext(DataContext);
+  if (!context) {
+    throw new Error('useSesame must be used within a DataProvider');
+  }
+  return context;
+};

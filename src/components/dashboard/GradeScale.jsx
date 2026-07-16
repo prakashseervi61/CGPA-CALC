@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Award, Edit3, Check } from 'lucide-react';
 import Card from '../ui/Card';
 import Button from '../ui/Button';
-import { useSesame } from '../../hooks/useSesame';
+import { useSesame } from '../../contexts/DataContext';
 
 export default function GradeScale() {
   const { gradeScaleRules, setGradeScaleRules } = useSesame();

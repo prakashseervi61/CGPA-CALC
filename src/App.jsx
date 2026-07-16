@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { Routes, Route, Navigate, useNavigate } from 'react-router-dom';
-import { useUser } from './hooks/useUser';
+import { Routes, Route, Navigate } from 'react-router-dom';
+import { useUser } from './contexts/AuthContext';
 import Sidebar from './components/layout/Sidebar';
 import Navbar from './components/layout/Navbar';
 import SubjectTable from './components/dashboard/SubjectTable';
@@ -15,8 +15,7 @@ import RegisterPage from './pages/RegisterPage';
 
 function App() {
   const [mobileOpen, setMobileOpen] = useState(false);
-  const navigate = useNavigate();
-  const { isLoggedIn, user, handleLogout, handleLogin } = useUser();
+  const { isLoggedIn } = useUser();
 
   // Protected route wrapper
   const ProtectedRoute = ({ children }) => {
@@ -26,31 +25,13 @@ function App() {
     return children;
   };
 
-  // Dashboard page content
-  const DashboardContent = () => {
-    return (
-      <>
-        <main className="flex-1 overflow-y-auto p-4 sm:p-6 md:p-8">
-          <div className="max-w-4xl mx-auto space-y-6">
-            <SubjectTable />
-            <GradeScale />
-          </div>
-        </main>
-        <aside className="w-full xl:w-[350px] shrink-0 p-4 sm:p-6 space-y-3.5 overflow-hidden select-none bg-white border-l border-slate-100/80">
-          <CGPASummary />
-          <GradeDistribution />
-        </aside>
-      </>
-    );
-  };
-
   // App shell layout
   const AppShell = ({ children }) => (
     <>
       <Sidebar mobileOpen={mobileOpen} setMobileOpen={setMobileOpen} />
-      <div className="flex-1 flex flex-col min-w-0 h-screen overflow-hidden">
+      <div className="flex-1 flex flex-col min-w-0 h-screen overflow-hidden dark:bg-slate-900 dark:text-slate-100">
         <Navbar setMobileOpen={setMobileOpen} />
-        <div className="flex-1 flex flex-col xl:flex-row min-h-0 overflow-hidden">
+        <div className="flex-1 flex flex-col lg:flex-row min-h-0 overflow-hidden">
           {children}
         </div>
       </div>
@@ -75,7 +56,16 @@ function App() {
         element={
           <ProtectedRoute>
             <AppShell>
-              <DashboardContent />
+              <main className="flex-1 overflow-y-auto p-4 sm:p-6 md:p-8 bg-slate-50/50 dark:bg-slate-900">
+                <div className="space-y-6">
+                  <SubjectTable />
+                  <GradeScale />
+                </div>
+              </main>
+              <aside className="w-full lg:w-[320px] xl:w-[350px] shrink-0 p-4 sm:p-6 space-y-3.5 overflow-y-auto select-none bg-white dark:bg-slate-800 border-t lg:border-t-0 lg:border-l border-slate-100/80 dark:border-slate-700/80">
+                <CGPASummary />
+                <GradeDistribution />
+              </aside>
             </AppShell>
           </ProtectedRoute>
         }
@@ -86,7 +76,7 @@ function App() {
         element={
           <ProtectedRoute>
             <AppShell>
-              <main className="flex-1 overflow-y-auto p-4 sm:p-6 md:p-8">
+              <main className="flex-1 overflow-y-auto p-4 sm:p-6 md:p-8 dark:bg-slate-900">
                 <CGPATrendsPage />
               </main>
             </AppShell>
@@ -99,7 +89,7 @@ function App() {
         element={
           <ProtectedRoute>
             <AppShell>
-              <main className="flex-1 overflow-y-auto p-4 sm:p-6 md:p-8">
+              <main className="flex-1 overflow-y-auto p-4 sm:p-6 md:p-8 dark:bg-slate-900">
                 <SettingsPage />
               </main>
             </AppShell>
@@ -112,8 +102,8 @@ function App() {
         element={
           <ProtectedRoute>
             <AppShell>
-              <main className="flex-1 overflow-y-auto p-4 sm:p-6 md:p-8">
-                <HelpPage onReturnToDashboard={() => navigate('/dashboard')} />
+              <main className="flex-1 overflow-y-auto p-4 sm:p-6 md:p-8 dark:bg-slate-900">
+                <HelpPage />
               </main>
             </AppShell>
           </ProtectedRoute>

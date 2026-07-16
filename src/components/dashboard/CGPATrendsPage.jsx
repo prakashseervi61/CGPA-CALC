@@ -1,12 +1,12 @@
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 import {
   AreaChart, Area, BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid, Legend
 } from 'recharts';
 import { TrendingUp, Award, Zap, BookOpen, Layers, XCircle, Target } from 'lucide-react';
 import Card from '../ui/Card';
 import Badge from '../ui/Badge';
-import { useSesame } from '../../hooks/useSesame';
-import { useUser } from '../../hooks/useUser';
+import { useSesame } from '../../contexts/DataContext';
+import { useUser } from '../../contexts/AuthContext';
 
 export default function CGPATrendsPage() {
   const { semesters, gradePointsMap, currentSemesterId } = useSesame();
@@ -123,7 +123,7 @@ export default function CGPATrendsPage() {
       </div>
 
       {/* 6 KPI Summary Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4">
         {[
           { label: 'Overall CGPA', value: analyticsData.overallCgpa.toFixed(2), sub: 'out of 10.0 Cumulative', icon: Award, gradient: true },
           { label: 'Target CGPA', value: analyticsData.targetCgpa.toFixed(2), sub: 'Goal to Achieve', icon: Target, gradient: true },

@@ -60,7 +60,7 @@ export default function HelpPage() {
       </div>
 
       {/* 3-STEP QUICK START GUIDE */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {/* Step 1 */}
         <Card className="p-4 border border-slate-100 bg-white shadow-sm space-y-2">
           <div className="w-8 h-8 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-black text-sm">

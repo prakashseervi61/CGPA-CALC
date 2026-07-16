@@ -1,8 +1,8 @@
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
 import { PieChart as PieIcon, Award } from 'lucide-react';
 import Card from '../ui/Card';
-import { useSesame } from '../../hooks/useSesame';
+import { useSesame } from '../../contexts/DataContext';
 
 const GRADE_COLOR_MAP = {
   'O': '#10B981',   // Emerald / Green

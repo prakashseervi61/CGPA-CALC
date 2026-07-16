@@ -6,7 +6,6 @@ export default function Button({
   variant = 'primary', // primary, secondary, outline
   size = 'md', // sm, md, lg
   icon: Icon = null,
-  iconPosition = 'left',
   className = '',
   disabled = false,
   onClick,
@@ -34,9 +33,8 @@ export default function Button({
       disabled={disabled}
       {...props}
     >
-      {Icon && iconPosition === 'left' && <Icon className="w-4 h-4 shrink-0" />}
+      {Icon && <Icon className="w-4 h-4 shrink-0" />}
       {children}
-      {Icon && iconPosition === 'right' && <Icon className="w-4 h-4 shrink-0" />}
     </button>
   );
 }

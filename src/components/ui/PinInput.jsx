@@ -29,7 +29,7 @@ const PinInput = ({ pin, setPin, type = 'password' }) => {
           value={pin[i] || ''}
           onChange={(e) => handleChange(i, e.target.value)}
           onKeyDown={(e) => handleKeyDown(i, e)}
-          className="w-10 h-12 text-center text-lg font-mono rounded-lg border border-gray-200 bg-white/50 backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all duration-200"
+          className="w-10 h-12 text-center text-lg font-mono rounded-lg border border-gray-200 dark:border-slate-600 bg-white/50 dark:bg-slate-700/50 backdrop-blur-sm text-gray-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500 transition-all duration-200"
         />
       ))}
     </div>

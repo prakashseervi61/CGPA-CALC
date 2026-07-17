@@ -37,13 +37,7 @@ export const DataProvider = ({ children }) => {
   ]);
 
   // Memoize grade points map
-  const gradePointsMap = useMemo(() => {
-    const map = {};
-    gradeScaleRules.forEach(rule => {
-      map[rule.grade] = Number(rule.point);
-    });
-    return map;
-  }, [gradeScaleRules]);
+  const gradePointsMap = useMemo(() => Object.fromEntries(gradeScaleRules.map(r => [r.grade, r.point])), [gradeScaleRules]);
 
   // Active semester
   const activeSemester = useMemo(() => {

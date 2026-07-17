@@ -6,11 +6,11 @@ import Card from '../ui/Card';
 import Button from '../ui/Button';
 import Badge from '../ui/Badge';
 import { useUser } from '../../contexts/AuthContext';
-import { useSesame } from '../../contexts/DataContext';
+import { useData } from '../../contexts/DataContext';
 
 export default function SettingsPage() {
   const { user, handleUpdateUser } = useUser();
-  const { handleResetGrades } = useSesame();
+  const { handleResetGrades } = useData();
 
   const [isEditingProfile, setIsEditingProfile] = useState(false);
   const [isEditingPin, setIsEditingPin] = useState(false);
@@ -94,7 +94,7 @@ export default function SettingsPage() {
             </div>
             <div>
               <h3 className="text-base font-extrabold text-slate-900 dark:text-stone-50">Student Profile</h3>
-              <p className="text-xs text-slate-400 dark:text-stone-500 font-semibold">Display name & registration number</p>
+               <p className="text-xs text-slate-500 dark:text-stone-500 font-semibold">Display name & registration number</p>
             </div>
           </div>
 
@@ -117,7 +117,7 @@ export default function SettingsPage() {
                 setStudentId(user?.studentId || '');
                 setTargetCgpa(user?.targetCgpa?.toString() || '9.00');
               }}
-              className="text-xs font-bold text-slate-400 hover:text-slate-600 flex items-center gap-1 transition-colors px-2 py-1 rounded-lg hover:bg-slate-100"
+               className="text-xs font-bold text-slate-500 hover:text-slate-600 flex items-center gap-1 transition-colors px-2 py-1 rounded-lg hover:bg-slate-100"
             >
               <X className="w-3.5 h-3.5" /> Cancel
             </button>
@@ -126,7 +126,7 @@ export default function SettingsPage() {
 
         <form onSubmit={handleProfileSave} className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <label className="block text-xs font-black uppercase text-slate-400 dark:text-stone-500 mb-1.5 tracking-wider">
+            <label className="block text-xs font-black uppercase text-slate-500 dark:text-stone-500 mb-1.5 tracking-wider">
               Student Name
             </label>
             <input
@@ -141,7 +141,7 @@ export default function SettingsPage() {
           </div>
 
           <div>
-            <label className="block text-xs font-black uppercase text-slate-400 dark:text-stone-500 mb-1.5 tracking-wider">
+            <label className="block text-xs font-black uppercase text-slate-500 dark:text-stone-500 mb-1.5 tracking-wider">
               Register / Student ID
             </label>
             <input
@@ -156,7 +156,7 @@ export default function SettingsPage() {
           </div>
 
           <div>
-            <label className="block text-xs font-black uppercase text-slate-400 dark:text-stone-500 mb-1.5 tracking-wider">
+            <label className="block text-xs font-black uppercase text-slate-500 dark:text-stone-500 mb-1.5 tracking-wider">
               Target CGPA Goal
             </label>
             <div className="flex items-center gap-2">
@@ -189,7 +189,7 @@ export default function SettingsPage() {
             </div>
             <div>
               <h3 className="text-base font-extrabold text-slate-900 dark:text-stone-50">Security & 4-Digit PIN</h3>
-              <p className="text-xs text-slate-400 dark:text-stone-500 font-semibold">Profile unlock security PIN</p>
+               <p className="text-xs text-slate-500 dark:text-stone-500 font-semibold">Profile unlock security PIN</p>
             </div>
           </div>
 
@@ -212,7 +212,7 @@ export default function SettingsPage() {
                 setNewPin('');
                 setPinMessage(null);
               }}
-              className="text-xs font-bold text-slate-400 hover:text-slate-600 flex items-center gap-1 transition-colors px-2 py-1 rounded-lg hover:bg-slate-100"
+               className="text-xs font-bold text-slate-500 hover:text-slate-600 flex items-center gap-1 transition-colors px-2 py-1 rounded-lg hover:bg-slate-100"
             >
               <X className="w-3.5 h-3.5" /> Cancel
             </button>
@@ -221,7 +221,7 @@ export default function SettingsPage() {
 
         <form onSubmit={handlePinChangeSubmit} className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <label className="block text-xs font-black uppercase text-slate-400 dark:text-stone-500 mb-1.5 tracking-wider">
+            <label className="block text-xs font-black uppercase text-slate-500 dark:text-stone-500 mb-1.5 tracking-wider">
               Current PIN
             </label>
             <input
@@ -239,7 +239,7 @@ export default function SettingsPage() {
           </div>
 
           <div>
-            <label className="block text-xs font-black uppercase text-slate-400 dark:text-stone-500 mb-1.5 tracking-wider">
+            <label className="block text-xs font-black uppercase text-slate-500 dark:text-stone-500 mb-1.5 tracking-wider">
               New 4-Digit PIN
             </label>
             <input
@@ -283,7 +283,7 @@ export default function SettingsPage() {
           </div>
           <div>
             <h3 className="text-base font-extrabold text-slate-900 dark:text-stone-50">Data Management</h3>
-            <p className="text-xs text-slate-400 dark:text-stone-500 font-semibold">Reset all semester grades to their default unselected state</p>
+            <p className="text-xs text-slate-500 dark:text-stone-500 font-semibold">Reset all semester grades to their default unselected state</p>
           </div>
         </div>
 

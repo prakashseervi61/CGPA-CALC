@@ -2,10 +2,10 @@ import { useState } from 'react';
 import { Award, Edit3, Check } from 'lucide-react';
 import Card from '../ui/Card';
 import Button from '../ui/Button';
-import { useSesame } from '../../contexts/DataContext';
+import { useData } from '../../contexts/DataContext';
 
 export default function GradeScale() {
-  const { gradeScaleRules, setGradeScaleRules } = useSesame();
+  const { gradeScaleRules, handleUpdateGradeScale } = useData();
   const [isEditing, setIsEditing] = useState(false);
   const [scales, setScales] = useState(gradeScaleRules);
 
@@ -16,7 +16,7 @@ export default function GradeScale() {
   };
 
   const saveScales = () => {
-    setGradeScaleRules(scales);
+    handleUpdateGradeScale(scales);
     setIsEditing(false);
   };
 

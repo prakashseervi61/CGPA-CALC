@@ -33,14 +33,14 @@ export default function Sidebar({ mobileOpen, setMobileOpen }) {
           <h1 className="text-2xl font-bold text-stone-800 dark:text-stone-100 leading-tight">
             Semora
           </h1>
-          <p className="text-[11px] text-stone-400 font-medium -mt-1">Academic Portal</p>
+          <p className="text-[11px] text-stone-500 font-medium -mt-1">Academic Portal</p>
         </div>
 
         {/* Mobile close button */}
         {setMobileOpen && (
           <button
             onClick={() => setMobileOpen(false)}
-            className="lg:hidden p-1.5 rounded-xl text-stone-400 hover:text-stone-600 hover:bg-stone-200/50"
+            className="lg:hidden p-1.5 rounded-xl text-stone-500 hover:text-stone-600 hover:bg-stone-200/50"
           >
             <X className="w-5 h-5" />
           </button>
@@ -81,7 +81,7 @@ export default function Sidebar({ mobileOpen, setMobileOpen }) {
           <div className="p-2 rounded-xl bg-danger/10 text-danger group-hover:bg-danger/20 shrink-0 transition-colors">
             <LogOut className="w-4 h-4" />
           </div>
-          <span className="font-extrabold">Logout</span>
+          <span className="font-extrabold text-red-700 dark:text-[#E07070]">Logout</span>
         </button>
       </div>
     </div>

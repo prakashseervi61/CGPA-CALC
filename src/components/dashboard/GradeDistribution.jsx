@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
 import { PieChart as PieIcon, Award } from 'lucide-react';
 import Card from '../ui/Card';
-import { useSesame } from '../../contexts/DataContext';
+import { useData } from '../../contexts/DataContext';
 
 const GRADE_COLOR_MAP = {
   'O': '#7A9E7E',   // Muted green
@@ -15,7 +15,7 @@ const GRADE_COLOR_MAP = {
 };
 
 export default function GradeDistribution() {
-  const { activeSemester } = useSesame();
+  const { activeSemester } = useData();
   const courses = activeSemester?.courses || [];
 
   // Calculate grade counts & percentages
@@ -69,14 +69,14 @@ export default function GradeDistribution() {
           </div>
           <div>
             <h4 className="text-sm font-extrabold text-stone-900 dark:text-stone-100">Grade Distribution</h4>
-            <p className="text-xs text-stone-400 font-semibold">Breakdown of achieved grades</p>
+            <p className="text-xs text-stone-500 font-semibold">Breakdown of achieved grades</p>
           </div>
         </div>
       </div>
 
       {!hasGrades ? (
         <div className="py-8 text-center">
-          <p className="text-xs text-stone-400 font-semibold">No grades entered yet</p>
+          <p className="text-xs text-stone-500 font-semibold">No grades entered yet</p>
         </div>
       ) : (
         <>
@@ -117,7 +117,7 @@ export default function GradeDistribution() {
                 <span className="text-base font-black text-stone-900 dark:text-stone-100 leading-tight">
                   {distributionData.totalGrades}
                 </span>
-                <span className="text-[9px] uppercase font-extrabold text-stone-400">
+                <span className="text-[9px] uppercase font-extrabold text-stone-500">
                   Grades
                 </span>
               </div>

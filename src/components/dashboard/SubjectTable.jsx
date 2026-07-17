@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import { Info, XCircle, RotateCcw, ChevronDown, AlertTriangle, Check } from 'lucide-react';
 import Badge from '../ui/Badge';
-import CustomSelect from '../ui/CustomSelect';
-import { useSesame } from '../../contexts/DataContext';
+import { useData } from '../../contexts/DataContext';
 
 const RING_COLORS = [
   'bg-[#F5E6D3] text-[#8B4F32]',
@@ -20,13 +19,13 @@ export default function SubjectTable() {
   const {
     activeSemester,
     currentSemesterId,
-    setCurrentSemesterId,
+    handleSetCurrentSemester,
     semesters,
     handleUpdateCourse,
     gradePointsMap,
-    handleResetCurrentSemesterGrades,
+    handleResetGrades,
     handleToggleSemesterInclusion
-  } = useSesame();
+  } = useData();
 
   const courses = activeSemester?.courses || [];
   const gradeOptions = Object.keys(gradePointsMap);
@@ -36,22 +35,30 @@ export default function SubjectTable() {
     <div className="space-y-4">
       {/* Semester Selector + Reset */}
       <div className="flex flex-wrap items-center justify-between gap-2">
-        <CustomSelect
-          value={currentSemesterId}
-          onChange={setCurrentSemesterId}
-          label="Sem"
-          options={semesters.map(sem => ({
-            value: sem.id,
-            label: `${sem.name} ${sem.courses?.length ? `(${sem.courses.length})` : ''}`
-          }))}
-        />
+        <div className="relative inline-block">
+           <label htmlFor="semester-select" className="text-[10px] font-black uppercase text-stone-500 tracking-wider mr-1.5">Sem</label>
+          <select
+            id="semester-select"
+            aria-label="Select semester"
+            value={currentSemesterId}
+            onChange={(e) => handleSetCurrentSemester(Number(e.target.value))}
+            className="appearance-none bg-stone-100/70 dark:bg-stone-700/50 border border-stone-200/80 dark:border-stone-600/80 rounded-xl px-3 py-1.5 pr-7 text-xs font-extrabold text-stone-800 dark:text-stone-100 hover:border-[#C27856]/50 hover:bg-[#F5E6D3]/40 dark:hover:bg-[#C27856]/20 transition-all duration-200 cursor-pointer focus:outline-none"
+          >
+            {semesters.map(sem => (
+              <option key={sem.id} value={sem.id}>
+                {sem.name}{sem.courses?.length ? ` (${sem.courses.length})` : ''}
+              </option>
+            ))}
+          </select>
+          <ChevronDown className="w-3 h-3 text-stone-400 pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2" />
+        </div>
 
         <div className="flex items-center gap-2">
           <button
             onClick={handleToggleSemesterInclusion}
             className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-[11px] font-extrabold border transition-all duration-200 cursor-pointer
               ${included
-                ? 'bg-[#D4E8D6] dark:bg-[#4A6E4D]/20 text-[#4A6E4D] dark:text-[#9AB89E] border-[#B8D4BB] dark:border-[#4A6E4D]/40 hover:bg-[#C2DBC5] dark:hover:bg-[#4A6E4D]/30'
+                ? 'bg-[#D4E8D6] dark:bg-[#4A6E4D]/20 text-[#2D5A30] dark:text-[#9AB89E] border-[#B8D4BB] dark:border-[#4A6E4D]/40 hover:bg-[#C2DBC5] dark:hover:bg-[#4A6E4D]/30'
                 : 'bg-stone-100 dark:bg-stone-700 text-stone-500 dark:text-stone-400 border-stone-200 dark:border-stone-600 hover:bg-stone-200 dark:hover:bg-stone-600'
               }`}
             title={included ? 'Exclude this semester from CGPA' : 'Include this semester in CGPA'}
@@ -91,7 +98,7 @@ export default function SubjectTable() {
                 Cancel
               </button>
               <button
-                onClick={() => { handleResetCurrentSemesterGrades(); setShowResetConfirm(false); }}
+                onClick={() => { handleResetGrades('current'); setShowResetConfirm(false); }}
                 className="px-4 py-2 rounded-xl text-xs font-bold text-white bg-rose-500 hover:bg-rose-600 transition-all"
               >
                 Reset
@@ -113,7 +120,7 @@ export default function SubjectTable() {
       <div className="hidden lg:block overflow-x-auto">
         <table className="w-full text-left border-collapse text-sm">
           <thead>
-            <tr className="text-sm font-black uppercase tracking-wider text-slate-400 dark:text-stone-400 border-b border-slate-100 dark:border-stone-700 pb-2">
+            <tr className="text-sm font-black uppercase tracking-wider text-slate-500 dark:text-stone-400 border-b border-slate-100 dark:border-stone-700 pb-2">
               <th className="py-3 px-2 text-center whitespace-nowrap">#</th>
               <th className="py-3 px-2">Subject Name</th>
               <th className="py-3 px-2 text-center whitespace-nowrap">Credits</th>
@@ -147,7 +154,7 @@ export default function SubjectTable() {
                     <td className="py-3 px-2 text-slate-800 dark:text-stone-200">
                       <div className="flex flex-col">
                         <span className="font-black text-slate-900 dark:text-stone-50 text-base tracking-tight leading-snug">{course.name}</span>
-                        {course.code && <span className="text-[11px] font-bold text-slate-400 dark:text-stone-300 leading-tight mt-0.5">{course.code}</span>}
+                        {course.code && <span className="text-[11px] font-bold text-slate-500 dark:text-stone-300 leading-tight mt-0.5">{course.code}</span>}
                       </div>
                     </td>
                     <td className="py-3 px-2 text-center whitespace-nowrap">

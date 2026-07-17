@@ -99,7 +99,7 @@ export default function HelpPage() {
           </div>
           <div>
             <h3 className="text-base font-extrabold text-slate-900 dark:text-stone-50">Frequently Asked Questions</h3>
-            <p className="text-xs text-slate-400 dark:text-stone-500 font-semibold">Click any question to view answers</p>
+            <p className="text-xs text-slate-500 dark:text-stone-500 font-semibold">Click any question to view answers</p>
           </div>
         </div>
 
@@ -120,7 +120,7 @@ export default function HelpPage() {
                   {isOpen ? (
                     <ChevronUp className="w-4 h-4 text-[#C27856] shrink-0" />
                   ) : (
-                    <ChevronDown className="w-4 h-4 text-slate-400 shrink-0" />
+                    <ChevronDown className="w-4 h-4 text-slate-500 shrink-0" />
                   )}
                 </button>
 
@@ -153,7 +153,7 @@ export default function HelpPage() {
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse text-xs font-semibold">
             <thead>
-              <tr className="text-[11px] font-black uppercase text-slate-400 dark:text-stone-500 border-b border-slate-100 dark:border-stone-700 pb-2">
+              <tr className="text-[11px] font-black uppercase text-slate-500 dark:text-stone-500 border-b border-slate-100 dark:border-stone-700 pb-2">
                 <th className="py-2.5 px-3">Letter Grade</th>
                 <th className="py-2.5 px-3 text-center">Grade Point</th>
                 <th className="py-2.5 px-3 text-center">Marks Range</th>

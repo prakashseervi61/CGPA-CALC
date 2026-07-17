@@ -5,11 +5,11 @@ import {
 import { TrendingUp, Award, Zap, BookOpen, Layers, XCircle, Target, Check } from 'lucide-react';
 import Card from '../ui/Card';
 import Badge from '../ui/Badge';
-import { useSesame } from '../../contexts/DataContext';
+import { useData } from '../../contexts/DataContext';
 import { useUser } from '../../contexts/AuthContext';
 
 export default function CGPATrendsPage() {
-  const { semesters, gradePointsMap, currentSemesterId } = useSesame();
+  const { semesters, gradePointsMap, currentSemesterId } = useData();
   const { user } = useUser();
   const targetCgpa = user?.targetCgpa || 9.00;
 
@@ -126,7 +126,7 @@ export default function CGPATrendsPage() {
         ].map((kpi, idx) => (
           <Card key={idx} className={`p-4 ${kpi.gradient ? 'bg-gradient-to-br from-primary to-primary-hover text-white shadow-md shadow-primary/15 border-primary/20' : 'bg-white dark:bg-stone-900 border-stone-200 dark:border-stone-800 shadow-sm'} relative overflow-hidden border`}>
             <div className="flex items-center justify-between mb-2">
-              <span className={`text-xs font-black uppercase tracking-wider ${kpi.gradient ? 'text-primary-light' : 'text-stone-400'}`}>{kpi.label}</span>
+              <span className={`text-xs font-black uppercase tracking-wider ${kpi.gradient ? 'text-primary-light' : 'text-stone-500'}`}>{kpi.label}</span>
               <kpi.icon className="w-4 h-4 text-warning" />
             </div>
             <div className={`text-3xl font-black ${kpi.gradient ? 'text-white' : 'text-stone-900 dark:text-stone-100'}`}>{kpi.value}</div>
@@ -257,7 +257,7 @@ export default function CGPATrendsPage() {
         <Card className="p-5 border border-stone-200 dark:border-stone-800 shadow-sm lg:col-span-1">
           <div className="mb-3 pb-2 border-b border-stone-200 dark:border-stone-800">
             <h4 className="text-sm font-extrabold text-stone-900 dark:text-stone-100">Credits Load per Semester</h4>
-            <p className="text-xs text-stone-400 font-semibold">Total course credit weight</p>
+            <p className="text-xs text-stone-500 font-semibold">Total course credit weight</p>
           </div>
           <div className="w-full h-56">
             <ResponsiveContainer width="100%" height="100%">
@@ -280,14 +280,14 @@ export default function CGPATrendsPage() {
           <div className="mb-3 pb-2 border-b border-stone-200 dark:border-stone-800 flex items-center justify-between">
             <div>
               <h4 className="text-sm font-extrabold text-stone-900 dark:text-stone-100">Semester Performance Breakdown</h4>
-              <p className="text-xs text-stone-400 font-semibold">Detailed breakdown for each semester</p>
+              <p className="text-xs text-stone-500 font-semibold">Detailed breakdown for each semester</p>
             </div>
           </div>
 
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse text-xs font-semibold">
               <thead>
-                <tr className="text-[11px] font-black uppercase text-stone-400 dark:text-stone-500 border-b border-stone-200 dark:border-stone-700 pb-2">
+                <tr className="text-[11px] font-black uppercase text-stone-500 dark:text-stone-500 border-b border-stone-200 dark:border-stone-700 pb-2">
                   <th className="py-2.5 px-3">Semester</th>
                   <th className="py-2.5 px-3 text-center">Graded</th>
                   <th className="py-2.5 px-3 text-center">Credits</th>
@@ -301,7 +301,7 @@ export default function CGPATrendsPage() {
                 {analyticsData.chartData.map((sem) => (
                   <tr key={sem.id} className="hover:bg-slate-50/80 dark:hover:bg-stone-800/50 transition-colors">
                     <td className="py-2.5 px-3 font-extrabold text-slate-900 dark:text-stone-50">{sem.fullName}</td>
-                    <td className="py-2.5 px-3 text-center text-slate-600 dark:text-stone-400 font-bold">{sem.gradedCount} subjects</td>
+                    <td className="py-2.5 px-3 text-center text-slate-600 dark:text-stone-500 font-bold">{sem.gradedCount} subjects</td>
                     <td className="py-2.5 px-3 text-center">
                       <Badge variant="purple" size="sm">{sem.credits} Credits</Badge>
                     </td>

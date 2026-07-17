@@ -72,6 +72,5 @@ src/
 │   ├── layout/        # Sidebar, navbar
 │   └── ui/            # Button, Card, Badge, CustomSelect
 ├── contexts/          # Auth, Data, Theme providers
-├── data/              # Curriculum courses
-└── pages/             # Login, Register
+└── data/              # Curriculum courses
 ```

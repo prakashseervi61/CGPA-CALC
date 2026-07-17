@@ -8,15 +8,15 @@ export default function ThemeToggle() {
     <button
       onClick={toggleTheme}
       aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
-      className="flex items-center gap-2 p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors duration-200"
+      className="flex items-center gap-1.5 px-3 py-2 rounded-xl border border-stone-200/80 dark:border-stone-700/80 bg-stone-100/70 dark:bg-stone-800/50 hover:bg-stone-200/70 dark:hover:bg-stone-700/50 transition-all duration-200 cursor-pointer shrink-0"
     >
       {theme === 'dark' ? (
-        <Moon className="h-4 w-4 text-slate-500 dark:text-slate-300" />
+        <Moon className="w-4 h-4 text-[#D4956F]" />
       ) : (
-        <Sun className="h-4 w-4 text-slate-500 dark:text-slate-300" />
+        <Sun className="w-4 h-4 text-[#C27856]" />
       )}
-      <span className="text-xs font-medium text-slate-600 dark:text-slate-300">
-        {theme === 'dark' ? 'Dark Mode' : 'Light Mode'}
+      <span className="text-xs font-bold text-stone-700 dark:text-stone-300 hidden sm:inline">
+        {theme === 'dark' ? 'Dark' : 'Light'}
       </span>
     </button>
   );

@@ -106,7 +106,7 @@ export default function CGPATrendsPage() {
   }, [semesters, gradePointsMap, user?.targetCgpa, currentSemesterId]);
 
   return (
-    <div className="space-y-6 select-none animate-in fade-in duration-200">
+    <div className="space-y-6 select-none duration-200">
       {/* Header Title */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2 border-b border-stone-200 dark:border-stone-800">
         <div>
@@ -134,7 +134,7 @@ export default function CGPATrendsPage() {
           <Card key={idx} className={`p-4 ${kpi.gradient ? 'bg-gradient-to-br from-primary to-primary-hover text-white shadow-md shadow-primary/15 border-primary/20' : 'bg-white dark:bg-stone-900 border-stone-200 dark:border-stone-800 shadow-sm'} relative overflow-hidden border`}>
             <div className="flex items-center justify-between mb-2">
               <span className={`text-xs font-black uppercase tracking-wider ${kpi.gradient ? 'text-primary-light' : 'text-stone-400'}`}>{kpi.label}</span>
-              <kpi.icon className={`w-4 h-4 ${kpi.gradient ? 'text-warning' : 'text-warning'}`} />
+              <kpi.icon className="w-4 h-4 text-warning" />
             </div>
             <div className={`text-3xl font-black ${kpi.gradient ? 'text-white' : 'text-stone-900 dark:text-stone-100'}`}>{kpi.value}</div>
             <p className={`text-[11px] font-semibold mt-1 ${kpi.gradient ? 'text-primary-light/80' : 'text-stone-500 dark:text-stone-400'}`}>{kpi.sub}</p>

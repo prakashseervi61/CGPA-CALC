@@ -28,14 +28,12 @@ export default function SettingsPage() {
   
   const handleProfileSave = (e) => {
     e.preventDefault();
-    if (handleUpdateUser) {
-      handleUpdateUser({
-        ...user,
-        name,
-        studentId,
-        targetCgpa: parseFloat(targetCgpa) || 0
-      });
-    }
+    handleUpdateUser({
+      ...user,
+      name,
+      studentId,
+      targetCgpa: parseFloat(targetCgpa) || 0
+    });
     setIsEditingProfile(false);
     setSavedNotice(true);
     setTimeout(() => setSavedNotice(false), 3000);
@@ -52,12 +50,10 @@ export default function SettingsPage() {
       return;
     }
 
-    if (handleUpdateUser) {
-      handleUpdateUser({
-        ...user,
-        pin: newPin
-      });
-    }
+    handleUpdateUser({
+      ...user,
+      pin: newPin
+    });
     setIsEditingPin(false);
     setPinMessage({ type: 'success', text: '4-Digit PIN updated successfully!' });
     setCurrentPin('');

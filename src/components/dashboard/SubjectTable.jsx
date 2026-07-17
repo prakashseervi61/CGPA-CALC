@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Info, XCircle, RotateCcw, ChevronDown, AlertTriangle } from 'lucide-react';
+import { Info, XCircle, RotateCcw, ChevronDown, AlertTriangle, Check } from 'lucide-react';
 import Badge from '../ui/Badge';
 import CustomSelect from '../ui/CustomSelect';
 import { useSesame } from '../../contexts/DataContext';
@@ -24,7 +24,8 @@ export default function SubjectTable() {
     semesters,
     handleUpdateCourse,
     gradePointsMap,
-    handleResetCurrentSemesterGrades
+    handleResetCurrentSemesterGrades,
+    handleToggleSemesterInclusion
   } = useSesame();
 
   const courses = activeSemester?.courses || [];
@@ -45,13 +46,28 @@ export default function SubjectTable() {
           }))}
         />
 
-        <button
-          onClick={() => setShowResetConfirm(true)}
-          className="p-2 rounded-xl text-slate-400 hover:text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-900/20 transition-all"
-          title="Reset all grades in this semester"
-        >
-          <RotateCcw className="w-4 h-4" />
-        </button>
+        <div className="flex items-center gap-2">
+          <button
+            onClick={handleToggleSemesterInclusion}
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-[11px] font-extrabold border transition-all duration-200 cursor-pointer
+              ${included
+                ? 'bg-[#D4E8D6] dark:bg-[#4A6E4D]/20 text-[#4A6E4D] dark:text-[#9AB89E] border-[#B8D4BB] dark:border-[#4A6E4D]/40 hover:bg-[#C2DBC5] dark:hover:bg-[#4A6E4D]/30'
+                : 'bg-stone-100 dark:bg-stone-700 text-stone-500 dark:text-stone-400 border-stone-200 dark:border-stone-600 hover:bg-stone-200 dark:hover:bg-stone-600'
+              }`}
+            title={included ? 'Exclude this semester from CGPA' : 'Include this semester in CGPA'}
+          >
+            {included ? <Check className="w-3 h-3" /> : <XCircle className="w-3 h-3" />}
+            {included ? 'Included' : 'Excluded'}
+          </button>
+
+          <button
+            onClick={() => setShowResetConfirm(true)}
+            className="p-2 rounded-xl text-slate-400 hover:text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-900/20 transition-all"
+            title="Reset all grades in this semester"
+          >
+            <RotateCcw className="w-4 h-4" />
+          </button>
+        </div>
       </div>
 
       {/* Reset Confirmation Modal */}

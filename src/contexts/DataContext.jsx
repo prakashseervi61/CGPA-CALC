@@ -127,6 +127,14 @@ export const DataProvider = ({ children }) => {
     ));
   };
 
+  const handleToggleSemesterInclusion = () => {
+    setSemesters(prev => prev.map(s =>
+      s.id === currentSemesterId
+        ? { ...s, included: s.included === false ? true : false }
+        : s
+    ));
+  };
+
   // Persist semesters to localStorage whenever they change (per user)
   useEffect(() => {
     const key = user ? `cgpa_app_semesters_${user.studentId || user.id}` : 'cgpa_app_semesters';
@@ -156,7 +164,8 @@ export const DataProvider = ({ children }) => {
     overallCgpaCalculations,
     handleUpdateCourse,
     handleResetGrades,
-    handleResetCurrentSemesterGrades
+    handleResetCurrentSemesterGrades,
+    handleToggleSemesterInclusion
   }), [user, semesters, currentSemesterId, gradeScaleRules, gradePointsMap, activeSemester, semesterCalculations, overallCgpaCalculations]);
 
   return (

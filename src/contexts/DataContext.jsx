@@ -54,14 +54,12 @@ export const DataProvider = ({ children }) => {
   const semesterCalculations = useMemo(() => {
     let earnedPoints = 0;
     let earnedCredits = 0;
-    let gradedCoursesCount = 0;
 
     (activeSemester.courses || []).forEach(c => {
       if (c.grade && gradePointsMap.hasOwnProperty(c.grade)) {
         const pts = gradePointsMap[c.grade];
         earnedPoints += c.credits * pts;
         earnedCredits += c.credits;
-        gradedCoursesCount++;
       }
     });
 
@@ -69,8 +67,7 @@ export const DataProvider = ({ children }) => {
     return {
       sgpa,
       totalCredits: earnedCredits,
-      totalGradePoints: earnedPoints,
-      gradedCoursesCount
+      totalGradePoints: earnedPoints
     };
   }, [activeSemester, gradePointsMap]);
 
@@ -130,7 +127,7 @@ export const DataProvider = ({ children }) => {
   const handleToggleSemesterInclusion = () => {
     setSemesters(prev => prev.map(s =>
       s.id === currentSemesterId
-        ? { ...s, included: s.included === false ? true : false }
+        ? { ...s, included: s.included === false }
         : s
     ));
   };

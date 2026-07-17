@@ -60,7 +60,7 @@ export default function GradeDistribution() {
   const hasGrades = distributionData.totalGrades > 0;
 
   return (
-    <Card className="shadow-sm border border-stone-200 dark:border-stone-800 p-5">
+    <Card className="shadow-sm border border-stone-200 dark:border-stone-800 p-5 shrink min-h-0 overflow-hidden">
       {/* Header */}
       <div className="flex items-center justify-between mb-3 pb-2 border-b border-stone-200 dark:border-stone-800">
         <div className="flex items-center gap-2.5">
@@ -81,9 +81,9 @@ export default function GradeDistribution() {
       ) : (
         <>
           {/* 2-Column Tight Layout: Left (45%) Donut Chart, Right (55%) Legend */}
-          <div className="flex items-center justify-between gap-2 my-2">
+          <div className="flex items-center justify-between gap-2 my-2 shrink">
             {/* Left Column: Donut Chart (45% width) */}
-            <div className="w-[45%] h-36 flex items-center justify-center relative">
+            <div className="w-[45%] h-28 flex items-center justify-center relative shrink">
               <ResponsiveContainer width="100%" height="100%">
                 <PieChart>
                   <Tooltip
@@ -138,7 +138,7 @@ export default function GradeDistribution() {
                     <span className="text-[11px] text-stone-500 dark:text-stone-400 font-extrabold">{item.percentage}%</span>
                   </div>
                   {/* Compact Progress Bar */}
-                  <div className="w-full bg-stone-100 dark:bg-stone-800 h-1.5 rounded-full overflow-hidden">
+                  <div className="w-full bg-stone-100 dark:bg-stone-800 h-1 rounded-full overflow-hidden">
                     <div
                       className="h-full rounded-full transition-all duration-500"
                       style={{ width: `${item.percentage}%`, backgroundColor: item.color }}
@@ -150,7 +150,7 @@ export default function GradeDistribution() {
           </div>
 
           {/* Bottom Highlight Badge */}
-          <div className="mt-3.5 pt-2.5 border-t border-stone-200 dark:border-stone-800 flex items-center justify-between bg-primary-light/50 px-3 py-2 rounded-xl">
+          <div className="mt-2 pt-2 border-t border-stone-200 dark:border-stone-800 flex items-center justify-between bg-primary-light/50 px-3 py-1.5 rounded-xl shrink">
             <div className="flex items-center gap-2">
               <Award className="w-4 h-4 text-primary" />
               <span className="text-xs font-extrabold text-stone-800 dark:text-stone-200">

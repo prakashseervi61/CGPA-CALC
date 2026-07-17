@@ -73,10 +73,8 @@ export default function CGPATrendsPage() {
 
     // Calculate required future GPA to reach target
     let requiredFutureGpa = 0;
-    const currentCompletedCredits = cumCredits;
-    const currentEarnedPoints = cumPoints;
-    const targetTotalPoints = targetCgpa * (currentCompletedCredits + totalRemainingCredits);
-    const requiredRemainingPoints = targetTotalPoints - currentEarnedPoints;
+    const targetTotalPoints = targetCgpa * (cumCredits + totalRemainingCredits);
+    const requiredRemainingPoints = targetTotalPoints - cumPoints;
 
     if (totalRemainingCredits > 0) {
       requiredFutureGpa = requiredRemainingPoints / totalRemainingCredits;

@@ -35,6 +35,7 @@ function DashboardLayout({ children }) {
 
 function App() {
   const { isLoggedIn } = useUser();
+  const mainCls = "flex-1 overflow-y-auto p-4 sm:p-6 md:p-8 bg-stone-50 dark:bg-stone-950";
 
   return (
     <Routes>
@@ -42,7 +43,7 @@ function App() {
       <Route path="/register" element={!isLoggedIn ? <RegisterPage /> : <Navigate to="/dashboard" replace />} />
       <Route path="/dashboard" element={
         <ProtectedRoute><DashboardLayout>
-          <main className="flex-1 overflow-y-auto p-4 sm:p-6 md:p-8 bg-stone-50 dark:bg-stone-950">
+          <main className={mainCls}>
             <div className="space-y-6"><SubjectTable /><GradeScale /></div>
           </main>
           <aside className="w-full md:w-[280px] xl:w-[320px] shrink-0 p-4 sm:p-6 space-y-3 select-none bg-white dark:bg-stone-900 border-t md:border-t-0 md:border-l border-stone-200/80 dark:border-stone-800/80 flex flex-col min-h-0 overflow-hidden">
@@ -52,17 +53,17 @@ function App() {
       } />
       <Route path="/trends" element={
         <ProtectedRoute><DashboardLayout>
-          <main className="flex-1 overflow-y-auto p-4 sm:p-6 md:p-8 bg-stone-50 dark:bg-stone-950"><CGPATrendsPage /></main>
+          <main className={mainCls}><CGPATrendsPage /></main>
         </DashboardLayout></ProtectedRoute>
       } />
       <Route path="/settings" element={
         <ProtectedRoute><DashboardLayout>
-          <main className="flex-1 overflow-y-auto p-4 sm:p-6 md:p-8 bg-stone-50 dark:bg-stone-950"><SettingsPage /></main>
+          <main className={mainCls}><SettingsPage /></main>
         </DashboardLayout></ProtectedRoute>
       } />
       <Route path="/help" element={
         <ProtectedRoute><DashboardLayout>
-          <main className="flex-1 overflow-y-auto p-4 sm:p-6 md:p-8 bg-stone-50 dark:bg-stone-950"><HelpPage /></main>
+          <main className={mainCls}><HelpPage /></main>
         </DashboardLayout></ProtectedRoute>
       } />
       <Route path="/" element={isLoggedIn ? <Navigate to="/dashboard" replace /> : <Navigate to="/login" replace />} />

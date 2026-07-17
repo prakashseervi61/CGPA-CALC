@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Info, XCircle, RotateCcw, ChevronDown, AlertTriangle } from 'lucide-react';
 import Badge from '../ui/Badge';
+import CustomSelect from '../ui/CustomSelect';
 import { useSesame } from '../../contexts/DataContext';
 
 const RING_COLORS = [
@@ -34,21 +35,15 @@ export default function SubjectTable() {
     <div className="space-y-4">
       {/* Semester Selector + Reset */}
       <div className="flex items-center justify-between">
-        <div className="flex items-center gap-2 bg-stone-100/70 dark:bg-stone-700/50 border border-stone-200/80 dark:border-stone-600/80 rounded-xl px-3 py-1.5 hover:border-[#C27856]/50 hover:bg-[#F5E6D3]/40 dark:hover:bg-[#C27856]/20 transition-all duration-200">
-          <span className="text-[10px] font-black uppercase text-slate-400 tracking-wider leading-none">Sem</span>
-          <select
-            value={currentSemesterId}
-            onChange={(e) => setCurrentSemesterId(Number(e.target.value))}
-            className="bg-transparent text-slate-800 dark:text-slate-100 font-extrabold text-xs focus:outline-none cursor-pointer pr-3 appearance-none"
-          >
-            {semesters.map((sem) => (
-              <option key={sem.id} value={sem.id} className="bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100">
-                {sem.name} {sem.courses?.length ? `(${sem.courses.length})` : ''}
-              </option>
-            ))}
-          </select>
-          <ChevronDown className="w-3 h-3 text-slate-400 pointer-events-none shrink-0" />
-        </div>
+        <CustomSelect
+          value={currentSemesterId}
+          onChange={(val) => setCurrentSemesterId(val)}
+          label="Sem"
+          options={semesters.map(sem => ({
+            value: sem.id,
+            label: `${sem.name} ${sem.courses?.length ? `(${sem.courses.length})` : ''}`
+          }))}
+        />
 
         <button
           onClick={() => setShowResetConfirm(true)}

@@ -1,0 +1,13 @@
+# Dependency directories
+node_modules/
+
+# Build output
+dist/
+
+# Backup files
+*.backup
+
+# Agent/tooling files
+.planning/
+.claude/
+.agent.md

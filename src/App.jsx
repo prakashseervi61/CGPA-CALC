@@ -32,14 +32,20 @@ function DashboardLayout({ children, aside }) {
             {aside}
           </div>
           {/* Desktop: side-by-side */}
-          <div className="hidden lg:flex lg:flex-1 lg:flex-row lg:min-h-0 lg:overflow-hidden">
-            <main className="flex-1 overflow-y-auto p-6 xl:p-8 bg-stone-50 dark:bg-stone-950">
+          {aside ? (
+            <div className="hidden lg:flex lg:flex-1 lg:flex-row lg:min-h-0 lg:overflow-hidden">
+              <main className="flex-1 overflow-y-auto p-6 xl:p-8 bg-stone-50 dark:bg-stone-950">
+                {children}
+              </main>
+              <aside className="w-[280px] xl:w-[320px] shrink-0 p-6 space-y-3 select-none bg-white dark:bg-stone-900 border-l border-stone-200/80 dark:border-stone-800/80 flex flex-col min-h-0 overflow-y-auto">
+                {aside}
+              </aside>
+            </div>
+          ) : (
+            <div className="hidden lg:block flex-1 overflow-y-auto p-6 xl:p-8 bg-stone-50 dark:bg-stone-950">
               {children}
-            </main>
-            <aside className="w-[280px] xl:w-[320px] shrink-0 p-6 space-y-3 select-none bg-white dark:bg-stone-900 border-l border-stone-200/80 dark:border-stone-800/80 flex flex-col min-h-0 overflow-y-auto">
-              {aside}
-            </aside>
-          </div>
+            </div>
+          )}
         </div>
       </div>
     </div>

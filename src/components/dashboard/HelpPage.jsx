@@ -33,13 +33,13 @@ export default function HelpPage() {
       a: "All your profiles, subject selections, and grade scores are stored locally and securely in your browser's local storage. Your data never leaves your device."
     },
     {
-      q: "How do I export my academic grades?",
-      a: "Go to the Settings page from the sidebar menu and click 'Export Grades (.csv)'. This downloads a formatted spreadsheet containing all your subjects, credits, and grade points."
+      q: "Where is my data stored and how do I reset it?",
+      a: "All your profiles, subject selections, and grade scores are stored locally in your browser's local storage. Your data never leaves your device. Use the Settings page to reset grades when needed."
     }
   ];
 
   return (
-    <div className="space-y-6 max-w-4xl select-none animate-in fade-in duration-200">
+    <div className="space-y-6 max-w-4xl select-none duration-200">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-2 border-b border-slate-100">
         <div>

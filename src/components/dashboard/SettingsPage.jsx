@@ -66,7 +66,7 @@ export default function SettingsPage() {
   };
 
   return (
-    <div className="space-y-6 max-w-4xl select-none animate-in fade-in duration-200">
+    <div className="space-y-6 max-w-4xl select-none duration-200">
       {/* Page Header */}
       <div className="flex items-center justify-between pb-2 border-b border-slate-100">
         <div>
@@ -175,7 +175,7 @@ export default function SettingsPage() {
           </div>
 
           {isEditingProfile && (
-            <div className="sm:col-span-2 pt-1 flex justify-end animate-in fade-in duration-150">
+            <div className="sm:col-span-2 pt-1 flex justify-end duration-150">
               <Button type="submit" variant="primary" size="md" icon={Check}>
                 Save Profile Changes
               </Button>
@@ -269,7 +269,7 @@ export default function SettingsPage() {
           )}
 
           {isEditingPin && (
-            <div className="sm:col-span-2 pt-1 flex justify-end animate-in fade-in duration-150">
+            <div className="sm:col-span-2 pt-1 flex justify-end duration-150">
               <Button type="submit" variant="primary" size="md" icon={Check}>
                 Update Security PIN
               </Button>
@@ -279,15 +279,15 @@ export default function SettingsPage() {
       </Card>
 
       </div>
-      {/* SECTION 4: Data Management & Export */}
+      {/* SECTION 3: Data Management */}
       <Card className="p-6 border border-slate-100 shadow-sm space-y-4">
         <div className="flex items-center gap-2.5 pb-3 border-b border-slate-100">
           <div className="w-8 h-8 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
             <Database className="w-4 h-4" />
           </div>
           <div>
-            <h3 className="text-base font-extrabold text-slate-900">Data Management & Export</h3>
-            <p className="text-xs text-slate-400 font-semibold">Export academic grades as CSV file or reset calculations</p>
+            <h3 className="text-base font-extrabold text-slate-900">Data Management</h3>
+            <p className="text-xs text-slate-400 font-semibold">Reset all semester grades to their default unselected state</p>
           </div>
         </div>
 
@@ -300,7 +300,7 @@ export default function SettingsPage() {
             icon={RotateCcw}
             onClick={() => {
               if (window.confirm('Are you sure you want to reset all selected grades back to unselected?')) {
-                if (handleResetGrades) handleResetGrades();
+                handleResetGrades();
               }
             }}
           >

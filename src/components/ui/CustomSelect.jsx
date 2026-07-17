@@ -30,7 +30,7 @@ export default function CustomSelect({ value, onChange, options, label }) {
       </button>
 
       {open && (
-        <div className="absolute z-50 mt-1.5 left-0 min-w-[200px] bg-white dark:bg-stone-800 border border-stone-200 dark:border-stone-700 rounded-xl shadow-lg shadow-black/10 dark:shadow-black/30 py-1.5 animate-in fade-in duration-100">
+        <div className="absolute z-50 mt-1.5 left-0 min-w-[200px] bg-white dark:bg-stone-800 border border-stone-200 dark:border-stone-700 rounded-xl shadow-lg shadow-black/10 dark:shadow-black/30 py-1.5 duration-100">
           {options.map((opt) => (
             <button
               key={opt.value}

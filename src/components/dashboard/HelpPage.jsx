@@ -29,10 +29,6 @@ export default function HelpPage() {
       a: "The grading scale uses the standard 10-point system:\n• Grade O (Outstanding): 10 Points (91–100%)\n• Grade A+ (Excellent): 9 Points (81–90%)\n• Grade A (Very Good): 8 Points (71–80%)\n• Grade B+ (Good): 7 Points (61–70%)\n• Grade B (Above Average): 6 Points (56–60%)\n• Grade C (Average): 5 Points (50–55%)\n• Grade U (Reappear/Fail): 0 Points (< 50%)"
     },
     {
-      q: "Where is my grade data stored?",
-      a: "All your profiles, subject selections, and grade scores are stored locally and securely in your browser's local storage. Your data never leaves your device."
-    },
-    {
       q: "Where is my data stored and how do I reset it?",
       a: "All your profiles, subject selections, and grade scores are stored locally in your browser's local storage. Your data never leaves your device. Use the Settings page to reset grades when needed."
     }

@@ -9,16 +9,16 @@ import {
 } from 'lucide-react';
 import { useUser } from '../../contexts/AuthContext';
 
+const menuItems = [
+  { id: 'dashboard', path: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
+  { id: 'cgpa-trends', path: '/trends', label: 'Trends', icon: TrendingUp },
+  { id: 'settings', path: '/settings', label: 'Settings', icon: Settings },
+  { id: 'help', path: '/help', label: 'Help & Support', icon: HelpCircle }
+];
+
 export default function Sidebar({ mobileOpen, setMobileOpen }) {
   const navigate = useNavigate();
   const { handleLogout } = useUser();
-
-  const menuItems = [
-    { id: 'dashboard', path: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
-    { id: 'cgpa-trends', path: '/trends', label: 'Trends', icon: TrendingUp },
-    { id: 'settings', path: '/settings', label: 'Settings', icon: Settings },
-    { id: 'help', path: '/help', label: 'Help & Support', icon: HelpCircle }
-  ];
 
   const handleLogoutClick = () => {
     handleLogout();

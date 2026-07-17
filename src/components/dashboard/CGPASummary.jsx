@@ -20,8 +20,7 @@ export default function CGPASummary() {
   const formattedSgpa = sgpa.toFixed(2);
   const formattedTargetCgpa = targetCgpa.toFixed(2);
 
-  const getMotivation = (val) => {
-    const score = Number(val);
+  const getMotivation = (score) => {
     if (score >= 9.0) return '🎉 Distinction! Outstanding academic performance!';
     if (score >= 8.0) return '🌟 Excellent work! You are in the top tier.';
     if (score >= 7.0) return '👍 Very Good! Keep pushing for distinction.';
@@ -91,7 +90,7 @@ export default function CGPASummary() {
 
       {/* Motivational Text */}
       <p className="text-xs text-white/80 font-bold mb-4 relative z-10 bg-white/10 backdrop-blur-sm px-3 py-2 rounded-xl border border-white/10 truncate">
-        {getMotivation(formattedCgpa)}
+        {getMotivation(currentCgpa)}
       </p>
 
       {/* Two Small Stat Cards */}

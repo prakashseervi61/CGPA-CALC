@@ -10,8 +10,7 @@ import GradeDistribution from './components/dashboard/GradeDistribution';
 import CGPATrendsPage from './components/dashboard/CGPATrendsPage';
 import SettingsPage from './components/dashboard/SettingsPage';
 import HelpPage from './components/dashboard/HelpPage';
-import LoginPage from './pages/LoginPage';
-import RegisterPage from './pages/RegisterPage';
+import AuthForm from './components/auth/AuthForm';
 
 function ProtectedRoute({ children }) {
   const { isLoggedIn } = useUser();
@@ -39,8 +38,8 @@ function App() {
 
   return (
     <Routes>
-      <Route path="/login" element={!isLoggedIn ? <LoginPage /> : <Navigate to="/dashboard" replace />} />
-      <Route path="/register" element={!isLoggedIn ? <RegisterPage /> : <Navigate to="/dashboard" replace />} />
+      <Route path="/login" element={!isLoggedIn ? <AuthForm mode="login" /> : <Navigate to="/dashboard" replace />} />
+      <Route path="/register" element={!isLoggedIn ? <AuthForm mode="register" /> : <Navigate to="/dashboard" replace />} />
       <Route path="/dashboard" element={
         <ProtectedRoute><DashboardLayout>
           <main className={mainCls}>

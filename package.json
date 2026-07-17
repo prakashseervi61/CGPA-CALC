@@ -1,7 +1,7 @@
 {
   "name": "cgpa",
   "version": "1.0.0",
-  "description": "Apex GPA is a modern, educational, and accessible GPA/CGPA calculator designed to support students throughout their academic journey. Built with React 19, Vite, and Tailwind CSS, it features an intuitive interface, persistent data storage, goal-setting tools, learning resource integration, and comprehensive analytics to foster academic success.",
+  "description": "CGPA calculator for SKCET B.Tech IT students",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -11,8 +11,6 @@
     "type": "git",
     "url": "git+https://github.com/prakashseervi61/CGPA-CALC.git"
   },
-  "keywords": [],
-  "author": "",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/prakashseervi61/CGPA-CALC/issues"

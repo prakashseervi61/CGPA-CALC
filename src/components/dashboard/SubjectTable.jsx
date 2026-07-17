@@ -38,7 +38,7 @@ export default function SubjectTable() {
       <div className="flex items-center justify-between">
         <CustomSelect
           value={currentSemesterId}
-          onChange={(val) => setCurrentSemesterId(val)}
+          onChange={setCurrentSemesterId}
           label="Sem"
           options={semesters.map(sem => ({
             value: sem.id,

@@ -18,13 +18,7 @@ export const ThemeProvider = ({ children }) => {
   // Update the DOM and localStorage when theme changes
   useEffect(() => {
     // Add or remove the 'dark' class on the document root
-    if (theme === 'dark') {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
-
-    // Save preference to localStorage
+    document.documentElement.classList.toggle('dark', theme === 'dark');
     localStorage.setItem('theme', theme);
   }, [theme]);
 

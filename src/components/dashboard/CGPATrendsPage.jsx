@@ -78,12 +78,7 @@ export default function CGPATrendsPage() {
 
     if (totalRemainingCredits > 0) {
       requiredFutureGpa = requiredRemainingPoints / totalRemainingCredits;
-      // Cap at 10.0 (maximum possible GPA)
-      requiredFutureGpa = Math.min(requiredFutureGpa, 10.0);
-      // If already achieved or exceeded target, show 0 or negative as achieved
-      if (requiredFutureGpa <= 0) {
-        requiredFutureGpa = 0; // Already achieved target
-      }
+      requiredFutureGpa = Math.max(0, Math.min(requiredFutureGpa, 10.0));
     } else {
       // No remaining credits
       requiredFutureGpa = overallCgpa >= targetCgpa ? 0 : 10.0; // 0 if achieved, 10 if not possible
@@ -104,7 +99,7 @@ export default function CGPATrendsPage() {
   }, [semesters, gradePointsMap, user?.targetCgpa, currentSemesterId]);
 
   return (
-    <div className="space-y-6 select-none duration-200">
+    <div className="space-y-6 select-none">
       {/* Header Title */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2 border-b border-stone-200 dark:border-stone-800">
         <div>
@@ -324,15 +319,13 @@ export default function CGPATrendsPage() {
                     <td className="py-2.5 px-3 text-center text-sm">
                       {/* Show progress toward target for this semester */}
                       {sem.cgpa > 0 ? (
-                        <>
-                          {sem.cgpa >= analyticsData.targetCgpa ? (
+                          sem.cgpa >= analyticsData.targetCgpa ? (
                             <span className="text-xs font-medium text-green-600">✓ Target Met</span>
                           ) : (
                             <span className="text-xs font-medium text-yellow-600">
                               {(sem.cgpa / analyticsData.targetCgpa * 100).toFixed(0)}% of target
                             </span>
-                          )}
-                        </>
+                          )
                       ) : (
                         <span className="text-xs font-medium text-slate-500">Not graded</span>
                       )}

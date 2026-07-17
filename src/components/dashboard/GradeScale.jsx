@@ -21,18 +21,18 @@ export default function GradeScale() {
   };
 
   return (
-    <Card className="shadow-sm border border-slate-100 mt-6">
+    <Card className="shadow-sm border border-slate-100 dark:border-stone-700 mt-6">
       {/* Header */}
-      <div className="flex items-center justify-between mb-5 pb-4 border-b border-slate-100">
+      <div className="flex items-center justify-between mb-5 pb-4 border-b border-slate-100 dark:border-stone-700">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-2xl bg-[#D4E8D6] text-[#4A6E4D] flex items-center justify-center shrink-0">
             <Award className="w-5 h-5" />
           </div>
           <div>
-            <h3 className="text-lg font-extrabold text-slate-900">
+            <h3 className="text-lg font-extrabold text-slate-900 dark:text-stone-50">
               Grade Scale
             </h3>
-            <p className="text-xs text-slate-500 font-semibold">
+              <p className="text-xs text-slate-500 dark:text-stone-400 font-semibold">
               Standard 10-point academic grading evaluation rules
             </p>
           </div>

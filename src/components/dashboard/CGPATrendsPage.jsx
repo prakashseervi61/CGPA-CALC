@@ -101,7 +101,7 @@ export default function CGPATrendsPage() {
   return (
     <div className="space-y-6 select-none">
       {/* Header Title */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2 border-b border-stone-200 dark:border-stone-800">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2 border-b border-stone-200 dark:border-stone-700">
         <div>
           <h2 className="text-2xl font-black text-stone-900 dark:text-stone-100 flex items-center gap-2.5">
             <div className="w-9 h-9 rounded-xl bg-primary-light text-primary flex items-center justify-center shrink-0">
@@ -152,7 +152,7 @@ export default function CGPATrendsPage() {
       <Card className="p-6 border border-stone-200 dark:border-stone-800 shadow-sm">
         <div className="flex items-center justify-between mb-4 pb-3 border-b border-stone-200 dark:border-stone-800">
           <div>
-            <h3 className="text-base font-extrabold text-stone-900 dark:text-stone-100">SGPA vs CGPA Progression Curve</h3>
+            <h3 className="text-base font-extrabold text-stone-900 dark:text-stone-50">SGPA vs CGPA Progression Curve</h3>
             <p className="text-xs text-stone-500 dark:text-stone-400 font-semibold">Comparison of individual semester SGPA against overall cumulative CGPA</p>
           </div>
         </div>
@@ -230,8 +230,8 @@ export default function CGPATrendsPage() {
       <div className="mt-6">
         <div className="space-y-3">
           <div className="flex justify-between mb-1">
-            <span className="text-sm font-medium text-stone-700 dark:text-zinc-300">Progress Toward Target CGPA</span>
-            <span className="text-sm font-medium text-stone-700 dark:text-zinc-300">
+            <span className="text-sm font-medium text-stone-700 dark:text-stone-200">Progress Toward Target CGPA</span>
+            <span className="text-sm font-medium text-stone-700 dark:text-stone-200">
               {analyticsData.overallCgpa.toFixed(2)} / {analyticsData.targetCgpa.toFixed(2)}
             </span>
           </div>
@@ -287,7 +287,7 @@ export default function CGPATrendsPage() {
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse text-xs font-semibold">
               <thead>
-                <tr className="text-[11px] font-black uppercase text-stone-400 border-b border-stone-200 dark:border-stone-800 pb-2">
+                <tr className="text-[11px] font-black uppercase text-stone-400 dark:text-stone-500 border-b border-stone-200 dark:border-stone-700 pb-2">
                   <th className="py-2.5 px-3">Semester</th>
                   <th className="py-2.5 px-3 text-center">Graded</th>
                   <th className="py-2.5 px-3 text-center">Credits</th>
@@ -297,15 +297,15 @@ export default function CGPATrendsPage() {
                   <th className="py-2.5 px-3 text-center">Target Progress</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-100">
+              <tbody className="divide-y divide-slate-100 dark:divide-stone-700">
                 {analyticsData.chartData.map((sem) => (
-                  <tr key={sem.id} className="hover:bg-slate-50/80 transition-colors">
-                    <td className="py-2.5 px-3 font-extrabold text-slate-900">{sem.fullName}</td>
-                    <td className="py-2.5 px-3 text-center text-slate-600 font-bold">{sem.gradedCount} subjects</td>
+                  <tr key={sem.id} className="hover:bg-slate-50/80 dark:hover:bg-stone-800/50 transition-colors">
+                    <td className="py-2.5 px-3 font-extrabold text-slate-900 dark:text-stone-50">{sem.fullName}</td>
+                    <td className="py-2.5 px-3 text-center text-slate-600 dark:text-stone-400 font-bold">{sem.gradedCount} subjects</td>
                     <td className="py-2.5 px-3 text-center">
                       <Badge variant="purple" size="sm">{sem.credits} Credits</Badge>
                     </td>
-                    <td className="py-2.5 px-3 text-center font-black text-slate-900">
+                    <td className="py-2.5 px-3 text-center font-black text-slate-900 dark:text-stone-50">
                       {sem.sgpa > 0 ? sem.sgpa.toFixed(2) : '--'}
                     </td>
                     <td className="py-2.5 px-3 text-center font-black text-[#C27856]">
@@ -320,14 +320,14 @@ export default function CGPATrendsPage() {
                       {/* Show progress toward target for this semester */}
                       {sem.cgpa > 0 ? (
                           sem.cgpa >= analyticsData.targetCgpa ? (
-                            <span className="text-xs font-medium text-green-600">✓ Target Met</span>
+                            <span className="text-xs font-medium text-green-600 dark:text-green-400">✓ Target Met</span>
                           ) : (
-                            <span className="text-xs font-medium text-yellow-600">
+                            <span className="text-xs font-medium text-yellow-600 dark:text-yellow-400">
                               {(sem.cgpa / analyticsData.targetCgpa * 100).toFixed(0)}% of target
                             </span>
                           )
                       ) : (
-                        <span className="text-xs font-medium text-slate-500">Not graded</span>
+                        <span className="text-xs font-medium text-slate-500 dark:text-stone-500">Not graded</span>
                       )}
                     </td>
                   </tr>

@@ -1,4 +1,4 @@
-import { Zap, BookOpen, Star, Check } from 'lucide-react';
+import { Zap, BookOpen, Star } from 'lucide-react';
 import { useSesame } from '../../contexts/DataContext';
 import { useUser } from '../../contexts/AuthContext';
 
@@ -51,9 +51,6 @@ export default function CGPASummary() {
           <span className="text-[10px] font-extrabold px-2.5 py-1 rounded-xl bg-white/15 backdrop-blur-md text-white border border-white/10">
             Target: {formattedTargetCgpa}
           </span>
-          {isTargetAchieved && (
-            <Check className="w-4 h-4 text-emerald-300" />
-          )}
         </div>
       </div>
 
@@ -66,7 +63,7 @@ export default function CGPASummary() {
           <span className="text-[10px] font-black uppercase text-white/70 tracking-wider">
             out of 10.0
           </span>
-          <span className="text-xs text-white/80 font-semibold truncate max-w-[180px]">
+          <span className="text-xs text-white/80 font-semibold">
             SGPA: <span className="font-bold text-white">{formattedSgpa}</span> ({activeSemesterName})
           </span>
         </div>
@@ -89,7 +86,7 @@ export default function CGPASummary() {
       </div>
 
       {/* Motivational Text */}
-      <p className="text-xs text-white/80 font-bold mb-4 relative z-10 bg-white/10 backdrop-blur-sm px-3 py-2 rounded-xl border border-white/10 truncate">
+      <p className="text-xs text-white/80 font-bold mb-4 relative z-10 bg-white/10 backdrop-blur-sm px-3 py-2 rounded-xl border border-white/10">
         {getMotivation(currentCgpa)}
       </p>
 

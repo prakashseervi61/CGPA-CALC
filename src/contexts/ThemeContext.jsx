@@ -9,8 +9,8 @@ export const ThemeProvider = ({ children }) => {
     if (storedTheme) {
       return storedTheme === 'dark' ? 'dark' : 'light';
     }
-    // Check system preference if no stored preference
-    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    // Default to light if no stored preference
+    return 'light';
   };
 
   const [theme, setTheme] = useState(getInitialTheme);

@@ -15,7 +15,7 @@ export default function SettingsPage() {
   const [isEditingProfile, setIsEditingProfile] = useState(false);
   const [isEditingPin, setIsEditingPin] = useState(false);
 
-  const [name, setName] = useState(user?.name || '');
+  const [name, setName] = useState(user?.username || '');
   const [studentId, setStudentId] = useState(user?.studentId || '');
   const [targetCgpa, setTargetCgpa] = useState(user?.targetCgpa || '9.00');
   const [savedNotice, setSavedNotice] = useState(false);
@@ -30,7 +30,7 @@ export default function SettingsPage() {
     e.preventDefault();
     handleUpdateUser({
       ...user,
-      name,
+      username: name,
       studentId,
       targetCgpa: parseFloat(targetCgpa) || 0
     });
@@ -64,15 +64,15 @@ export default function SettingsPage() {
   return (
     <div className="space-y-6 max-w-4xl select-none duration-200">
       {/* Page Header */}
-      <div className="flex items-center justify-between pb-2 border-b border-slate-100">
+      <div className="flex items-center justify-between pb-2 border-b border-slate-100 dark:border-stone-700 dark:border-stone-700">
         <div>
-          <h2 className="text-2xl font-black text-slate-900 flex items-center gap-2.5">
+          <h2 className="text-2xl font-black text-slate-900 dark:text-stone-50 flex items-center gap-2.5">
             <div className="w-9 h-9 rounded-xl bg-[#F5E6D3] text-[#C27856] flex items-center justify-center shrink-0">
               <Settings className="w-5 h-5" />
             </div>
             Settings & Preferences
           </h2>
-          <p className="text-xs text-slate-500 font-semibold mt-1">
+            <p className="text-xs text-slate-500 dark:text-stone-400 font-semibold mt-1">
             Manage student profile info, 4-digit security PIN, target CGPA goals & data exports
           </p>
         </div>
@@ -86,15 +86,15 @@ export default function SettingsPage() {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
       {/* SECTION 1: Student Profile Information with Edit / Save Toggle */}
-      <Card className="p-6 border border-slate-100 shadow-sm space-y-4">
-        <div className="flex items-center justify-between pb-3 border-b border-slate-100">
+      <Card className="p-6 border border-slate-100 dark:border-stone-700 shadow-sm space-y-4">
+        <div className="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-stone-700">
           <div className="flex items-center gap-2.5">
             <div className="w-8 h-8 rounded-xl bg-[#F5E6D3] text-[#C27856] flex items-center justify-center shrink-0">
               <User className="w-4 h-4" />
             </div>
             <div>
-              <h3 className="text-base font-extrabold text-slate-900">Student Profile</h3>
-              <p className="text-xs text-slate-400 font-semibold">Display name & registration number</p>
+              <h3 className="text-base font-extrabold text-slate-900 dark:text-stone-50">Student Profile</h3>
+              <p className="text-xs text-slate-400 dark:text-stone-500 font-semibold">Display name & registration number</p>
             </div>
           </div>
 
@@ -113,7 +113,7 @@ export default function SettingsPage() {
               type="button"
               onClick={() => {
                 setIsEditingProfile(false);
-                setName(user?.name || '');
+                setName(user?.username || '');
                 setStudentId(user?.studentId || '');
                 setTargetCgpa(user?.targetCgpa?.toString() || '9.00');
               }}
@@ -126,7 +126,7 @@ export default function SettingsPage() {
 
         <form onSubmit={handleProfileSave} className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <label className="block text-xs font-black uppercase text-slate-400 mb-1.5 tracking-wider">
+            <label className="block text-xs font-black uppercase text-slate-400 dark:text-stone-500 mb-1.5 tracking-wider">
               Student Name
             </label>
             <input
@@ -136,12 +136,12 @@ export default function SettingsPage() {
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="Enter your name"
-              className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-sm font-bold text-slate-800 bg-slate-50/50 focus:bg-white focus:border-[#C27856] focus:outline-none transition-all disabled:bg-slate-100/70 disabled:text-slate-600 disabled:border-slate-200 disabled:cursor-not-allowed"
+              className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-stone-600 text-sm font-bold text-slate-800 dark:text-stone-100 bg-slate-50/50 dark:bg-stone-800/50 focus:bg-white dark:focus:bg-stone-700 focus:border-[#C27856] focus:outline-none transition-all disabled:bg-slate-100/70 dark:disabled:bg-stone-800 disabled:text-slate-600 dark:disabled:text-stone-500 disabled:border-slate-200 dark:disabled:border-stone-700 disabled:cursor-not-allowed"
             />
           </div>
 
           <div>
-            <label className="block text-xs font-black uppercase text-slate-400 mb-1.5 tracking-wider">
+            <label className="block text-xs font-black uppercase text-slate-400 dark:text-stone-500 mb-1.5 tracking-wider">
               Register / Student ID
             </label>
             <input
@@ -151,12 +151,12 @@ export default function SettingsPage() {
               value={studentId}
               onChange={(e) => setStudentId(e.target.value)}
               placeholder="Enter your reg no"
-              className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-sm font-bold text-slate-800 bg-slate-50/50 focus:bg-white focus:border-[#C27856] focus:outline-none transition-all disabled:bg-slate-100/70 disabled:text-slate-600 disabled:border-slate-200 disabled:cursor-not-allowed"
+              className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-stone-600 text-sm font-bold text-slate-800 dark:text-stone-100 bg-slate-50/50 dark:bg-stone-800/50 focus:bg-white dark:focus:bg-stone-700 focus:border-[#C27856] focus:outline-none transition-all disabled:bg-slate-100/70 dark:disabled:bg-stone-800 disabled:text-slate-600 dark:disabled:text-stone-500 disabled:border-slate-200 dark:disabled:border-stone-700 disabled:cursor-not-allowed"
             />
           </div>
 
           <div>
-            <label className="block text-xs font-black uppercase text-slate-400 mb-1.5 tracking-wider">
+            <label className="block text-xs font-black uppercase text-slate-400 dark:text-stone-500 mb-1.5 tracking-wider">
               Target CGPA Goal
             </label>
             <div className="flex items-center gap-2">
@@ -166,7 +166,7 @@ export default function SettingsPage() {
                 onChange={(e) => setTargetCgpa(e.target.value)}
                 className="w-24 px-3 py-1.5 rounded-lg border border-slate-200 text-sm font-black text-slate-900 focus:outline-none focus:border-[#C27856]"
               />
-              <span className="text-xs text-slate-500 font-bold">out of 10.0</span>
+              <span className="text-xs text-slate-500 dark:text-stone-400 font-bold">out of 10.0</span>
             </div>
           </div>
 
@@ -181,15 +181,15 @@ export default function SettingsPage() {
       </Card>
 
       {/* SECTION 2: Security & 4-Digit PIN with Edit / Save Toggle */}
-      <Card className="p-6 border border-slate-100 shadow-sm space-y-4">
-        <div className="flex items-center justify-between pb-3 border-b border-slate-100">
+      <Card className="p-6 border border-slate-100 dark:border-stone-700 shadow-sm space-y-4">
+        <div className="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-stone-700">
           <div className="flex items-center gap-2.5">
             <div className="w-8 h-8 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center shrink-0">
               <KeyRound className="w-4 h-4" />
             </div>
             <div>
-              <h3 className="text-base font-extrabold text-slate-900">Security & 4-Digit PIN</h3>
-              <p className="text-xs text-slate-400 font-semibold">Profile unlock security PIN</p>
+              <h3 className="text-base font-extrabold text-slate-900 dark:text-stone-50">Security & 4-Digit PIN</h3>
+              <p className="text-xs text-slate-400 dark:text-stone-500 font-semibold">Profile unlock security PIN</p>
             </div>
           </div>
 
@@ -221,7 +221,7 @@ export default function SettingsPage() {
 
         <form onSubmit={handlePinChangeSubmit} className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <label className="block text-xs font-black uppercase text-slate-400 mb-1.5 tracking-wider">
+            <label className="block text-xs font-black uppercase text-slate-400 dark:text-stone-500 mb-1.5 tracking-wider">
               Current PIN
             </label>
             <input
@@ -234,12 +234,12 @@ export default function SettingsPage() {
               value={currentPin}
               onChange={(e) => setCurrentPin(e.target.value)}
               placeholder="••••"
-              className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-sm font-black text-[#C27856] bg-slate-50/50 focus:bg-white focus:border-[#C27856] focus:outline-none transition-all disabled:bg-slate-100/70 disabled:text-slate-400 disabled:border-slate-200 disabled:cursor-not-allowed"
+              className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-stone-600 text-sm font-black text-[#C27856] bg-slate-50/50 dark:bg-stone-800/50 focus:bg-white dark:focus:bg-stone-700 focus:border-[#C27856] focus:outline-none transition-all disabled:bg-slate-100/70 dark:disabled:bg-stone-800 disabled:text-slate-400 dark:disabled:text-stone-600 disabled:border-slate-200 dark:disabled:border-stone-700 disabled:cursor-not-allowed"
             />
           </div>
 
           <div>
-            <label className="block text-xs font-black uppercase text-slate-400 mb-1.5 tracking-wider">
+            <label className="block text-xs font-black uppercase text-slate-400 dark:text-stone-500 mb-1.5 tracking-wider">
               New 4-Digit PIN
             </label>
             <input
@@ -252,7 +252,7 @@ export default function SettingsPage() {
               value={newPin}
               onChange={(e) => setNewPin(e.target.value)}
               placeholder="••••"
-              className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-sm font-black text-[#C27856] bg-slate-50/50 focus:bg-white focus:border-[#C27856] focus:outline-none transition-all disabled:bg-slate-100/70 disabled:text-slate-400 disabled:border-slate-200 disabled:cursor-not-allowed"
+              className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-stone-600 text-sm font-black text-[#C27856] bg-slate-50/50 dark:bg-stone-800/50 focus:bg-white dark:focus:bg-stone-700 focus:border-[#C27856] focus:outline-none transition-all disabled:bg-slate-100/70 dark:disabled:bg-stone-800 disabled:text-slate-400 dark:disabled:text-stone-600 disabled:border-slate-200 dark:disabled:border-stone-700 disabled:cursor-not-allowed"
             />
           </div>
 
@@ -276,14 +276,14 @@ export default function SettingsPage() {
 
       </div>
       {/* SECTION 3: Data Management */}
-      <Card className="p-6 border border-slate-100 shadow-sm space-y-4">
-        <div className="flex items-center gap-2.5 pb-3 border-b border-slate-100">
+      <Card className="p-6 border border-slate-100 dark:border-stone-700 shadow-sm space-y-4">
+        <div className="flex items-center gap-2.5 pb-3 border-b border-slate-100 dark:border-stone-700">
           <div className="w-8 h-8 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
             <Database className="w-4 h-4" />
           </div>
           <div>
-            <h3 className="text-base font-extrabold text-slate-900">Data Management</h3>
-            <p className="text-xs text-slate-400 font-semibold">Reset all semester grades to their default unselected state</p>
+            <h3 className="text-base font-extrabold text-slate-900 dark:text-stone-50">Data Management</h3>
+            <p className="text-xs text-slate-400 dark:text-stone-500 font-semibold">Reset all semester grades to their default unselected state</p>
           </div>
         </div>
 

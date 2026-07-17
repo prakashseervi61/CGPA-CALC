@@ -27,11 +27,34 @@ const AuthForm = ({ mode }) => {
     return Object.keys(newErrors).length === 0;
   };
 
+  const getUsers = () => {
+    try { return JSON.parse(localStorage.getItem('cgpa_app_users')) || {}; } catch { return {}; }
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     setSubmitted(true);
     if (!validate()) return;
-    handleLogin({ username, registerNumber, studentId: registerNumber });
+
+    if (isLogin) {
+      const users = getUsers();
+      const found = users[username.trim()];
+      if (!found) {
+        setErrors({ username: 'User doesn\'t exist' });
+        return;
+      }
+      if (found.registerNumber !== registerNumber.trim()) {
+        setErrors({ registerNumber: 'Register number doesn\'t match' });
+        return;
+      }
+      handleLogin(found);
+    } else {
+      const users = getUsers();
+      const profile = { username: username.trim(), registerNumber: registerNumber.trim(), studentId: registerNumber.trim() };
+      users[username.trim()] = profile;
+      localStorage.setItem('cgpa_app_users', JSON.stringify(users));
+      handleLogin(profile);
+    }
     navigate('/dashboard');
   };
 

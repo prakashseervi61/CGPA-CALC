@@ -40,7 +40,7 @@ export default function Sidebar({ mobileOpen, setMobileOpen }) {
         {setMobileOpen && (
           <button
             onClick={() => setMobileOpen(false)}
-            className="md:hidden p-1.5 rounded-xl text-stone-400 hover:text-stone-600 hover:bg-stone-200/50"
+            className="lg:hidden p-1.5 rounded-xl text-stone-400 hover:text-stone-600 hover:bg-stone-200/50"
           >
             <X className="w-5 h-5" />
           </button>
@@ -60,7 +60,7 @@ export default function Sidebar({ mobileOpen, setMobileOpen }) {
                 if (setMobileOpen) setMobileOpen(false);
               }}
                className={({ isActive }) =>
-                 `w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-sm font-semibold transition-all duration-200 ${isActive ? 'bg-primary-light text-primary font-extrabold shadow-sm' : 'text-stone-600 hover:bg-stone-100 hover:text-stone-900 dark:text-stone-400 dark:hover:bg-stone-800 dark:hover:text-stone-100'}`
+                 `w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-sm font-semibold transition-all duration-200 ${isActive ? 'bg-primary-light text-[#8B4F32] font-extrabold shadow-sm dark:bg-[#8B4F32]/20 dark:text-[#F5E6D3]' : 'text-stone-600 hover:bg-stone-100 hover:text-stone-900 dark:text-stone-400 dark:hover:bg-stone-800 dark:hover:text-stone-100'}`
                }
             >
               <div className="p-2 rounded-xl transition-colors duration-200 shrink-0">
@@ -76,7 +76,7 @@ export default function Sidebar({ mobileOpen, setMobileOpen }) {
       <div className="pt-4 mt-auto border-t border-stone-200/60 dark:border-stone-800/60">
         <button
           onClick={handleLogoutClick}
-          className="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-sm font-bold text-danger hover:bg-danger/10 transition-colors cursor-pointer group"
+          className="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-sm font-bold text-danger hover:bg-danger/10 transition-colors cursor-pointer group dark:text-[#E07070]"
         >
           <div className="p-2 rounded-xl bg-danger/10 text-danger group-hover:bg-danger/20 shrink-0 transition-colors">
             <LogOut className="w-4 h-4" />
@@ -90,13 +90,13 @@ export default function Sidebar({ mobileOpen, setMobileOpen }) {
   return (
     <>
       {/* Desktop Fixed Sidebar */}
-      <aside className="hidden md:block sticky top-0 h-screen z-20">
+      <aside className="hidden lg:block sticky top-0 h-screen z-20">
         {sidebarContent}
       </aside>
 
       {/* Mobile Drawer Overlay */}
       {mobileOpen && (
-        <div className="fixed inset-0 z-50 md:hidden flex">
+        <div className="fixed inset-0 z-50 lg:hidden flex">
           <div
             className="fixed inset-0 bg-black/40 backdrop-blur-xs transition-opacity"
             onClick={() => setMobileOpen(false)}

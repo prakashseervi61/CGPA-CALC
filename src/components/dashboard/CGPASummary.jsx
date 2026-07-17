@@ -9,20 +9,19 @@ export default function CGPASummary() {
     activeSemester
   } = useSesame();
   const { user } = useUser();
-  const targetCgpa = parseFloat(user?.targetCgpa) || 9.00;
+  const targetCgpa = user?.targetCgpa || 9.00;
   const currentCgpa = overallCgpaCalculations.cgpa ?? 0;
   const sgpa = semesterCalculations.sgpa ?? 0;
   const totalCredits = overallCgpaCalculations.totalCumCredits ?? 0;
   const totalGradePoints = overallCgpaCalculations.totalCumPoints ?? 0;
   const activeSemesterName = activeSemester?.name || 'Semester 1';
 
-  // Format numbers cleanly
-  const formattedCgpa = typeof currentCgpa === 'number' && !isNaN(currentCgpa) ? currentCgpa.toFixed(2) : '0.00';
-  const formattedSgpa = typeof sgpa === 'number' && !isNaN(sgpa) ? sgpa.toFixed(2) : '0.00';
-  const formattedTargetCgpa = typeof targetCgpa === 'number' && !isNaN(targetCgpa) ? targetCgpa.toFixed(2) : '9.00';
+  const formattedCgpa = currentCgpa.toFixed(2);
+  const formattedSgpa = sgpa.toFixed(2);
+  const formattedTargetCgpa = targetCgpa.toFixed(2);
 
   const getMotivation = (val) => {
-    const score = parseFloat(val);
+    const score = Number(val);
     if (score >= 9.0) return '🎉 Distinction! Outstanding academic performance!';
     if (score >= 8.0) return '🌟 Excellent work! You are in the top tier.';
     if (score >= 7.0) return '👍 Very Good! Keep pushing for distinction.';

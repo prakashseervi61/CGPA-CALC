@@ -131,7 +131,8 @@ export default function SubjectTable() {
             ) : (
               courses.map((course, idx) => {
                 const key = course.code || course.id || idx;
-                const point = course.grade ? (gradePointsMap[course.grade] ?? 0) : '-';
+                const hasGrade = !!course.grade;
+                const point = hasGrade ? (gradePointsMap[course.grade] ?? 0) : 0;
 
                 return (
                   <tr
@@ -198,10 +199,10 @@ export default function SubjectTable() {
                     {/* Grade Point Badge */}
                     <td className="py-3 px-2 text-center whitespace-nowrap">
                       <Badge
-                        variant={point !== '-' && parseFloat(point) > 0 ? 'green' : parseFloat(point) === 0 ? 'red' : 'slate'}
+                        variant={hasGrade && point > 0 ? 'green' : hasGrade && point === 0 ? 'red' : 'slate'}
                         size="lg"
                       >
-                        {point !== '-' ? `${parseFloat(point).toFixed(1)} Pts` : '--'}
+                        {hasGrade ? `${point.toFixed(1)} Pts` : '--'}
                       </Badge>
                     </td>
                   </tr>

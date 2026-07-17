@@ -54,7 +54,6 @@ function DashboardLayout({ children, aside }) {
 
 function App() {
   const { isLoggedIn } = useUser();
-  const mainCls = "flex-1 overflow-y-auto p-3 sm:p-6 md:p-8 bg-stone-50 dark:bg-stone-950";
 
   return (
     <Routes>

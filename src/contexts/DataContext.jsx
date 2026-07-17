@@ -103,20 +103,16 @@ export const DataProvider = ({ children }) => {
     }));
   };
 
-  const handleResetGrades = () => {
-    setSemesters(prev => prev.map(s => ({
-      ...s,
-      courses: (s.courses || []).map(c => ({ ...c, grade: '' }))
-    })));
+  const handleResetGrades = (scope = 'all') => {
+    setSemesters(prev => prev.map(s => {
+      if (scope === 'current' && s.id !== currentSemesterId) return s;
+      return { ...s, courses: (s.courses || []).map(c => ({ ...c, grade: '' })) };
+    }));
   };
 
-  const handleResetCurrentSemesterGrades = () => {
-    setSemesters(prev => prev.map(s =>
-      s.id === currentSemesterId
-        ? { ...s, courses: (s.courses || []).map(c => ({ ...c, grade: '' })) }
-        : s
-    ));
-  };
+  const handleSetCurrentSemester = (id) => setCurrentSemesterId(id);
+
+  const handleUpdateGradeScale = (rules) => setGradeScaleRules(rules);
 
   const handleToggleSemesterInclusion = () => {
     setSemesters(prev => prev.map(s =>
@@ -146,16 +142,15 @@ export const DataProvider = ({ children }) => {
     user,
     semesters,
     currentSemesterId,
-    setCurrentSemesterId,
     gradeScaleRules,
-    setGradeScaleRules,
     gradePointsMap,
     activeSemester,
     semesterCalculations,
     overallCgpaCalculations,
+    handleSetCurrentSemester,
+    handleUpdateGradeScale,
     handleUpdateCourse,
     handleResetGrades,
-    handleResetCurrentSemesterGrades,
     handleToggleSemesterInclusion
   }), [user, semesters, currentSemesterId, gradeScaleRules, gradePointsMap, activeSemester, semesterCalculations, overallCgpaCalculations]);
 
@@ -166,10 +161,10 @@ export const DataProvider = ({ children }) => {
   );
 };
 
-export const useSesame = () => {
+export const useData = () => {
   const context = useContext(DataContext);
   if (!context) {
-    throw new Error('useSesame must be used within a DataProvider');
+    throw new Error('useData must be used within a DataProvider');
   }
   return context;
 };

@@ -1,8 +1,35 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useUser } from '../../contexts/AuthContext';
 import { User, Hash, ArrowRight, Check, AlertCircle } from 'lucide-react';
-import PinInput from '../ui/PinInput';
+function PinDots({ pin, setPin, type = 'password' }) {
+  const refs = useRef([]);
+  return (
+    <div className="flex gap-2 justify-center">
+      {[0, 1, 2, 3].map((i) => (
+        <input
+          key={i}
+          ref={(el) => (refs.current[i] = el)}
+          type={type}
+          maxLength={1}
+          value={pin[i] || ''}
+          onChange={(e) => {
+            const v = e.target.value;
+            if (v.length > 1) return;
+            setPin(pin.substring(0, i) + v + pin.substring(i + 1));
+            if (v && i < 3) refs.current[i + 1]?.focus();
+          }}
+          onKeyDown={(e) => {
+            if (e.key !== 'Backspace') return;
+            if (pin[i]) setPin(pin.substring(0, i) + pin.substring(i + 1));
+            else if (i > 0) refs.current[i - 1]?.focus();
+          }}
+          className="w-10 h-12 text-center text-lg font-mono rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white/50 dark:bg-zinc-800/50 backdrop-blur-sm text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all duration-200"
+        />
+      ))}
+    </div>
+  );
+}
 
 const AuthForm = ({ mode }) => {
   const isLogin = mode === 'login';
@@ -107,7 +134,7 @@ const AuthForm = ({ mode }) => {
           <div className="mb-3.5">
             <label className="block text-sm font-semibold mb-1.5 text-stone-900 dark:text-stone-50">{isLogin ? '4-Digit PIN' : 'Create 4-Digit PIN'}</label>
             <div className="relative">
-              <PinInput pin={pin} setPin={setPin} />
+              <PinDots pin={pin} setPin={setPin} />
             </div>
             {showError('pin') && (
               <p className="text-xs mt-1.5 flex items-center gap-1 text-red-500">
@@ -120,7 +147,7 @@ const AuthForm = ({ mode }) => {
             <div className="mb-3.5">
               <label className="block text-sm font-semibold mb-1.5 text-stone-900 dark:text-stone-50">Confirm PIN</label>
               <div className="relative">
-                <PinInput pin={confirmPin} setPin={setConfirmPin} />
+                <PinDots pin={confirmPin} setPin={setConfirmPin} />
               </div>
               {submitted && errors.confirmPin && (
                 <p className="text-xs mt-1.5 flex items-center gap-1 text-red-500">

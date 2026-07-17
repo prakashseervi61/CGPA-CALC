@@ -3,17 +3,7 @@ import { createContext, useState, useEffect, useContext } from 'react';
 const ThemeContext = createContext();
 
 export const ThemeProvider = ({ children }) => {
-  // Get theme from localStorage or detecting system preference
-  const getInitialTheme = () => {
-    const storedTheme = localStorage.getItem('theme');
-    if (storedTheme) {
-      return storedTheme === 'dark' ? 'dark' : 'light';
-    }
-    // Default to light if no stored preference
-    return 'light';
-  };
-
-  const [theme, setTheme] = useState(getInitialTheme);
+  const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'light');
 
   // Update the DOM and localStorage when theme changes
   useEffect(() => {
@@ -37,8 +27,6 @@ export const ThemeProvider = ({ children }) => {
     </ThemeContext.Provider>
   );
 };
-
-// Custom hook to use the theme context
 export const useTheme = () => {
   const context = useContext(ThemeContext);
   if (!context) {

@@ -38,7 +38,7 @@ const AuthForm = ({ mode }) => {
   const showError = (field) => submitted && errors[field];
 
   return (
-    <div className={`auth-container ${!isLogin ? 'auth-register' : ''} auth-page-enter`}>
+    <div className={`auth-container ${!isLogin ? 'auth-register' : ''}`}>
       <div className="auth-brand-panel">
         <div className="auth-brand-content">
           <h1 className="auth-brand-title">Semora</h1>

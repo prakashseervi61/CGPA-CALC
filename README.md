@@ -100,6 +100,4 @@ src/
 4. **Track trends** — view semester-wise performance charts and grade distribution.
 5. **Set targets** — configure a target CGPA in Settings to see required future performance.
 
-## License
 
-MIT

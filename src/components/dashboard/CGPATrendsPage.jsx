@@ -116,36 +116,24 @@ export default function CGPATrendsPage() {
       </div>
 
       {/* 6 KPI Summary Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4">
+      <div className="grid grid-cols-3 gap-2 sm:gap-3 lg:gap-4">
         {[
           { label: 'Overall CGPA', value: analyticsData.overallCgpa.toFixed(2), sub: 'out of 10.0 Cumulative', icon: Award, gradient: true },
           { label: 'Target CGPA', value: analyticsData.targetCgpa.toFixed(2), sub: 'Goal to Achieve', icon: Target, gradient: true },
           { label: 'Peak Performance', value: analyticsData.highestSgpa > 0 ? analyticsData.highestSgpa.toFixed(2) : '--', sub: `Highest SGPA (${analyticsData.highestSgpa})`, icon: Zap },
           { label: 'Earned Credits', value: analyticsData.totalCumCredits, sub: 'Total Academic Credits', icon: BookOpen },
-          { label: 'Semesters', value: `${analyticsData.totalCompletedSemesters} / ${semesters.length}`, sub: 'Completed Semesters', icon: Layers }
+          { label: 'Semesters', value: `${analyticsData.totalCompletedSemesters} / ${semesters.length}`, sub: 'Completed Semesters', icon: Layers },
+          { label: 'Required GPA', value: analyticsData.requiredFutureGpa === 0 ? 'DONE' : analyticsData.requiredFutureGpa >= 10 ? 'N/A' : analyticsData.requiredFutureGpa.toFixed(2), sub: analyticsData.requiredFutureGpa === 0 ? 'Target achieved!' : analyticsData.requiredFutureGpa >= 10 ? 'Cannot reach target' : `Need avg`, icon: analyticsData.requiredFutureGpa === 0 ? Check : analyticsData.requiredFutureGpa >= 10 ? XCircle : Zap }
         ].map((kpi, idx) => (
-          <Card key={idx} className={`p-4 ${kpi.gradient ? 'bg-gradient-to-br from-primary to-primary-hover text-white shadow-md shadow-primary/15 border-primary/20' : 'bg-white dark:bg-stone-900 border-stone-200 dark:border-stone-800 shadow-sm'} relative overflow-hidden border`}>
-            <div className="flex items-center justify-between mb-2">
-              <span className={`text-xs font-black uppercase tracking-wider ${kpi.gradient ? 'text-primary-light' : 'text-stone-500'}`}>{kpi.label}</span>
-              <kpi.icon className="w-4 h-4 text-warning" />
+          <Card key={idx} className={`p-2 sm:p-3 lg:p-4 ${kpi.gradient ? 'bg-gradient-to-br from-primary to-primary-hover text-white shadow-md shadow-primary/15 border-primary/20' : idx === 5 && analyticsData.requiredFutureGpa === 0 ? 'bg-success/20 border-success/30' : idx === 5 && analyticsData.requiredFutureGpa >= 10 ? 'bg-danger/20 border-danger/30' : idx === 5 ? 'bg-primary/20 border-primary/30' : 'bg-white dark:bg-stone-900 border-stone-200 dark:border-stone-800 shadow-sm'} relative overflow-hidden border`}>
+            <div className="flex items-center justify-between mb-1 lg:mb-2">
+              <span className={`text-[9px] sm:text-[10px] lg:text-xs font-black uppercase tracking-wider truncate ${kpi.gradient ? 'text-primary-light' : 'text-stone-500'}`}>{kpi.label}</span>
+              <kpi.icon className="w-3 h-3 lg:w-4 lg:h-4 text-warning shrink-0" />
             </div>
-            <div className={`text-3xl font-black ${kpi.gradient ? 'text-white' : 'text-stone-900 dark:text-stone-100'}`}>{kpi.value}</div>
-            <p className={`text-[11px] font-semibold mt-1 ${kpi.gradient ? 'text-primary-light/80' : 'text-stone-500 dark:text-stone-400'}`}>{kpi.sub}</p>
+            <div className={`text-lg sm:text-2xl lg:text-3xl font-black ${kpi.gradient ? 'text-white' : 'text-stone-900 dark:text-stone-100'}`}>{kpi.value}</div>
+            <p className={`text-[8px] sm:text-[9px] lg:text-[11px] font-semibold mt-0.5 lg:mt-1 truncate ${kpi.gradient ? 'text-primary-light/80' : 'text-stone-500 dark:text-stone-400'}`}>{kpi.sub}</p>
           </Card>
         ))}
-        {/* KPI 3: Required Future GPA (conditional structure) */}
-        <Card className={`p-4 ${analyticsData.requiredFutureGpa === 0 ? 'bg-success/20 border-success/30' : analyticsData.requiredFutureGpa >= 10 ? 'bg-danger/20 border-danger/30' : 'bg-primary/20 border-primary/30'} border`}>
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-xs font-black uppercase tracking-wider text-stone-500 dark:text-stone-400">Required Future GPA</span>
-            {analyticsData.requiredFutureGpa === 0 ? <Check className="w-4 h-4 text-success" /> : analyticsData.requiredFutureGpa >= 10 ? <XCircle className="w-4 h-4 text-danger" /> : <Zap className="w-4 h-4 text-warning" />}
-          </div>
-          <div className="text-3xl font-black text-stone-900 dark:text-stone-100">
-            {analyticsData.requiredFutureGpa === 0 ? 'ACHIEVED!' : analyticsData.requiredFutureGpa >= 10 ? 'NOT POSSIBLE' : analyticsData.requiredFutureGpa.toFixed(2)}
-          </div>
-          <p className="text-[11px] text-stone-500 dark:text-stone-400 font-semibold mt-1">
-            {analyticsData.requiredFutureGpa === 0 ? 'Target achieved!' : analyticsData.requiredFutureGpa >= 10 ? 'Cannot reach target with remaining credits' : `Need ${analyticsData.requiredFutureGpa.toFixed(2)} avg`}
-          </p>
-        </Card>
       </div>
 
       {/* Main Chart 1: Dual Series Progression Curve (SGPA vs CGPA) */}

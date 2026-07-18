@@ -116,7 +116,7 @@ export default function CGPATrendsPage() {
       </div>
 
       {/* 6 KPI Summary Cards */}
-      <div className="grid grid-cols-3 gap-2 sm:gap-3 lg:gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 sm:gap-3 lg:gap-4">
         {[
           { label: 'Overall CGPA', value: analyticsData.overallCgpa.toFixed(2), sub: 'out of 10.0 Cumulative', icon: Award, gradient: true },
           { label: 'Target CGPA', value: analyticsData.targetCgpa.toFixed(2), sub: 'Goal to Achieve', icon: Target, gradient: true },

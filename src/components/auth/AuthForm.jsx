@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useUser } from '../../contexts/AuthContext';
 import { User, Hash, ArrowRight, Check, AlertCircle } from 'lucide-react';
 function PinDots({ pin, setPin, type = 'password' }) {
@@ -177,7 +177,7 @@ const AuthForm = ({ mode }) => {
         <div className="text-center text-sm">
           <p className="text-stone-500 dark:text-stone-400">
             {isLogin ? 'Create an account to get started ' : 'Sign in to your existing account '}
-            <a href={isLogin ? '/register' : '/login'} className="text-primary font-semibold no-underline transition-colors hover:text-primary-hover hover:underline">{isLogin ? 'Sign Up' : 'Sign In'}</a>
+            <Link to={isLogin ? '/register' : '/login'} className="text-primary font-semibold no-underline transition-colors hover:text-primary-hover hover:underline">{isLogin ? 'Sign Up' : 'Sign In'}</Link>
           </p>
         </div>
       </div>

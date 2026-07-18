@@ -60,7 +60,7 @@ export default function Sidebar({ mobileOpen, setMobileOpen }) {
                 if (setMobileOpen) setMobileOpen(false);
               }}
                className={({ isActive }) =>
-                 `w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-sm font-semibold transition-all duration-200 ${isActive ? 'bg-primary-light text-[#8B4F32] font-extrabold shadow-sm dark:bg-[#8B4F32]/20 dark:text-[#F5E6D3]' : 'text-stone-600 hover:bg-stone-100 hover:text-stone-900 dark:text-stone-400 dark:hover:bg-stone-800 dark:hover:text-stone-100'}`
+                 `w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-sm font-semibold transition-all duration-200 ${isActive ? 'bg-primary-light text-primary-hover font-extrabold shadow-sm dark:bg-primary-hover/20 dark:text-primary-light' : 'text-stone-600 hover:bg-stone-100 hover:text-stone-900 dark:text-stone-400 dark:hover:bg-stone-800 dark:hover:text-stone-100'}`
                }
             >
               <div className="p-2 rounded-xl transition-colors duration-200 shrink-0">

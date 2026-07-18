@@ -6,7 +6,7 @@ import { useData } from '../../contexts/DataContext';
 
 const GRADE_COLOR_MAP = {
   'O': '#7A9E7E',   // Muted green
-  'A+': '#C27856',  // Terracotta (primary)
+  'A+': '#6366F1',  // Indigo (primary)
   'A': '#D4A843',   // Warm amber
   'B+': '#E0976E',  // Light terracotta
   'B': '#A8A29E',   // Stone

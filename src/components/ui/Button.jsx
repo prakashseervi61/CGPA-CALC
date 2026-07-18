@@ -20,8 +20,8 @@ export default function Button({
   };
 
   const variantStyles = {
-    primary: 'bg-[#C27856] hover:bg-[#A8623E] text-white shadow-md shadow-[#C27856]/20 hover:shadow-[#C27856]/35',
-    secondary: 'bg-[#F5E6D3] hover:bg-[#EBD5BE] text-[#8B4F32] font-extrabold',
+    primary: 'bg-primary hover:bg-primary-hover text-white shadow-md shadow-primary/20 hover:shadow-primary/35',
+    secondary: 'bg-primary-light hover:bg-primary-light/60 text-primary-hover font-extrabold',
     pastelGreen: 'bg-[#D4E8D6] hover:bg-[#C2DBC5] text-[#4A6E4D] font-extrabold',
     outline: 'border border-stone-200 bg-white hover:bg-stone-50 text-stone-700 font-bold',
   };

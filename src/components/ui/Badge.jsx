@@ -9,7 +9,7 @@ export default function Badge({
   ...props
 }) {
   const variantStyles = {
-    purple: 'bg-[#F5E6D3] text-[#8B4F32]',
+    purple: 'bg-primary-light text-primary-hover',
     green: 'bg-[#D4E8D6] text-[#4A6E4D]',
     red: 'bg-rose-100 text-rose-800',
     slate: 'bg-stone-100 text-stone-800',

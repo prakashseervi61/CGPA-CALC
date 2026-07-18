@@ -40,7 +40,7 @@ export default function HelpPage() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-2 border-b border-slate-100 dark:border-stone-700">
         <div>
           <h2 className="text-2xl font-black text-slate-900 dark:text-stone-50 flex items-center gap-2.5">
-            <div className="w-9 h-9 rounded-xl bg-[#F5E6D3] text-[#C27856] flex items-center justify-center shrink-0">
+            <div className="w-9 h-9 rounded-xl bg-primary-light text-primary flex items-center justify-center shrink-0">
               <HelpCircle className="w-5 h-5" />
             </div>
             Help & Support Guide
@@ -59,7 +59,7 @@ export default function HelpPage() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {/* Step 1 */}
         <Card className="p-4 border border-slate-100 dark:border-stone-700 bg-white dark:bg-stone-900 shadow-sm space-y-2">
-          <div className="w-8 h-8 rounded-xl bg-[#F5E6D3] text-[#C27856] flex items-center justify-center font-black text-sm">
+          <div className="w-8 h-8 rounded-xl bg-primary-light text-primary flex items-center justify-center font-black text-sm">
             1
           </div>
           <h3 className="font-extrabold text-sm text-slate-900 dark:text-stone-50">Select Active Semester</h3>
@@ -94,7 +94,7 @@ export default function HelpPage() {
       {/* FAQ SECTION */}
       <Card className="p-6 border border-slate-100 shadow-sm space-y-4">
         <div className="flex items-center gap-2.5 pb-3 border-b border-slate-100 dark:border-stone-700">
-          <div className="w-8 h-8 rounded-xl bg-[#F5E6D3] text-[#C27856] flex items-center justify-center shrink-0">
+          <div className="w-8 h-8 rounded-xl bg-primary-light text-primary flex items-center justify-center shrink-0">
             <Lightbulb className="w-4 h-4" />
           </div>
           <div>
@@ -114,11 +114,11 @@ export default function HelpPage() {
                 <button
                   type="button"
                   onClick={() => setOpenFaq(isOpen ? -1 : idx)}
-                  className="w-full flex items-center justify-between p-4 text-left font-black text-sm text-slate-800 dark:text-stone-100 hover:text-[#C27856] transition-colors"
+                  className="w-full flex items-center justify-between p-4 text-left font-black text-sm text-slate-800 dark:text-stone-100 hover:text-primary transition-colors"
                 >
                   <span>{faq.q}</span>
                   {isOpen ? (
-                    <ChevronUp className="w-4 h-4 text-[#C27856] shrink-0" />
+                    <ChevronUp className="w-4 h-4 text-primary shrink-0" />
                   ) : (
                     <ChevronDown className="w-4 h-4 text-slate-500 shrink-0" />
                   )}
@@ -168,7 +168,7 @@ export default function HelpPage() {
                 <td className="py-2.5 px-3 text-right font-bold text-slate-700 dark:text-stone-300">Outstanding</td>
               </tr>
               <tr className="hover:bg-slate-50 dark:hover:bg-stone-800">
-                <td className="py-2.5 px-3 font-black text-[#C27856]">A+</td>
+                <td className="py-2.5 px-3 font-black text-primary">A+</td>
                 <td className="py-2.5 px-3 text-center font-black text-slate-900 dark:text-stone-100">9.0</td>
                 <td className="py-2.5 px-3 text-center text-slate-600 dark:text-stone-400">81 – 90%</td>
                 <td className="py-2.5 px-3 text-right font-bold text-slate-700 dark:text-stone-300">Excellent</td>

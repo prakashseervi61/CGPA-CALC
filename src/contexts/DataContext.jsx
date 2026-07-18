@@ -28,7 +28,7 @@ export const DataProvider = ({ children }) => {
 
   const [gradeScaleRules, setGradeScaleRules] = useState([
     { grade: 'O', point: 10, range: '91–100%', bg: 'bg-[#D4E8D6] text-[#4A6E4D] border-[#B8D4BB]' },
-    { grade: 'A+', point: 9, range: '81–90%', bg: 'bg-[#F5E6D3] text-[#8B4F32] border-[#EBD5BE]' },
+    { grade: 'A+', point: 9, range: '81–90%', bg: 'bg-primary-light text-primary-hover border-primary-light/60' },
     { grade: 'A', point: 8, range: '71–80%', bg: 'bg-amber-100 text-amber-800 border-amber-200' },
     { grade: 'B+', point: 7, range: '61–70%', bg: 'bg-orange-100 text-orange-800 border-orange-200' },
     { grade: 'B', point: 6, range: '56–60%', bg: 'bg-stone-200 text-stone-800 border-stone-300' },

@@ -4,10 +4,10 @@ import Badge from '../ui/Badge';
 import { useData } from '../../contexts/DataContext';
 
 const RING_COLORS = [
-  'bg-[#F5E6D3] text-[#8B4F32]',
+  'bg-primary-light text-primary-hover',
   'bg-[#D4E8D6] text-[#4A6E4D]',
   'bg-amber-100 text-amber-800',
-  'bg-[#F5E6D3] text-[#C27856]',
+  'bg-primary-light text-primary',
   'bg-rose-100 text-rose-800',
 ];
 
@@ -42,7 +42,7 @@ export default function SubjectTable() {
             aria-label="Select semester"
             value={currentSemesterId}
             onChange={(e) => handleSetCurrentSemester(Number(e.target.value))}
-            className="appearance-none bg-stone-100/70 dark:bg-stone-700/50 border border-stone-200/80 dark:border-stone-600/80 rounded-xl px-3 py-1.5 pr-7 text-xs font-extrabold text-stone-800 dark:text-stone-100 hover:border-[#C27856]/50 hover:bg-[#F5E6D3]/40 dark:hover:bg-[#C27856]/20 transition-all duration-200 cursor-pointer focus:outline-none"
+            className="appearance-none bg-stone-100/70 dark:bg-stone-700/50 border border-stone-200/80 dark:border-stone-600/80 rounded-xl px-3 py-1.5 pr-7 text-xs font-extrabold text-stone-800 dark:text-stone-100 hover:border-primary/50 hover:bg-primary-light/40 dark:hover:bg-primary/20 transition-all duration-200 cursor-pointer focus:outline-none"
           >
             {semesters.map(sem => (
               <option key={sem.id} value={sem.id}>
@@ -168,7 +168,7 @@ export default function SubjectTable() {
                           aria-label={`Grade for ${course.name}`}
                           className={`px-3.5 py-1.5 pr-7 rounded-xl font-black text-sm border transition-all cursor-pointer focus:outline-none appearance-none
                             ${course.grade
-                              ? 'bg-[#F5E6D3] text-[#8B4F32] border-[#EBD5BE] shadow-xs dark:bg-[#8B4F32]/20 dark:text-[#F5E6D3] dark:border-[#8B4F32]/40'
+                              ? 'bg-primary-light text-primary-hover border-primary-light/60 shadow-xs dark:bg-primary-hover/20 dark:text-primary-light dark:border-primary-hover/40'
                               : 'bg-slate-100 text-slate-700 border-slate-200/80 hover:bg-slate-200/60 dark:bg-stone-700 dark:text-stone-300 dark:border-stone-600 dark:hover:bg-stone-600'
                             }`}
                         >
@@ -235,7 +235,7 @@ export default function SubjectTable() {
                       aria-label={`Grade for ${course.name}`}
                       className={`w-full px-4 py-3 pr-9 rounded-xl font-black text-sm border-2 transition-all appearance-none focus:outline-none
                         ${course.grade
-                          ? 'bg-[#F5E6D3] text-[#8B4F32] border-[#EBD5BE] dark:bg-[#8B4F32]/20 dark:text-[#F5E6D3] dark:border-[#8B4F32]/40'
+                          ? 'bg-primary-light text-primary-hover border-primary-light/60 dark:bg-primary-hover/20 dark:text-primary-light dark:border-primary-hover/40'
                           : 'bg-stone-50 text-slate-700 border-stone-200 hover:border-stone-300 dark:bg-stone-800 dark:text-stone-300 dark:border-stone-600 dark:hover:border-stone-500'
                         }`}
                     >

@@ -33,7 +33,7 @@ export default function CGPASummary() {
   const isTargetAchieved = currentCgpa >= targetCgpa;
 
   return (
-    <div className="bg-gradient-to-br from-[#C27856] via-[#A8623E] to-[#8B4F32] text-white rounded-[24px] p-5 shadow-lg shadow-[#C27856]/20 relative overflow-hidden select-none border border-[#D4956F]/20 shrink-0">
+    <div className="bg-gradient-to-br from-primary via-primary-hover to-[#4338CA] text-white rounded-[24px] p-5 shadow-lg shadow-primary/20 relative overflow-hidden select-none border border-white/10 shrink-0">
       {/* Decorative Glow Elements */}
       <div className="absolute -top-10 -right-10 w-36 h-36 bg-white/10 rounded-full blur-xl pointer-events-none"></div>
 

@@ -150,8 +150,8 @@ export default function CGPATrendsPage() {
             <AreaChart data={analyticsData.chartData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
               <defs>
                 <linearGradient id="cgpaGlow" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#C27856" stopOpacity={0.35} />
-                  <stop offset="95%" stopColor="#C27856" stopOpacity={0.0} />
+                  <stop offset="5%" stopColor="#6366F1" stopOpacity={0.35} />
+                  <stop offset="95%" stopColor="#6366F1" stopOpacity={0.0} />
                 </linearGradient>
                 <linearGradient id="sgpaGlow" x1="0" y1="0" x2="0" y2="1">
                   <stop offset="5%" stopColor="#7A9E7E" stopOpacity={0.35} />
@@ -202,11 +202,11 @@ export default function CGPATrendsPage() {
               <Area
                 type="monotone"
                 dataKey="cgpa"
-                stroke="#C27856"
+                stroke="#6366F1"
                 strokeWidth={2.5}
                 fillOpacity={1}
                 fill="url(#cgpaGlow)"
-                dot={{ r: 4, fill: '#C27856', strokeWidth: 1.5, stroke: '#fff' }}
+                dot={{ r: 4, fill: '#6366F1', strokeWidth: 1.5, stroke: '#fff' }}
                 activeDot={{ r: 6 }}
               />
             </AreaChart>
@@ -257,7 +257,7 @@ export default function CGPATrendsPage() {
                   contentStyle={{ backgroundColor: '#292524', borderRadius: '10px', color: '#F5F5F4', fontSize: '11px', fontWeight: 'bold', border: 'none' }}
                   formatter={(val) => [`${val} Credits`, 'Credit Load']}
                 />
-                <Bar dataKey="credits" fill="#C27856" radius={[6, 6, 0, 0]} />
+                <Bar dataKey="credits" fill="#6366F1" radius={[6, 6, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
           </div>
@@ -296,7 +296,7 @@ export default function CGPATrendsPage() {
                     <td className="py-2.5 px-3 text-center font-black text-slate-900 dark:text-stone-50">
                       {sem.sgpa > 0 ? sem.sgpa.toFixed(2) : '--'}
                     </td>
-                    <td className="py-2.5 px-3 text-center font-black text-[#C27856]">
+                    <td className="py-2.5 px-3 text-center font-black text-primary">
                       {sem.cgpa > 0 ? sem.cgpa.toFixed(2) : '--'}
                     </td>
                     <td className="py-2.5 px-3 text-right">

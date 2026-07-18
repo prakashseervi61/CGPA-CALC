@@ -73,7 +73,7 @@ export default function GradeScale() {
                     type="number"
                     value={item.point}
                     onChange={(e) => handlePointChange(idx, e.target.value)}
-                    className="w-12 px-1.5 py-0.5 rounded border border-stone-300 text-xs font-bold text-center bg-white text-slate-900 focus:outline-none focus:border-[#C27856]"
+                    className="w-12 px-1.5 py-0.5 rounded border border-stone-300 text-xs font-bold text-center bg-white text-slate-900 focus:outline-none focus:border-primary"
                     min="0"
                     max="10"
                   />

@@ -67,7 +67,7 @@ export default function SettingsPage() {
       <div className="flex items-center justify-between pb-2 border-b border-slate-100 dark:border-stone-700 dark:border-stone-700">
         <div>
           <h2 className="text-2xl font-black text-slate-900 dark:text-stone-50 flex items-center gap-2.5">
-            <div className="w-9 h-9 rounded-xl bg-[#F5E6D3] text-[#C27856] flex items-center justify-center shrink-0">
+            <div className="w-9 h-9 rounded-xl bg-primary-light text-primary flex items-center justify-center shrink-0">
               <Settings className="w-5 h-5" />
             </div>
             Settings & Preferences
@@ -89,7 +89,7 @@ export default function SettingsPage() {
       <Card className="p-6 border border-slate-100 dark:border-stone-700 shadow-sm space-y-4">
         <div className="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-stone-700">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-xl bg-[#F5E6D3] text-[#C27856] flex items-center justify-center shrink-0">
+            <div className="w-8 h-8 rounded-xl bg-primary-light text-primary flex items-center justify-center shrink-0">
               <User className="w-4 h-4" />
             </div>
             <div>
@@ -136,7 +136,7 @@ export default function SettingsPage() {
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="Enter your name"
-              className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-stone-600 text-sm font-bold text-slate-800 dark:text-stone-100 bg-slate-50/50 dark:bg-stone-800/50 focus:bg-white dark:focus:bg-stone-700 focus:border-[#C27856] focus:outline-none transition-all disabled:bg-slate-100/70 dark:disabled:bg-stone-800 disabled:text-slate-600 dark:disabled:text-stone-500 disabled:border-slate-200 dark:disabled:border-stone-700 disabled:cursor-not-allowed"
+              className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-stone-600 text-sm font-bold text-slate-800 dark:text-stone-100 bg-slate-50/50 dark:bg-stone-800/50 focus:bg-white dark:focus:bg-stone-700 focus:border-primary focus:outline-none transition-all disabled:bg-slate-100/70 dark:disabled:bg-stone-800 disabled:text-slate-600 dark:disabled:text-stone-500 disabled:border-slate-200 dark:disabled:border-stone-700 disabled:cursor-not-allowed"
             />
           </div>
 
@@ -151,7 +151,7 @@ export default function SettingsPage() {
               value={studentId}
               onChange={(e) => setStudentId(e.target.value)}
               placeholder="Enter your reg no"
-              className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-stone-600 text-sm font-bold text-slate-800 dark:text-stone-100 bg-slate-50/50 dark:bg-stone-800/50 focus:bg-white dark:focus:bg-stone-700 focus:border-[#C27856] focus:outline-none transition-all disabled:bg-slate-100/70 dark:disabled:bg-stone-800 disabled:text-slate-600 dark:disabled:text-stone-500 disabled:border-slate-200 dark:disabled:border-stone-700 disabled:cursor-not-allowed"
+              className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-stone-600 text-sm font-bold text-slate-800 dark:text-stone-100 bg-slate-50/50 dark:bg-stone-800/50 focus:bg-white dark:focus:bg-stone-700 focus:border-primary focus:outline-none transition-all disabled:bg-slate-100/70 dark:disabled:bg-stone-800 disabled:text-slate-600 dark:disabled:text-stone-500 disabled:border-slate-200 dark:disabled:border-stone-700 disabled:cursor-not-allowed"
             />
           </div>
 
@@ -164,7 +164,7 @@ export default function SettingsPage() {
                 type="text"
                 value={targetCgpa}
                 onChange={(e) => setTargetCgpa(e.target.value)}
-                className="w-24 px-3 py-1.5 rounded-lg border border-slate-200 dark:border-stone-700 text-sm font-black text-slate-900 dark:text-stone-100 bg-white dark:bg-stone-800 focus:outline-none focus:border-[#C27856]"
+                className="w-24 px-3 py-1.5 rounded-lg border border-slate-200 dark:border-stone-700 text-sm font-black text-slate-900 dark:text-stone-100 bg-white dark:bg-stone-800 focus:outline-none focus:border-primary"
               />
               <span className="text-xs text-slate-500 dark:text-stone-400 font-bold">out of 10.0</span>
             </div>
@@ -234,7 +234,7 @@ export default function SettingsPage() {
               value={currentPin}
               onChange={(e) => setCurrentPin(e.target.value)}
               placeholder="••••"
-              className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-stone-600 text-sm font-black text-[#C27856] bg-slate-50/50 dark:bg-stone-800/50 focus:bg-white dark:focus:bg-stone-700 focus:border-[#C27856] focus:outline-none transition-all disabled:bg-slate-100/70 dark:disabled:bg-stone-800 disabled:text-slate-400 dark:disabled:text-stone-600 disabled:border-slate-200 dark:disabled:border-stone-700 disabled:cursor-not-allowed"
+              className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-stone-600 text-sm font-black text-primary bg-slate-50/50 dark:bg-stone-800/50 focus:bg-white dark:focus:bg-stone-700 focus:border-primary focus:outline-none transition-all disabled:bg-slate-100/70 dark:disabled:bg-stone-800 disabled:text-slate-400 dark:disabled:text-stone-600 disabled:border-slate-200 dark:disabled:border-stone-700 disabled:cursor-not-allowed"
             />
           </div>
 
@@ -252,7 +252,7 @@ export default function SettingsPage() {
               value={newPin}
               onChange={(e) => setNewPin(e.target.value)}
               placeholder="••••"
-              className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-stone-600 text-sm font-black text-[#C27856] bg-slate-50/50 dark:bg-stone-800/50 focus:bg-white dark:focus:bg-stone-700 focus:border-[#C27856] focus:outline-none transition-all disabled:bg-slate-100/70 dark:disabled:bg-stone-800 disabled:text-slate-400 dark:disabled:text-stone-600 disabled:border-slate-200 dark:disabled:border-stone-700 disabled:cursor-not-allowed"
+              className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-stone-600 text-sm font-black text-primary bg-slate-50/50 dark:bg-stone-800/50 focus:bg-white dark:focus:bg-stone-700 focus:border-primary focus:outline-none transition-all disabled:bg-slate-100/70 dark:disabled:bg-stone-800 disabled:text-slate-400 dark:disabled:text-stone-600 disabled:border-slate-200 dark:disabled:border-stone-700 disabled:cursor-not-allowed"
             />
           </div>
 

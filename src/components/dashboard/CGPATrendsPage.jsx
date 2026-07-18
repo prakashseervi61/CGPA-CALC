@@ -127,11 +127,11 @@ export default function CGPATrendsPage() {
         ].map((kpi, idx) => (
           <Card key={idx} className={`p-2 sm:p-3 lg:p-4 ${kpi.gradient ? 'bg-gradient-to-br from-primary to-primary-hover text-white shadow-md shadow-primary/15 border-primary/20' : idx === 5 && analyticsData.requiredFutureGpa === 0 ? 'bg-success/20 border-success/30' : idx === 5 && analyticsData.requiredFutureGpa >= 10 ? 'bg-danger/20 border-danger/30' : idx === 5 ? 'bg-primary/20 border-primary/30' : 'bg-white dark:bg-stone-900 border-stone-200 dark:border-stone-800 shadow-sm'} relative overflow-hidden border`}>
             <div className="flex items-center justify-between mb-1 lg:mb-2">
-              <span className={`text-[9px] sm:text-[10px] lg:text-xs font-black uppercase tracking-wider truncate ${kpi.gradient ? 'text-primary-light' : 'text-stone-500'}`}>{kpi.label}</span>
+              <span className={`text-[9px] sm:text-[10px] lg:text-xs font-black uppercase tracking-wider truncate ${kpi.gradient ? 'text-white/80' : 'text-stone-500'}`}>{kpi.label}</span>
               <kpi.icon className="w-3 h-3 lg:w-4 lg:h-4 text-warning shrink-0" />
             </div>
             <div className={`text-lg sm:text-2xl lg:text-3xl font-black ${kpi.gradient ? 'text-white' : 'text-stone-900 dark:text-stone-100'}`}>{kpi.value}</div>
-            <p className={`text-[8px] sm:text-[9px] lg:text-[11px] font-semibold mt-0.5 lg:mt-1 truncate ${kpi.gradient ? 'text-primary-light/80' : 'text-stone-500 dark:text-stone-400'}`}>{kpi.sub}</p>
+            <p className={`text-[8px] sm:text-[9px] lg:text-[11px] font-semibold mt-0.5 lg:mt-1 truncate ${kpi.gradient ? 'text-white/60' : 'text-stone-500 dark:text-stone-400'}`}>{kpi.sub}</p>
           </Card>
         ))}
       </div>

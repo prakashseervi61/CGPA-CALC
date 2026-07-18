@@ -164,7 +164,7 @@ export default function SettingsPage() {
                 type="text"
                 value={targetCgpa}
                 onChange={(e) => setTargetCgpa(e.target.value)}
-                className="w-24 px-3 py-1.5 rounded-lg border border-slate-200 text-sm font-black text-slate-900 focus:outline-none focus:border-[#C27856]"
+                className="w-24 px-3 py-1.5 rounded-lg border border-slate-200 dark:border-stone-700 text-sm font-black text-slate-900 dark:text-stone-100 bg-white dark:bg-stone-800 focus:outline-none focus:border-[#C27856]"
               />
               <span className="text-xs text-slate-500 dark:text-stone-400 font-bold">out of 10.0</span>
             </div>

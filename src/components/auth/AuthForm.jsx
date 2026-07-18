@@ -100,6 +100,7 @@ const AuthForm = ({ mode }) => {
 
       <div className={`w-full max-w-[420px] bg-white/95 dark:bg-stone-900/95 backdrop-blur-xl border border-white/20 dark:border-stone-800/20 rounded-[1.25rem] shadow-lg relative z-10 overflow-y-auto p-8 animate-[auth-slide-in_0.4s_cubic-bezier(0.16,1,0.3,1)_both] lg:w-[55%] lg:max-w-none lg:p-12 lg:flex lg:flex-col lg:justify-center ${!isLogin ? 'lg:rounded-[1.5rem_0_0_1.5rem]' : 'lg:rounded-[0_1.5rem_1.5rem_0]'}`}>
         <div className={`text-center mb-6 lg:text-left`}>
+          <h1 className="text-2xl font-extrabold text-stone-900 dark:text-stone-50 tracking-tight lg:hidden mb-4">Semora</h1>
           <h2 className="text-xl font-bold text-stone-900 dark:text-stone-50">{isLogin ? 'Welcome back' : 'Create account'}</h2>
           <p className="text-sm text-stone-500 dark:text-stone-400 mt-1">{isLogin ? 'Sign in to access your dashboard' : 'Start tracking your academic progress'}</p>
         </div>

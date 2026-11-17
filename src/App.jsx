@@ -1,4 +1,4 @@
-import { useState, lazy, Suspense } from 'react';
+import { lazy, Suspense, useState } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import Sidebar from './components/layout/Sidebar';
 import Navbar from './components/layout/Navbar';
@@ -14,28 +14,28 @@ const CGPATrendsPage = lazy(() => import('./components/dashboard/CGPATrendsPage'
 function DashboardLayout({ children, aside }) {
   const [mobileOpen, setMobileOpen] = useState(false);
   return (
-    <div className="flex h-screen overflow-hidden">
+    <div className="flex h-screen overflow-hidden bg-background text-text-primary">
       <Sidebar mobileOpen={mobileOpen} setMobileOpen={setMobileOpen} />
-      <div className="flex-1 flex flex-col min-w-0 h-screen overflow-hidden bg-stone-50 dark:bg-stone-950 text-stone-900 dark:text-stone-100">
+      <div className="flex-1 flex flex-col min-w-0 h-screen overflow-hidden">
         <Navbar setMobileOpen={setMobileOpen} />
         <div className="flex-1 min-h-0 overflow-y-auto lg:overflow-hidden lg:flex lg:flex-row">
           {/* Mobile: single scrollable column */}
-          <div className="lg:hidden p-3 space-y-4">
+          <div className="lg:hidden p-4 space-y-4">
             {children}
             {aside}
           </div>
           {/* Desktop: side-by-side */}
           {aside ? (
             <div className="hidden lg:flex lg:flex-1 lg:flex-row lg:min-h-0 lg:overflow-hidden">
-              <main className="flex-1 overflow-y-auto p-6 xl:p-8 bg-stone-50 dark:bg-stone-950">
+              <main className="flex-1 overflow-y-auto p-6 xl:p-8 bg-background">
                 {children}
               </main>
-              <aside className="w-[280px] xl:w-[320px] shrink-0 p-6 space-y-3 select-none bg-white dark:bg-stone-900 border-l border-stone-200/80 dark:border-stone-800/80 flex flex-col min-h-0 overflow-y-auto">
+              <aside className="w-[280px] xl:w-[320px] shrink-0 p-6 space-y-4 select-none bg-surface dark:bg-surface-variant border-l border-border dark:border-border-strong flex flex-col min-h-0 overflow-y-auto">
                 {aside}
               </aside>
             </div>
           ) : (
-            <div className="hidden lg:block flex-1 overflow-y-auto p-6 xl:p-8 bg-stone-50 dark:bg-stone-950">
+            <div className="hidden lg:block flex-1 overflow-y-auto p-6 xl:p-8 bg-background">
               {children}
             </div>
           )}
@@ -55,7 +55,7 @@ function App() {
       } />
       <Route path="/trends" element={
         <DashboardLayout>
-          <Suspense fallback={<div className="flex items-center justify-center h-64 text-stone-500 dark:text-stone-400">Loading...</div>}>
+          <Suspense fallback={<div className="flex items-center justify-center h-64 text-text-tertiary">Loading…</div>}>
             <CGPATrendsPage />
           </Suspense>
         </DashboardLayout>

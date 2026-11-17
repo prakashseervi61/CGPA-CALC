@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Award, Edit3, Check } from 'lucide-react';
 import Card from '../ui/Card';
 import Button from '../ui/Button';
+import Input from '../ui/Input';
 import { useData } from '../../contexts/DataContext';
 
 export default function GradeScale() {
@@ -11,7 +12,7 @@ export default function GradeScale() {
 
   const handlePointChange = (idx, newPoint) => {
     const updated = [...scales];
-    updated[idx] = { ...updated[idx], point: Number(newPoint) };
+    updated[idx] = { ...updated[idx], point: Math.max(0, Math.min(10, Number(newPoint) || 0)) };
     setScales(updated);
   };
 
@@ -21,18 +22,16 @@ export default function GradeScale() {
   };
 
   return (
-    <Card className="shadow-sm border border-slate-100 dark:border-stone-700 mt-6">
+    <Card variant="elevated" className="mt-4">
       {/* Header */}
-      <div className="flex items-center justify-between mb-5 pb-4 border-b border-slate-100 dark:border-stone-700">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-2xl bg-[#D4E8D6] text-[#4A6E4D] flex items-center justify-center shrink-0">
-            <Award className="w-5 h-5" />
+      <div className="flex items-center justify-between mb-4 pb-3 border-b border-border dark:border-border-strong">
+        <div className="flex items-center gap-2.5">
+          <div className="w-9 h-9 rounded-lg bg-success-light text-success-text flex items-center justify-center shrink-0">
+            <Award className="w-4.5 h-4.5" />
           </div>
           <div>
-            <h3 className="text-lg font-extrabold text-slate-900 dark:text-stone-50">
-              Grade Scale
-            </h3>
-              <p className="text-xs text-slate-500 dark:text-stone-400 font-semibold">
+            <h3 className="font-extrabold text-sm text-text-primary leading-tight">Grade Scale</h3>
+            <p className="text-[10px] font-extrabold text-text-tertiary uppercase tracking-wider">
               Standard 10-point academic grading evaluation rules
             </p>
           </div>
@@ -43,48 +42,44 @@ export default function GradeScale() {
           size="sm"
           icon={isEditing ? Check : Edit3}
           onClick={isEditing ? saveScales : () => setIsEditing(true)}
-          className="rounded-2xl"
         >
           {isEditing ? 'Save Scale' : 'Edit Grade Scale'}
         </Button>
       </div>
 
-      {/* Grade Chips Flex Container */}
-      <div className="flex flex-wrap gap-3">
+      {/* Grade Scale Grid */}
+      <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-2">
         {scales.map((item, idx) => (
           <div
             key={item.grade}
-            className={`
-              flex items-center gap-2.5 px-3.5 py-2.5 rounded-2xl border transition-all duration-200
-              ${item.bg || 'bg-slate-100 text-slate-800 border-slate-200'}
-              shadow-xs
-            `}
+            className={`flex flex-col items-center gap-1.5 px-2.5 py-2.5 rounded-lg border transition-all duration-200 ${item.bg || 'bg-surface dark:bg-surface-variant border-border dark:border-border-strong'}`}
           >
-            {/* Grade Letter Circle */}
-            <span className="w-7 h-7 rounded-xl bg-white/90 flex items-center justify-center font-black text-xs shadow-2xs">
+            {/* Grade Letter */}
+            <span className="w-7 h-7 rounded-lg bg-white/60 dark:bg-white/10 flex items-center justify-center shrink-0 font-extrabold text-xs text-text-primary">
               {item.grade}
             </span>
-
             {/* Points & Range */}
-            <div className="flex flex-col">
+            <div className="text-center">
               {isEditing ? (
-                <div className="flex items-center gap-1">
-                  <input
+                <div className="flex items-center justify-center gap-1">
+                  <Input
+                    id={`grade-point-${item.grade}`}
                     type="number"
                     value={item.point}
                     onChange={(e) => handlePointChange(idx, e.target.value)}
-                    className="w-12 px-1.5 py-0.5 rounded border border-stone-300 text-xs font-bold text-center bg-white text-slate-900 focus:outline-none focus:border-primary"
-                    min="0"
-                    max="10"
+                    inputMode="numeric"
+                    maxLength="2"
+                    className="w-10 py-0 text-[10px] font-extrabold text-center border-none focus:ring-0 focus:border-transparent bg-transparent"
+                    label=""
                   />
-                  <span className="text-[11px] font-bold">Pts</span>
+                  <span className="text-[9px] font-extrabold text-text-tertiary">Pts</span>
                 </div>
               ) : (
-                <span className="text-xs font-black tracking-tight">
-                  {item.point} {item.point === 1 ? 'Point' : 'Points'}
+                <span className="text-[10px] font-black text-text-primary">
+                  {item.point}
                 </span>
               )}
-              <span className="text-[10px] opacity-80 font-bold leading-tight">
+              <span className="text-[9px] font-extrabold text-text-tertiary uppercase tracking-wider">
                 {item.range}
               </span>
             </div>

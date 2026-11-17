@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import {
-  Settings, User, KeyRound, Database, RotateCcw, Check, Edit2, X
+  Settings, User, KeyRound, Database, RotateCcw, Check, Edit2, X,
 } from 'lucide-react';
 import Card from '../ui/Card';
 import Button from '../ui/Button';
 import Badge from '../ui/Badge';
+import Input from '../ui/Input';
 import { useData } from '../../contexts/DataContext';
 
 const PROFILE_KEY = 'cgpa_app_profile';
@@ -30,7 +31,7 @@ export default function SettingsPage() {
   const profile = loadProfile();
   const [name, setName] = useState(profile.name || '');
   const [studentId, setStudentId] = useState(profile.studentId || '');
-  const [targetCgpa, setTargetCgpa] = useState(profile.targetCgpa || '9.00');
+  const [targetCgpa, setTargetCgpa] = useState(profile.targetCgpa?.toString() || '9.00');
   const [savedNotice, setSavedNotice] = useState(false);
 
   // PIN change state
@@ -61,235 +62,207 @@ export default function SettingsPage() {
   };
 
   return (
-    <div className="space-y-6 max-w-4xl select-none duration-200">
+    <div className="space-y-6 max-w-4xl select-none">
       {/* Page Header */}
-      <div className="flex items-center justify-between pb-2 border-b border-slate-100 dark:border-stone-700 dark:border-stone-700">
+      <div className="flex items-center justify-between pb-3 border-b border-border dark:border-border-strong">
         <div>
-          <h2 className="text-2xl font-black text-slate-900 dark:text-stone-50 flex items-center gap-2.5">
-            <div className="w-9 h-9 rounded-xl bg-primary-light text-primary flex items-center justify-center shrink-0">
-              <Settings className="w-5 h-5" />
+          <h2 className="text-xl font-black text-text-primary flex items-center gap-2.5">
+            <div className="w-8 h-8 rounded-lg bg-primary-light text-primary flex items-center justify-center shrink-0">
+              <Settings className="w-4 h-4" />
             </div>
             Settings & Preferences
           </h2>
-          <p className="text-xs text-slate-500 dark:text-stone-400 font-semibold mt-1">
-            Manage student profile info, 4-digit security PIN, target CGPA goals & data exports
+          <p className="text-[10px] font-extrabold text-text-tertiary uppercase tracking-wider mt-0.5">
+            Manage student profile, PIN, target CGPA & data exports
           </p>
         </div>
 
         {savedNotice && (
-          <Badge variant="green" size="md" className="animate-in fade-in">
-            ✓ Profile Saved!
+          <Badge variant="success" size="sm" className="animate-[fade-in_200ms_ease-out_forwards]">
+            ✓ Profile Saved
           </Badge>
         )}
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-      {/* SECTION 1: Student Profile Information with Edit / Save Toggle */}
-      <Card className="p-6 border border-slate-100 dark:border-stone-700 shadow-sm space-y-4">
-        <div className="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-stone-700">
-          <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-xl bg-primary-light text-primary flex items-center justify-center shrink-0">
-              <User className="w-4 h-4" />
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+        {/* SECTION 1: Student Profile */}
+        <Card variant="elevated" className="col-span-1 lg:col-span-1">
+          <div className="flex items-center justify-between pb-3 border-b border-border dark:border-border-strong">
+            <div className="flex items-center gap-2.5">
+              <div className="w-8 h-8 rounded-lg bg-primary-light text-primary flex items-center justify-center shrink-0">
+                <User className="w-4 h-4" />
+              </div>
+              <div>
+                <h3 className="font-extrabold text-sm text-text-primary">Student Profile</h3>
+                <p className="text-[10px] font-extrabold text-text-tertiary uppercase tracking-wider">
+                  Display name & registration number
+                </p>
+              </div>
             </div>
-            <div>
-              <h3 className="text-base font-extrabold text-slate-900 dark:text-stone-50">Student Profile</h3>
-              <p className="text-xs text-slate-500 dark:text-stone-500 font-semibold">Display name & registration number</p>
-            </div>
+
+            {!isEditingProfile ? (
+              <Button variant="outline" size="sm" icon={Edit2} onClick={() => setIsEditingProfile(true)}>
+                Edit Profile
+              </Button>
+            ) : (
+              <button
+                type="button"
+                onClick={() => {
+                  setIsEditingProfile(false);
+                  setName(profile.name || '');
+                  setStudentId(profile.studentId || '');
+                  setTargetCgpa(profile.targetCgpa?.toString() || '9.00');
+                }}
+                className="text-xs font-extrabold text-text-tertiary hover:text-text-primary flex items-center gap-1 px-2 py-1 rounded-lg hover:bg-stone-50 dark:hover:bg-stone-800 transition-colors"
+              >
+                <X className="w-3.5 h-3.5" /> Cancel
+              </button>
+            )}
           </div>
 
-          {!isEditingProfile ? (
-            <Button
-              type="button"
-              variant="secondary"
-              size="sm"
-              icon={Edit2}
-              onClick={() => setIsEditingProfile(true)}
-            >
-              Edit Profile
-            </Button>
-          ) : (
-            <button
-              type="button"
-              onClick={() => {
-                setIsEditingProfile(false);
-                setName(profile.name || '');
-                setStudentId(profile.studentId || '');
-                setTargetCgpa(profile.targetCgpa?.toString() || '9.00');
-              }}
-              className="text-xs font-bold text-slate-500 hover:text-slate-600 flex items-center gap-1 transition-colors px-2 py-1 rounded-lg hover:bg-slate-100"
-            >
-              <X className="w-3.5 h-3.5" /> Cancel
-            </button>
-          )}
-        </div>
-
-        <form onSubmit={handleProfileSave} className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div>
-            <label className="block text-xs font-black uppercase text-slate-500 dark:text-stone-500 mb-1.5 tracking-wider">
-              Student Name
-            </label>
-            <input
-              type="text"
-              required
-              disabled={!isEditingProfile}
+          <form onSubmit={handleProfileSave} className="space-y-4">
+            <Input
+              id="profile-name"
+              label="Student Name"
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="Enter your name"
-              className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-stone-600 text-sm font-bold text-slate-800 dark:text-stone-100 bg-slate-50/50 dark:bg-stone-800/50 focus:bg-white dark:focus:bg-stone-700 focus:border-primary focus:outline-none transition-all disabled:bg-slate-100/70 dark:disabled:bg-stone-800 disabled:text-slate-600 dark:disabled:text-stone-500 disabled:border-slate-200 dark:disabled:border-stone-700 disabled:cursor-not-allowed"
-            />
-          </div>
-
-          <div>
-            <label className="block text-xs font-black uppercase text-slate-500 dark:text-stone-500 mb-1.5 tracking-wider">
-              Register / Student ID
-            </label>
-            <input
-              type="text"
-              required
               disabled={!isEditingProfile}
+              required
+            />
+            <Input
+              id="profile-id"
+              label="Register / Student ID"
               value={studentId}
               onChange={(e) => setStudentId(e.target.value)}
               placeholder="Enter your reg no"
-              className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-stone-600 text-sm font-bold text-slate-800 dark:text-stone-100 bg-slate-50/50 dark:bg-stone-800/50 focus:bg-white dark:focus:bg-stone-700 focus:border-primary focus:outline-none transition-all disabled:bg-slate-100/70 dark:disabled:bg-stone-800 disabled:text-slate-600 dark:disabled:text-stone-500 disabled:border-slate-200 dark:disabled:border-stone-700 disabled:cursor-not-allowed"
+              disabled={!isEditingProfile}
+              required
             />
-          </div>
-
-          <div>
-            <label className="block text-xs font-black uppercase text-slate-500 dark:text-stone-500 mb-1.5 tracking-wider">
-              Target CGPA Goal
-            </label>
             <div className="flex items-center gap-2">
-              <input
-                type="text"
-                value={targetCgpa}
-                onChange={(e) => setTargetCgpa(e.target.value)}
-                className="w-24 px-3 py-1.5 rounded-lg border border-slate-200 dark:border-stone-700 text-sm font-black text-slate-900 dark:text-stone-100 bg-white dark:bg-stone-800 focus:outline-none focus:border-primary"
-              />
-              <span className="text-xs text-slate-500 dark:text-stone-400 font-bold">out of 10.0</span>
+              <label className="text-[10px] font-extrabold text-text-secondary w-full">Target CGPA Goal</label>
+              <div className="relative flex-1">
+                <input
+                  type="text"
+                  value={targetCgpa}
+                  onChange={(e) => setTargetCgpa(e.target.value)}
+                  className="w-full px-3 py-2 rounded-xl border border-border dark:border-border-strong text-black font-extrabold text-sm bg-surface dark:bg-surface-variant focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none disabled:bg-stone-50 dark:disabled:bg-stone-800 disabled:text-text-disabled disabled:cursor-not-allowed"
+                  disabled={!isEditingProfile}
+                />
+                <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] font-extrabold text-text-tertiary">
+                  out of 10.0
+                </span>
+              </div>
             </div>
-          </div>
 
-          {isEditingProfile && (
-            <div className="sm:col-span-2 pt-1 flex justify-end duration-150">
-              <Button type="submit" variant="primary" size="md" icon={Check}>
-                Save Profile Changes
+            {isEditingProfile && (
+              <div className="flex justify-end pt-1">
+                <Button type="submit" variant="primary" size="md" icon={Check}>
+                  Save Profile Changes
+                </Button>
+              </div>
+            )}
+          </form>
+        </Card>
+
+        {/* SECTION 2: Security & PIN */}
+        <Card variant="elevated" className="col-span-1 lg:col-span-1">
+          <div className="flex items-center justify-between pb-3 border-b border-border dark:border-border-strong">
+            <div className="flex items-center gap-2.5">
+              <div className="w-8 h-8 rounded-lg bg-warning-light text-warning flex items-center justify-center shrink-0">
+                <KeyRound className="w-4 h-4" />
+              </div>
+              <div>
+                <h3 className="font-extrabold text-sm text-text-primary">Security & PIN</h3>
+                <p className="text-[10px] font-extrabold text-text-tertiary uppercase tracking-wider">
+                  Profile unlock security PIN
+                </p>
+              </div>
+            </div>
+
+            {!isEditingPin ? (
+              <Button variant="outline" size="sm" icon={Edit2} onClick={() => setIsEditingPin(true)}>
+                Edit PIN
               </Button>
-            </div>
-          )}
-        </form>
-      </Card>
-
-      {/* SECTION 2: Security & 4-Digit PIN with Edit / Save Toggle */}
-      <Card className="p-6 border border-slate-100 dark:border-stone-700 shadow-sm space-y-4">
-        <div className="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-stone-700">
-          <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center shrink-0">
-              <KeyRound className="w-4 h-4" />
-            </div>
-            <div>
-              <h3 className="text-base font-extrabold text-slate-900 dark:text-stone-50">Security & 4-Digit PIN</h3>
-              <p className="text-xs text-slate-500 dark:text-stone-500 font-semibold">Profile unlock security PIN</p>
-            </div>
+            ) : (
+              <button
+                type="button"
+                onClick={() => {
+                  setIsEditingPin(false);
+                  setCurrentPin('');
+                  setNewPin('');
+                  setPinMessage(null);
+                }}
+                className="text-xs font-extrabold text-text-tertiary hover:text-text-primary flex items-center gap-1 px-2 py-1 rounded-lg hover:bg-stone-50 dark:hover:bg-stone-800 transition-colors"
+              >
+                <X className="w-3.5 h-3.5" /> Cancel
+              </button>
+            )}
           </div>
 
-          {!isEditingPin ? (
-            <Button
-              type="button"
-              variant="secondary"
-              size="sm"
-              icon={Edit2}
-              onClick={() => setIsEditingPin(true)}
-            >
-              Edit PIN
-            </Button>
-          ) : (
-            <button
-              type="button"
-              onClick={() => {
-                setIsEditingPin(false);
-                setCurrentPin('');
-                setNewPin('');
-                setPinMessage(null);
-              }}
-              className="text-xs font-bold text-slate-500 hover:text-slate-600 flex items-center gap-1 transition-colors px-2 py-1 rounded-lg hover:bg-slate-100"
-            >
-              <X className="w-3.5 h-3.5" /> Cancel
-            </button>
-          )}
-        </div>
-
-        <form onSubmit={handlePinChangeSubmit} className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div>
-            <label className="block text-xs font-black uppercase text-slate-500 dark:text-stone-500 mb-1.5 tracking-wider">
-              Current PIN
-            </label>
-            <input
+          <form onSubmit={handlePinChangeSubmit} className="space-y-4">
+            <Input
+              id="current-pin"
+              label="Current PIN"
               type="password"
               maxLength={4}
               inputMode="numeric"
-              pattern="[0-9]*"
-              required={isEditingPin}
-              disabled={!isEditingPin}
               value={currentPin}
               onChange={(e) => setCurrentPin(e.target.value)}
               placeholder="••••"
-              className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-stone-600 text-sm font-black text-primary bg-slate-50/50 dark:bg-stone-800/50 focus:bg-white dark:focus:bg-stone-700 focus:border-primary focus:outline-none transition-all disabled:bg-slate-100/70 dark:disabled:bg-stone-800 disabled:text-slate-400 dark:disabled:text-stone-600 disabled:border-slate-200 dark:disabled:border-stone-700 disabled:cursor-not-allowed"
+              disabled={!isEditingPin}
             />
-          </div>
-
-          <div>
-            <label className="block text-xs font-black uppercase text-slate-500 dark:text-stone-500 mb-1.5 tracking-wider">
-              New 4-Digit PIN
-            </label>
-            <input
+            <Input
+              id="new-pin"
+              label="New 4-Digit PIN"
               type="password"
               maxLength={4}
               inputMode="numeric"
-              pattern="[0-9]*"
-              required={isEditingPin}
-              disabled={!isEditingPin}
               value={newPin}
               onChange={(e) => setNewPin(e.target.value)}
               placeholder="••••"
-              className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-stone-600 text-sm font-black text-primary bg-slate-50/50 dark:bg-stone-800/50 focus:bg-white dark:focus:bg-stone-700 focus:border-primary focus:outline-none transition-all disabled:bg-slate-100/70 dark:disabled:bg-stone-800 disabled:text-slate-400 dark:disabled:text-stone-600 disabled:border-slate-200 dark:disabled:border-stone-700 disabled:cursor-not-allowed"
+              disabled={!isEditingPin}
             />
-          </div>
 
-          {pinMessage && (
-            <div className={`sm:col-span-2 p-3 rounded-xl text-xs font-bold ${
-              pinMessage.type === 'success' ? 'bg-[#D4E8D6] text-[#4A6E4D] border border-[#B8D4BB]' : 'bg-rose-50 text-rose-800 border border-rose-200'
-            }`}>
-              {pinMessage.text}
-            </div>
-          )}
+            {pinMessage && (
+              <div className={`p-3 rounded-lg text-xs font-extrabold ${
+                pinMessage.type === 'success'
+                  ? 'bg-success-light text-success-text border-success-border'
+                  : 'bg-danger-light text-danger-text border-danger-border'
+              }`}>
+                {pinMessage.text}
+              </div>
+            )}
 
-          {isEditingPin && (
-            <div className="sm:col-span-2 pt-1 flex justify-end duration-150">
-              <Button type="submit" variant="primary" size="md" icon={Check}>
-                Update Security PIN
-              </Button>
-            </div>
-          )}
-        </form>
-      </Card>
+            {isEditingPin && (
+              <div className="flex justify-end pt-1">
+                <Button type="submit" variant="primary" size="md" icon={Check}>
+                  Update Security PIN
+                </Button>
+              </div>
+            )}
+          </form>
+        </Card>
       </div>
+
       {/* SECTION 3: Data Management */}
-      <Card className="p-6 border border-slate-100 dark:border-stone-700 shadow-sm space-y-4">
-        <div className="flex items-center gap-2.5 pb-3 border-b border-slate-100 dark:border-stone-700">
-          <div className="w-8 h-8 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
+      <Card variant="elevated">
+        <div className="flex items-center gap-2.5 pb-3 border-b border-border dark:border-border-strong">
+          <div className="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
             <Database className="w-4 h-4" />
           </div>
           <div>
-            <h3 className="text-base font-extrabold text-slate-900 dark:text-stone-50">Data Management</h3>
-            <p className="text-xs text-slate-500 dark:text-stone-500 font-semibold">Reset all semester grades to their default unselected state</p>
+            <h3 className="font-extrabold text-sm text-text-primary">Data Management</h3>
+            <p className="text-[10px] font-extrabold text-text-tertiary uppercase tracking-wider">
+              Reset all semester grades to default
+            </p>
           </div>
         </div>
 
         <div className="flex flex-wrap items-center gap-3">
-          {/* Reset All Grades */}
           <Button
             type="button"
-            variant="secondary"
+            variant="outline"
             size="md"
             icon={RotateCcw}
             onClick={() => {
@@ -298,7 +271,7 @@ export default function SettingsPage() {
               }
             }}
           >
-            Reset Grades
+            Reset All Grades
           </Button>
         </div>
       </Card>

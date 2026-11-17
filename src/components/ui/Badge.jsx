@@ -1,22 +1,25 @@
 /**
- * Reusable Badge component for academic status, grade letters, and grade points.
+ * Reusable Badge component for grade letters, credits, status labels.
+ * Refined variants with strong contrast and dark-mode safety.
  */
 export default function Badge({
   children,
-  variant = 'purple', // purple, green, red, slate
+  variant = 'primary', // primary, success, warning, danger, slate, outline
   className = '',
   size = 'md',
   ...props
 }) {
   const variantStyles = {
-    purple: 'bg-primary-light text-primary-hover border-primary-light/60',
-    green: 'bg-[#D4E8D6] text-[#4A6E4D] border-[#B8D4BB]',
-    danger: 'bg-rose-100 text-rose-800 border-rose-200',
-    slate: 'bg-stone-100 text-stone-800 border-stone-200',
+    primary: 'bg-primary-light text-primary-hover border-primary-border',
+    success: 'bg-success-light text-success-text border-success-border',
+    warning: 'bg-warning-light text-warning border-warning-border',
+    danger: 'bg-danger-light text-danger-text border-danger-border',
+    slate: 'bg-surface-variant dark:bg-stone-800 text-text-secondary border-border dark:border-border-strong',
+    outline: 'bg-transparent text-text-primary border-border dark:border-border-strong',
   };
 
   const sizeStyles = {
-    sm: 'text-[11px] px-2 py-0.5 font-bold',
+    sm: 'text-[10px] px-2 py-0.5 font-extrabold',
     md: 'text-xs px-2.5 py-1 font-extrabold',
     lg: 'text-sm px-3 py-1.5 font-black',
   };
@@ -24,7 +27,7 @@ export default function Badge({
   return (
     <span
       className={`
-        inline-flex items-center justify-center rounded-xl tracking-wide select-none
+        inline-flex items-center justify-center rounded-xl tracking-wide select-none border
         ${sizeStyles[size]} ${variantStyles[variant]} ${className}
       `}
       {...props}

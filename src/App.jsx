@@ -1,6 +1,5 @@
 import { useState, lazy, Suspense } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
-import { useUser } from './contexts/AuthContext';
 import Sidebar from './components/layout/Sidebar';
 import Navbar from './components/layout/Navbar';
 import SubjectTable from './components/dashboard/SubjectTable';
@@ -9,14 +8,8 @@ import CGPASummary from './components/dashboard/CGPASummary';
 import GradeDistribution from './components/dashboard/GradeDistribution';
 import SettingsPage from './components/dashboard/SettingsPage';
 import HelpPage from './components/dashboard/HelpPage';
-import AuthForm from './components/auth/AuthForm';
 
 const CGPATrendsPage = lazy(() => import('./components/dashboard/CGPATrendsPage'));
-
-function ProtectedRoute({ children }) {
-  const { isLoggedIn } = useUser();
-  return isLoggedIn ? children : <Navigate to="/login" replace />;
-}
 
 function DashboardLayout({ children, aside }) {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -53,36 +46,31 @@ function DashboardLayout({ children, aside }) {
 }
 
 function App() {
-  const { isLoggedIn } = useUser();
-
   return (
     <Routes>
-      <Route path="/login" element={!isLoggedIn ? <AuthForm mode="login" /> : <Navigate to="/dashboard" replace />} />
-      <Route path="/register" element={!isLoggedIn ? <AuthForm mode="register" /> : <Navigate to="/dashboard" replace />} />
-      <Route path="/dashboard" element={
-        <ProtectedRoute><DashboardLayout aside={<><CGPASummary /><GradeDistribution /></>}>
+      <Route path="/" element={
+        <DashboardLayout aside={<><CGPASummary /><GradeDistribution /></>}>
           <div className="space-y-4"><SubjectTable /><GradeScale /></div>
-        </DashboardLayout></ProtectedRoute>
+        </DashboardLayout>
       } />
       <Route path="/trends" element={
-        <ProtectedRoute><DashboardLayout>
+        <DashboardLayout>
           <Suspense fallback={<div className="flex items-center justify-center h-64 text-stone-500 dark:text-stone-400">Loading...</div>}>
             <CGPATrendsPage />
           </Suspense>
-        </DashboardLayout></ProtectedRoute>
+        </DashboardLayout>
       } />
       <Route path="/settings" element={
-        <ProtectedRoute><DashboardLayout>
+        <DashboardLayout>
           <SettingsPage />
-        </DashboardLayout></ProtectedRoute>
+        </DashboardLayout>
       } />
       <Route path="/help" element={
-        <ProtectedRoute><DashboardLayout>
+        <DashboardLayout>
           <HelpPage />
-        </DashboardLayout></ProtectedRoute>
+        </DashboardLayout>
       } />
-      <Route path="/" element={isLoggedIn ? <Navigate to="/dashboard" replace /> : <Navigate to="/login" replace />} />
-      <Route path="*" element={<Navigate to={isLoggedIn ? '/dashboard' : '/login'} replace />} />
+      <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );
 }

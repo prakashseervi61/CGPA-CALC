@@ -1,11 +1,7 @@
 import { Menu } from 'lucide-react';
-import { useUser } from '../../contexts/AuthContext';
 import ThemeToggle from '../ui/ThemeToggle';
 
 export default function Navbar({ setMobileOpen }) {
-  const { user } = useUser();
-  const userName = user?.username || 'Student';
-
   return (
     <header className="px-4 md:px-8 py-3 md:py-3.5 flex items-center justify-between gap-3 border-b border-stone-200 dark:border-stone-800 bg-white/80 dark:bg-stone-900/80 backdrop-blur-md sticky top-0 z-30 shadow-2xs">
       {/* Left: hamburger + greeting */}
@@ -20,7 +16,7 @@ export default function Navbar({ setMobileOpen }) {
 
         <div className="min-w-0">
           <h2 className="text-base md:text-xl font-black text-stone-900 dark:text-stone-100 leading-tight truncate">
-            Hello, {userName}! 👋
+            Welcome to Semora 👋
           </h2>
           <p className="text-[11px] md:text-xs text-stone-500 dark:text-stone-400 font-semibold hidden sm:block">
             Track your academic progress with Semora

@@ -5,19 +5,32 @@ import {
 import Card from '../ui/Card';
 import Button from '../ui/Button';
 import Badge from '../ui/Badge';
-import { useUser } from '../../contexts/AuthContext';
 import { useData } from '../../contexts/DataContext';
 
+const PROFILE_KEY = 'cgpa_app_profile';
+
+function loadProfile() {
+  try {
+    return JSON.parse(localStorage.getItem(PROFILE_KEY)) || {};
+  } catch {
+    return {};
+  }
+}
+
+function saveProfile(profile) {
+  localStorage.setItem(PROFILE_KEY, JSON.stringify(profile));
+}
+
 export default function SettingsPage() {
-  const { user, handleUpdateUser } = useUser();
   const { handleResetGrades } = useData();
 
   const [isEditingProfile, setIsEditingProfile] = useState(false);
   const [isEditingPin, setIsEditingPin] = useState(false);
 
-  const [name, setName] = useState(user?.username || '');
-  const [studentId, setStudentId] = useState(user?.studentId || '');
-  const [targetCgpa, setTargetCgpa] = useState(user?.targetCgpa || '9.00');
+  const profile = loadProfile();
+  const [name, setName] = useState(profile.name || '');
+  const [studentId, setStudentId] = useState(profile.studentId || '');
+  const [targetCgpa, setTargetCgpa] = useState(profile.targetCgpa || '9.00');
   const [savedNotice, setSavedNotice] = useState(false);
 
   // PIN change state
@@ -25,15 +38,9 @@ export default function SettingsPage() {
   const [newPin, setNewPin] = useState('');
   const [pinMessage, setPinMessage] = useState(null);
 
-  
   const handleProfileSave = (e) => {
     e.preventDefault();
-    handleUpdateUser({
-      ...user,
-      username: name,
-      studentId,
-      targetCgpa: parseFloat(targetCgpa) || 0
-    });
+    saveProfile({ name, studentId, targetCgpa: parseFloat(targetCgpa) || 0 });
     setIsEditingProfile(false);
     setSavedNotice(true);
     setTimeout(() => setSavedNotice(false), 3000);
@@ -41,19 +48,11 @@ export default function SettingsPage() {
 
   const handlePinChangeSubmit = (e) => {
     e.preventDefault();
-    if (user?.pin && currentPin !== user.pin) {
-      setPinMessage({ type: 'error', text: 'Current PIN is incorrect.' });
-      return;
-    }
     if (newPin.length !== 4 || !/^\d{4}$/.test(newPin)) {
       setPinMessage({ type: 'error', text: 'New PIN must be exactly 4 digits.' });
       return;
     }
-
-    handleUpdateUser({
-      ...user,
-      pin: newPin
-    });
+    saveProfile({ ...profile, pin: newPin });
     setIsEditingPin(false);
     setPinMessage({ type: 'success', text: '4-Digit PIN updated successfully!' });
     setCurrentPin('');
@@ -72,7 +71,7 @@ export default function SettingsPage() {
             </div>
             Settings & Preferences
           </h2>
-            <p className="text-xs text-slate-500 dark:text-stone-400 font-semibold mt-1">
+          <p className="text-xs text-slate-500 dark:text-stone-400 font-semibold mt-1">
             Manage student profile info, 4-digit security PIN, target CGPA goals & data exports
           </p>
         </div>
@@ -94,7 +93,7 @@ export default function SettingsPage() {
             </div>
             <div>
               <h3 className="text-base font-extrabold text-slate-900 dark:text-stone-50">Student Profile</h3>
-               <p className="text-xs text-slate-500 dark:text-stone-500 font-semibold">Display name & registration number</p>
+              <p className="text-xs text-slate-500 dark:text-stone-500 font-semibold">Display name & registration number</p>
             </div>
           </div>
 
@@ -113,11 +112,11 @@ export default function SettingsPage() {
               type="button"
               onClick={() => {
                 setIsEditingProfile(false);
-                setName(user?.username || '');
-                setStudentId(user?.studentId || '');
-                setTargetCgpa(user?.targetCgpa?.toString() || '9.00');
+                setName(profile.name || '');
+                setStudentId(profile.studentId || '');
+                setTargetCgpa(profile.targetCgpa?.toString() || '9.00');
               }}
-               className="text-xs font-bold text-slate-500 hover:text-slate-600 flex items-center gap-1 transition-colors px-2 py-1 rounded-lg hover:bg-slate-100"
+              className="text-xs font-bold text-slate-500 hover:text-slate-600 flex items-center gap-1 transition-colors px-2 py-1 rounded-lg hover:bg-slate-100"
             >
               <X className="w-3.5 h-3.5" /> Cancel
             </button>
@@ -189,7 +188,7 @@ export default function SettingsPage() {
             </div>
             <div>
               <h3 className="text-base font-extrabold text-slate-900 dark:text-stone-50">Security & 4-Digit PIN</h3>
-               <p className="text-xs text-slate-500 dark:text-stone-500 font-semibold">Profile unlock security PIN</p>
+              <p className="text-xs text-slate-500 dark:text-stone-500 font-semibold">Profile unlock security PIN</p>
             </div>
           </div>
 
@@ -212,7 +211,7 @@ export default function SettingsPage() {
                 setNewPin('');
                 setPinMessage(null);
               }}
-               className="text-xs font-bold text-slate-500 hover:text-slate-600 flex items-center gap-1 transition-colors px-2 py-1 rounded-lg hover:bg-slate-100"
+              className="text-xs font-bold text-slate-500 hover:text-slate-600 flex items-center gap-1 transition-colors px-2 py-1 rounded-lg hover:bg-slate-100"
             >
               <X className="w-3.5 h-3.5" /> Cancel
             </button>
@@ -273,7 +272,6 @@ export default function SettingsPage() {
           )}
         </form>
       </Card>
-
       </div>
       {/* SECTION 3: Data Management */}
       <Card className="p-6 border border-slate-100 dark:border-stone-700 shadow-sm space-y-4">

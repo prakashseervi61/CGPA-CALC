@@ -1,28 +1,41 @@
 import { createContext, useContext, useState, useMemo, useEffect } from 'react';
 import { CURRICULUM_PRESETS } from '../data/curriculum';
-import AuthContext from './AuthContext';
 
-const skipCourse = c => c.code !== '23MC102' && !c.name.includes('Environmental Sciences');
+const skipCourse = c => !c.name.includes('Environmental Sciences');
 
-function loadSemesters(userId) {
-  const key = userId ? `cgpa_app_semesters_${userId}` : 'cgpa_app_semesters';
+function loadSemesters() {
+  const key = 'cgpa_app_semesters';
+  const preset = CURRICULUM_PRESETS.skcet_it_24_28.semesters;
   const saved = localStorage.getItem(key);
+  let savedSemesters = [];
   if (saved) {
-    try {
-      return JSON.parse(saved).map(sem => ({ ...sem, courses: (sem.courses || []).filter(skipCourse) }));
-    } catch (e) { /* fall through */ }
+    try { savedSemesters = JSON.parse(saved); } catch { savedSemesters = []; }
   }
-  return CURRICULUM_PRESETS.skcet_it_24_28.semesters.map(sem => ({
-    ...sem, courses: (sem.courses || []).filter(skipCourse)
-  }));
+  // Always start from the preset structure (3 subjects per semester),
+  // but preserve saved grades by matching subject index.
+  return preset.map((sem, sIdx) => {
+    const savedSem = savedSemesters[sIdx];
+    const savedCourses = savedSem?.courses || [];
+    return {
+      id: sem.id,
+      name: sem.name,
+      included: sem.included,
+      courses: sem.courses.map((c, cIdx) => {
+        const savedCourse = savedCourses[cIdx];
+        return {
+          name: `Subject ${cIdx + 1}`,
+          credits: c.credits,
+          grade: savedCourse?.grade || '',
+        };
+      }),
+    };
+  });
 }
 
 const DataContext = createContext();
 
 export const DataProvider = ({ children }) => {
-  const { user } = useContext(AuthContext);
-
-  const [semesters, setSemesters] = useState(() => loadSemesters(user ? user.studentId || user.id : null));
+  const [semesters, setSemesters] = useState(() => loadSemesters());
 
   const [currentSemesterId, setCurrentSemesterId] = useState(1);
 
@@ -103,6 +116,33 @@ export const DataProvider = ({ children }) => {
     }));
   };
 
+  const handleAddSubject = () => {
+    setSemesters(prev => prev.map(s => {
+      if (s.id === currentSemesterId) {
+        const newCourses = [...(s.courses || [])];
+        const nextNum = newCourses.length + 1;
+        newCourses.push({
+          name: `Subject ${nextNum}`,
+          credits: 3,
+          grade: ''
+        });
+        return { ...s, courses: newCourses };
+      }
+      return s;
+    }));
+  };
+
+  const handleRemoveSubject = (courseIndex) => {
+    setSemesters(prev => prev.map(s => {
+      if (s.id === currentSemesterId) {
+        const newCourses = [...(s.courses || [])];
+        newCourses.splice(courseIndex, 1);
+        return { ...s, courses: newCourses };
+      }
+      return s;
+    }));
+  };
+
   const handleResetGrades = (scope = 'all') => {
     setSemesters(prev => prev.map(s => {
       if (scope === 'current' && s.id !== currentSemesterId) return s;
@@ -122,24 +162,12 @@ export const DataProvider = ({ children }) => {
     ));
   };
 
-  // Persist semesters to localStorage whenever they change (per user)
+  // Persist semesters to localStorage whenever they change
   useEffect(() => {
-    const key = user ? `cgpa_app_semesters_${user.studentId || user.id}` : 'cgpa_app_semesters';
-    localStorage.setItem(key, JSON.stringify(semesters));
-  }, [semesters, user]);
-
-  // When user changes, reset to first semester and reload semesters
-  useEffect(() => {
-    setCurrentSemesterId(1);
-    if (user) {
-      setSemesters(loadSemesters(user.studentId || user.id));
-    } else {
-      setSemesters(loadSemesters(null));
-    }
-  }, [user]);
+    localStorage.setItem('cgpa_app_semesters', JSON.stringify(semesters));
+  }, [semesters]);
 
   const value = useMemo(() => ({
-    user,
     semesters,
     currentSemesterId,
     gradeScaleRules,
@@ -151,8 +179,10 @@ export const DataProvider = ({ children }) => {
     handleUpdateGradeScale,
     handleUpdateCourse,
     handleResetGrades,
+    handleAddSubject,
+    handleRemoveSubject,
     handleToggleSemesterInclusion
-  }), [user, semesters, currentSemesterId, gradeScaleRules, gradePointsMap, activeSemester, semesterCalculations, overallCgpaCalculations]);
+  }), [semesters, currentSemesterId, gradeScaleRules, gradePointsMap, activeSemester, semesterCalculations, overallCgpaCalculations]);
 
   return (
     <DataContext.Provider value={value}>

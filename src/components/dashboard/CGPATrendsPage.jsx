@@ -6,12 +6,10 @@ import { TrendingUp, Award, Zap, BookOpen, Layers, XCircle, Target, Check } from
 import Card from '../ui/Card';
 import Badge from '../ui/Badge';
 import { useData } from '../../contexts/DataContext';
-import { useUser } from '../../contexts/AuthContext';
 
 export default function CGPATrendsPage() {
   const { semesters, gradePointsMap, currentSemesterId } = useData();
-  const { user } = useUser();
-  const targetCgpa = user?.targetCgpa || 9.00;
+  const targetCgpa = 9.00;
 
   // Compute analytics and chart datasets across all semesters
   const analyticsData = useMemo(() => {
@@ -96,7 +94,7 @@ export default function CGPATrendsPage() {
       requiredFutureGpa: Number(requiredFutureGpa.toFixed(2)),
       targetCgpa: Number(targetCgpa.toFixed(2))
     };
-  }, [semesters, gradePointsMap, user?.targetCgpa, currentSemesterId]);
+  }, [semesters, gradePointsMap, currentSemesterId]);
 
   return (
     <div className="space-y-6 select-none">

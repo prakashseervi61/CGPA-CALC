@@ -7,14 +7,20 @@
   --color-primary-hover: #4F46E5;
   --color-primary-light: #EEF2FF;
   --color-success: #10B981;
+  --color-success-light: #D4E8D6;
+  --color-success-border: #B8D4BB;
   --color-warning: #F59E0B;
   --color-danger: #EF4444;
+  --color-danger-light: #FECACA;
 }
 
 .dark {
   --color-primary: #818CF8;
   --color-primary-hover: #6366F1;
   --color-primary-light: #312E81;
+  --color-success-light: #4A6E4D;
+  --color-success-border: #4A6E4D;
+  --color-danger-light: #EF4444;
 }
 
 :root {

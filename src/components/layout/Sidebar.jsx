@@ -4,13 +4,11 @@ import {
   TrendingUp,
   Settings,
   HelpCircle,
-  LogOut,
   X
 } from 'lucide-react';
-import { useUser } from '../../contexts/AuthContext';
 
 const menuItems = [
-  { id: 'dashboard', path: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
+  { id: 'dashboard', path: '/', label: 'Dashboard', icon: LayoutDashboard },
   { id: 'cgpa-trends', path: '/trends', label: 'Trends', icon: TrendingUp },
   { id: 'settings', path: '/settings', label: 'Settings', icon: Settings },
   { id: 'help', path: '/help', label: 'Help & Support', icon: HelpCircle }
@@ -18,12 +16,6 @@ const menuItems = [
 
 export default function Sidebar({ mobileOpen, setMobileOpen }) {
   const navigate = useNavigate();
-  const { handleLogout } = useUser();
-
-  const handleLogoutClick = () => {
-    handleLogout();
-    navigate('/login');
-  };
 
   const sidebarContent = (
     <div className="flex flex-col h-full bg-stone-50 dark:bg-stone-900 border-r border-stone-200/60 dark:border-stone-800/60 p-6 w-[260px] shrink-0 select-none">
@@ -72,18 +64,6 @@ export default function Sidebar({ mobileOpen, setMobileOpen }) {
         })}
       </nav>
 
-      {/* Bottom Logout Button */}
-      <div className="pt-4 mt-auto border-t border-stone-200/60 dark:border-stone-800/60">
-        <button
-          onClick={handleLogoutClick}
-          className="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-sm font-bold text-danger hover:bg-danger/10 transition-colors cursor-pointer group dark:text-[#E07070]"
-        >
-          <div className="p-2 rounded-xl bg-danger/10 text-danger group-hover:bg-danger/20 shrink-0 transition-colors">
-            <LogOut className="w-4 h-4" />
-          </div>
-          <span className="font-extrabold text-red-700 dark:text-[#E07070]">Logout</span>
-        </button>
-      </div>
     </div>
   );
 

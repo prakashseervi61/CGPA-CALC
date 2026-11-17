@@ -9,10 +9,10 @@ export default function Badge({
   ...props
 }) {
   const variantStyles = {
-    purple: 'bg-primary-light text-primary-hover',
-    green: 'bg-[#D4E8D6] text-[#4A6E4D]',
-    red: 'bg-rose-100 text-rose-800',
-    slate: 'bg-stone-100 text-stone-800',
+    purple: 'bg-primary-light text-primary-hover border-primary-light/60',
+    green: 'bg-[#D4E8D6] text-[#4A6E4D] border-[#B8D4BB]',
+    danger: 'bg-rose-100 text-rose-800 border-rose-200',
+    slate: 'bg-stone-100 text-stone-800 border-stone-200',
   };
 
   const sizeStyles = {

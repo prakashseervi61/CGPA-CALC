@@ -1,6 +1,5 @@
 import { Zap, BookOpen, Star } from 'lucide-react';
 import { useData } from '../../contexts/DataContext';
-import { useUser } from '../../contexts/AuthContext';
 
 export default function CGPASummary() {
   const {
@@ -8,8 +7,7 @@ export default function CGPASummary() {
     semesterCalculations,
     activeSemester
   } = useData();
-  const { user } = useUser();
-  const targetCgpa = user?.targetCgpa || 9.00;
+  const targetCgpa = 9.00;
   const currentCgpa = overallCgpaCalculations.cgpa ?? 0;
   const sgpa = semesterCalculations.sgpa ?? 0;
   const totalCredits = overallCgpaCalculations.totalCumCredits ?? 0;

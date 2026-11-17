@@ -39,7 +39,7 @@ export default function GradeScale() {
         </div>
 
         <Button
-          variant={isEditing ? 'pastelGreen' : 'outline'}
+          variant={isEditing ? 'success' : 'outline'}
           size="sm"
           icon={isEditing ? Check : Edit3}
           onClick={isEditing ? saveScales : () => setIsEditing(true)}
